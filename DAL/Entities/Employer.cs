@@ -12,14 +12,17 @@ namespace DAL.Entities
         [Required]
         public string Name { get; set; }
 
+        [Required]
         public Address Address { get; set; }
 
         public string PhoneNumber { get; set; }
 
+        [Required]
         [EmailAddress]
         public string Email { get; set; }
 
         public virtual List<JobOffer> JobOffers { get; set; }
+
         public DateTime? DeletedDate { get; set; }
     }
 }
