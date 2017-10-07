@@ -1,8 +1,7 @@
-﻿using DAL.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using DAL.Context;
-
+using DAL.Entities;
 
 namespace DAL.Initializer
 {
@@ -35,10 +34,6 @@ namespace DAL.Initializer
                 Street = "One Microsoft Way",
                 Number = "98052"
             };
-
-            context.Addresses.Add(redHatAddress);
-            context.Addresses.Add(googleAddress);
-            context.Addresses.Add(microsoftAddress);
 
             #endregion
 
@@ -125,7 +120,7 @@ namespace DAL.Initializer
                 Name = "Anonymous",
                 Email = "Anonymous@programmer.net",
                 PhoneNumber = "+420 5565893",
-                Education = "Secret",
+                Education = "Secret"
             };
 
             context.Users.Add(piskula);
@@ -156,7 +151,7 @@ namespace DAL.Initializer
 
             #region job offers
 
-            var googleAndroidOffer = new JobOffer()
+            var googleAndroidOffer = new JobOffer
             {
                 Name = "Associate Android Developer",
                 Employer = google,
@@ -175,7 +170,7 @@ namespace DAL.Initializer
                 }
             };
 
-            var googleBackendOffer = new JobOffer()
+            var googleBackendOffer = new JobOffer
             {
                 Name = "Java backend senior",
                 Employer = google,
@@ -183,7 +178,7 @@ namespace DAL.Initializer
                 Description = "Be a backend hero!",
                 Skills = new List<SkillTag>
                 {
-                    java,
+                    java
                 },
                 Questions = new List<Question>
                 {
@@ -211,7 +206,7 @@ namespace DAL.Initializer
                 }
             };
 
-            var microsoftCsharpDev = new JobOffer()
+            var microsoftCsharpDev = new JobOffer
             {
                 Name = "C# dev",
                 Employer = microsoft,
@@ -219,7 +214,7 @@ namespace DAL.Initializer
                 Description = "Lets see sharp!",
                 Skills = new List<SkillTag>
                 {
-                    cSharp,
+                    cSharp
                 },
                 Questions = new List<Question>
                 {
@@ -227,7 +222,7 @@ namespace DAL.Initializer
                 }
             };
 
-            var microsoftProjectManager = new JobOffer()
+            var microsoftProjectManager = new JobOffer
             {
                 Name = "Project manager junior",
                 Employer = microsoft,
@@ -235,7 +230,7 @@ namespace DAL.Initializer
                 Description = "Manage amazing projects",
                 Skills = new List<SkillTag>
                 {
-                    cSharp,
+                    cSharp
                 },
                 Questions = new List<Question>
                 {
@@ -244,7 +239,7 @@ namespace DAL.Initializer
                 }
             };
 
-            var redHatQalityEngineer = new JobOffer()
+            var redHatQalityEngineer = new JobOffer
             {
                 Name = "Quality engineer",
                 Employer = redHat,
@@ -252,13 +247,13 @@ namespace DAL.Initializer
                 Description = "Quality matters",
                 Skills = new List<SkillTag>
                 {
-                    java,
+                    java
                 },
                 Questions = new List<Question>
                 {
                     softSkills,
                     javaExperience,
-                    javaEeExperience,
+                    javaEeExperience
                 }
             };
 
