@@ -1,6 +1,6 @@
 ﻿namespace DAL.Entities
 {
-    public class Address
+    public class Address : IEntity<int>
     {
         public int Id { get; set; }
         public string Country { get; set; }

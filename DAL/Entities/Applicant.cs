@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
-    public class Applicant
+    public class Applicant : IEntity<int> 
     {
         public int Id { get; set; }
 

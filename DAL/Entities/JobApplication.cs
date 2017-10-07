@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Entities
 {
-    public class JobApplication
+    public class JobApplication : IEntity<int>, ISoftDeleteEntity
     {
         public int Id { get; set; }
 
@@ -23,6 +24,8 @@ namespace DAL.Entities
 
         [Required]
         public Applicant Applicant { get; set; }
+
+        public DateTime? DeletedDate { get; set; }
     }
 
     public enum Status

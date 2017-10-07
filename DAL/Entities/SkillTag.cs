@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Entities
 {
-    public class SkillTag
+    public class SkillTag : IEntity<int>, ISoftDeleteEntity
     {
         public int Id { get; set; }
 
@@ -13,10 +14,12 @@ namespace DAL.Entities
         public virtual List<JobOffer> JobOffers { get; set; }
 
         public virtual List<User> Users { get; set; }
+        public DateTime? DeletedDate { get; set; }
 
         public override string ToString()
         {
             return Name;
         }
+
     }
 }

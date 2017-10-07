@@ -2,7 +2,7 @@
 
 namespace DAL.Entities
 {
-    public class QuestionAnswer
+    public class QuestionAnswer : IEntity<int>
     {
         public int Id { get; set; }
 

@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
-    public class Employer
+    public class Employer : IEntity<int>, ISoftDeleteEntity
     {
         public int Id { get; set; }
 
@@ -19,5 +20,6 @@ namespace DAL.Entities
         public string Email { get; set; }
 
         public virtual List<JobOffer> JobOffers { get; set; }
+        public DateTime? DeletedDate { get; set; }
     }
 }
