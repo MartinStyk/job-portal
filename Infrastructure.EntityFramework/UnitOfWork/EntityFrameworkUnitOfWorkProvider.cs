@@ -9,7 +9,7 @@ using Infrastructure.UnitOfWork;
 
 namespace Infrastructure.EntityFramework.UnitOfWork
 {
-    class EntityFrameworkUnitOfWorkProvider : UnitOfWorkProviderBase
+    public class EntityFrameworkUnitOfWorkProvider : UnitOfWorkProviderBase
     {
         private readonly Func<DbContext> dbContextFactory;
 

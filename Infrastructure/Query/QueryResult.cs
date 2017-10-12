@@ -4,7 +4,7 @@ using Infrastructure.Entity;
 
 namespace Infrastructure.Query
 {
-    public class QueryResult<TEntity> where TEntity : IEntity<object>
+    public class QueryResult<TEntity> where TEntity : IEntity
     {
         public QueryResult(IList<TEntity> items, long totalItemsCount, int pageSize = 10, int? requestedPageNumber = null)
         {

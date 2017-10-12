@@ -7,7 +7,7 @@ using Infrastructure.Entity;
 
 namespace DAL.Entities
 {
-    public class SkillTag : IEntity<int>, ISoftDeleteEntity
+    public class SkillTag : IEntity, ISoftDeleteEntity
     {
         public int Id { get; set; }
 

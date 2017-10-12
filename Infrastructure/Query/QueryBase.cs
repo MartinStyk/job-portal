@@ -8,7 +8,7 @@ using Infrastructure.UnitOfWork;
 
 namespace Infrastructure.Query
 {
-    public abstract class QueryBase<TEntity> : IQuery<TEntity> where TEntity : class, IEntity<object>, new()
+    public abstract class QueryBase<TEntity> : IQuery<TEntity> where TEntity : class, IEntity, new()
     {
         protected readonly IUnitOfWorkProvider Provider;
 
@@ -24,12 +24,14 @@ namespace Infrastructure.Query
         public int? DesiredPage { get; private set; }
 
         private string sortAccordingTo;
+
         public string SortAccordingTo
         {
             get => sortAccordingTo;
             protected set
             {
-                var properties = typeof(TEntity).GetProperties().Select(prop => prop.Name).Except(new []{nameof(IEntity<object>.TableName)});
+                var properties = typeof(TEntity).GetProperties().Select(prop => prop.Name)
+                    .Except(new[] {nameof(IEntity.TableName)});
                 var matchedName = properties
                     .FirstOrDefault(name => name.IndexOf(value, StringComparison.OrdinalIgnoreCase) >= 0);
                 sortAccordingTo = matchedName;
@@ -48,7 +50,9 @@ namespace Infrastructure.Query
 
         public IQuery<TEntity> SortBy(string sortAccordingTo, bool ascendingOrder = true)
         {
-            SortAccordingTo = !string.IsNullOrWhiteSpace(sortAccordingTo) ? sortAccordingTo : throw new ArgumentException($"{nameof(sortAccordingTo)} must be defined!");
+            SortAccordingTo = !string.IsNullOrWhiteSpace(sortAccordingTo)
+                ? sortAccordingTo
+                : throw new ArgumentException($"{nameof(sortAccordingTo)} must be defined!");
             UseAscendingOrder = ascendingOrder;
             return this;
         }

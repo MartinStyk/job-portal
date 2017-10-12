@@ -5,7 +5,7 @@ using Infrastructure.UnitOfWork;
 
 namespace DAL.Repository
 {
-    public class SkillRepository : EntityFrameworkRepository<SkillTag, int>
+    public class SkillRepository : EntityFrameworkRepository<SkillTag>
     {
         public SkillRepository(IUnitOfWorkProvider provider) : base(provider)
         {

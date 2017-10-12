@@ -4,7 +4,7 @@ using Infrastructure.UnitOfWork;
 
 namespace DAL.Repository
 {
-    public class JobOfferRepository : EntityFrameworkRepository<JobOffer, int>
+    public class JobOfferRepository : EntityFrameworkRepository<JobOffer>
     {
         public JobOfferRepository(IUnitOfWorkProvider provider) : base(provider)
         {

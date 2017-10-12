@@ -1,8 +1,8 @@
 ﻿namespace Infrastructure.Entity
 {
-    public interface IEntity<TKey>
+    public interface IEntity
     {
-        TKey Id { get; set; }
+        int Id { get; set; }
 
         string TableName { get; }
     }

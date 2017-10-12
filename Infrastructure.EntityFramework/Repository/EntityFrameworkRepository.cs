@@ -12,14 +12,10 @@ using Infrastructure.UnitOfWork;
 
 namespace Infrastructure.EntityFramework.Repository
 {
-    public class EntityFrameworkRepository<TEntity, TKey> : IRepository<TEntity, TKey>
-        where TEntity : class, IEntity<TKey>, new()
+    public class EntityFrameworkRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity, new()
     {
         private readonly IUnitOfWorkProvider provider;
 
-        /// <summary>
-        /// Gets the <see cref="DbContext"/>.
-        /// </summary>
         protected DbContext Context => ((EntityFrameworkUnitOfWork) provider.GetInstance()).Context;
 
         public EntityFrameworkRepository(IUnitOfWorkProvider provider)
@@ -33,17 +29,17 @@ namespace Infrastructure.EntityFramework.Repository
             Context.Set<TEntity>().Add(entity);
         }
 
-        public TEntity Get(TKey id)
+        public TEntity Get(int id)
         {
             return Context.Set<TEntity>().Find(id);
         }
 
-        public async Task<TEntity> GetAsync(TKey id)
+        public async Task<TEntity> GetAsync(int id)
         {
             return await Context.Set<TEntity>().FindAsync(id);
         }
 
-        public async Task<TEntity> GetAsync(TKey id, params string[] includes)
+        public async Task<TEntity> GetAsync(int id, params string[] includes)
         {
             DbQuery<TEntity> ctx = Context.Set<TEntity>();
             foreach (var include in includes)
@@ -59,7 +55,7 @@ namespace Infrastructure.EntityFramework.Repository
             Context.Entry(foundEntity).CurrentValues.SetValues(entity);
         }
 
-        public void Delete(TKey id)
+        public void Delete(int id)
         {
             var entity = Context.Set<TEntity>().Find(id);
             if (entity != null)

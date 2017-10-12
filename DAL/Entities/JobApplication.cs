@@ -7,7 +7,7 @@ using Infrastructure.Entity;
 
 namespace DAL.Entities
 {
-    public class JobApplication : IEntity<int>, ISoftDeleteEntity
+    public class JobApplication : IEntity, ISoftDeleteEntity
     {
         public int Id { get; set; }
 

@@ -5,7 +5,7 @@ using Infrastructure.Entity;
 
 namespace DAL.Entities
 {
-    public class QuestionAnswer : IEntity<int>
+    public class QuestionAnswer : IEntity
     {
         public int Id { get; set; }
 

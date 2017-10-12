@@ -5,7 +5,7 @@ using Infrastructure.Entity;
 
 namespace DAL.Entities
 {
-    public class Question : IEntity<int>, ISoftDeleteEntity
+    public class Question : IEntity, ISoftDeleteEntity
     {
         public int Id { get; set; }
 

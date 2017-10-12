@@ -3,18 +3,18 @@ using Infrastructure.Entity;
 
 namespace Infrastructure.Repository
 {
-    public interface IRepository<TEntity, in TKey> where TEntity : class, IEntity<TKey>, new()
+    public interface IRepository<TEntity> where TEntity : class, IEntity, new()
     {
-        TEntity Get(TKey id);
+        TEntity Get(int id);
 
-        Task<TEntity> GetAsync(TKey id);
+        Task<TEntity> GetAsync(int id);
 
-        Task<TEntity> GetAsync(TKey id, params string[] includes);
+        Task<TEntity> GetAsync(int id, params string[] includes);
 
         void Create(TEntity entity);
 
         void Update(TEntity entity);
 
-        void Delete(TKey id);
+        void Delete(int id);
     }
 }

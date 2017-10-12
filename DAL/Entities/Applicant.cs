@@ -10,7 +10,7 @@ using Infrastructure.Entity;
 
 namespace DAL.Entities
 {
-    public class Applicant : IEntity<int>
+    public class Applicant : IEntity
     {
         public int Id { get; set; }
 

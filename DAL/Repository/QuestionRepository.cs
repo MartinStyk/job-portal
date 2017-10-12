@@ -5,7 +5,7 @@ using Infrastructure.UnitOfWork;
 
 namespace DAL.Repository
 {
-    public class QuestionRepository : EntityFrameworkRepository<Question, int>
+    public class QuestionRepository : EntityFrameworkRepository<Question>
     {
         public QuestionRepository(IUnitOfWorkProvider provider) : base(provider)
         {

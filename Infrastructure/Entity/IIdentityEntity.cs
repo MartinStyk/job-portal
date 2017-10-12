@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Entity
 {
-    public interface IIdentityEntity<T> : IEntity<T>
+    public interface IIdentityEntity : IEntity
     {        
         string Email { get; set; }
 

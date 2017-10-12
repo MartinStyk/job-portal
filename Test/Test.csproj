@@ -63,6 +63,10 @@
       <Project>{ce6bce85-fbf9-4197-bf61-734e280070da}</Project>
       <Name>DataAccessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Infrastructure.EntityFramework\Infrastructure.EntityFramework.csproj">
+      <Project>{eabdfe17-15e9-45d2-a1db-840aac26d71f}</Project>
+      <Name>Infrastructure.EntityFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{C94B72C4-AD9F-4C5E-8AC9-3A401065424F}</Project>
       <Name>Infrastructure</Name>

@@ -7,7 +7,7 @@ using Infrastructure.Entity;
 
 namespace DAL.Entities
 {
-    public class User : Applicant, IIdentityEntity<int>, ISoftDeleteEntity
+    public class User : Applicant, IIdentityEntity, ISoftDeleteEntity
     {
 
         [NotMapped]

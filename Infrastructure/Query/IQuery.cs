@@ -8,7 +8,7 @@ using Infrastructure.Query.Predicates;
 
 namespace Infrastructure.Query
 {
-    public interface IQuery<TEntity> where TEntity : class, IEntity<object>, new()
+    public interface IQuery<TEntity> where TEntity : class, IEntity, new()
     {
         /// <summary>
         /// Adds a specified sort criteria to the query.
