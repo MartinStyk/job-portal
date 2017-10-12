@@ -1,4 +1,5 @@
 ﻿using System;
+using Infrastructure.Entity;
 
 namespace DAL.Entities
 {

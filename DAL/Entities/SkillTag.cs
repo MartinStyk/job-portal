@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Infrastructure.Entity;
 
 namespace DAL.Entities
 {

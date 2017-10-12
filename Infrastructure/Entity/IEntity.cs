@@ -1,4 +1,4 @@
-﻿namespace DAL.Entities
+﻿namespace Infrastructure.Entity
 {
     public interface IEntity<TKey>
     {
