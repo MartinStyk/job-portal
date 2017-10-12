@@ -9,56 +9,32 @@ namespace DAL.Initializer
     {
         protected override void Seed(JobPortalDbContext context)
         {
-            #region address
-
-            var redHatAddress = new Address
-            {
-                Country = "Czech Republic",
-                City = "Brno",
-                Street = "Purkyňova",
-                Number = "111"
-            };
-
-            var googleAddress = new Address
-            {
-                Country = "US",
-                City = "Mountain View",
-                Street = "Amphitheatre Parkway",
-                Number = "1600"
-            };
-
-            var microsoftAddress = new Address
-            {
-                Country = "USA",
-                City = "Redmond",
-                Street = "One Microsoft Way",
-                Number = "98052"
-            };
-
-            #endregion
-
             #region employers
 
             var redHat = new Employer
             {
                 Name = "RedHat",
-                Address = redHatAddress,
+                Address = "Brno, CzechRepublic",
                 Email = "mail@redhat.xxx",
-                PhoneNumber = "+420 123 456 789"
+                PhoneNumber = "+420 123 456 789",
+                Password = "rh_pwd"
             };
             var google = new Employer
             {
                 Name = "Google",
-                Address = googleAddress,
+                Address = "MountainView, CA",
                 Email = "mail@google.xxx",
-                PhoneNumber = "+421 123 456 789"
+                PhoneNumber = "+421 123 456 789",
+                Password = "google_pwd"
             };
+
             var microsoft = new Employer
             {
                 Name = "Microsoft",
-                Address = microsoftAddress,
+                Address = "Praha, CZ",
                 Email = "mail@microsoft.xxx",
-                PhoneNumber = "(425) 882-8080"
+                PhoneNumber = "(425) 882-8080",
+                Password = "ms_pwd"
             };
 
             context.Employers.Add(redHat);
@@ -87,7 +63,8 @@ namespace DAL.Initializer
 
             var piskula = new User
             {
-                Name = "Piskula",
+                FirstName = "Piskula",
+                LastName = "Zeleny",
                 Email = "piskula@programmer.net",
                 PhoneNumber = "+420 123 456 789",
                 Education = "High School of Live",
@@ -102,7 +79,8 @@ namespace DAL.Initializer
 
             var madki = new User
             {
-                Name = "Madki",
+                FirstName = "Madki",
+                LastName = "Programmer",
                 Email = "madki@programmer.net",
                 PhoneNumber = "+421 999 666 789",
                 Education = "Programming High",
@@ -115,16 +93,17 @@ namespace DAL.Initializer
                 Password = "password"
             };
 
-            var anonymous = new Applicant
+            var anonymous = new Applicant()
             {
-                Name = "Anonymous",
+                FirstName = "Anonymous",
+                LastName = "Inkognito",
                 Email = "Anonymous@programmer.net",
                 PhoneNumber = "+420 5565893",
                 Education = "Secret"
             };
 
-            context.Users.Add(piskula);
-            context.Users.Add(madki);
+            context.Applicants.Add(piskula);
+            context.Applicants.Add(madki);
             context.Applicants.Add(anonymous);
 
             #endregion
@@ -155,7 +134,7 @@ namespace DAL.Initializer
             {
                 Name = "Associate Android Developer",
                 Employer = google,
-                Location = googleAddress,
+                Location = "Paris, FR",
                 Description = "Develop apps for Android - it will be fun!",
                 Skills = new List<SkillTag>
                 {
@@ -174,7 +153,7 @@ namespace DAL.Initializer
             {
                 Name = "Java backend senior",
                 Employer = google,
-                Location = googleAddress,
+                Location = "Vienna, Austria",
                 Description = "Be a backend hero!",
                 Skills = new List<SkillTag>
                 {
@@ -191,7 +170,7 @@ namespace DAL.Initializer
             {
                 Name = "Javascript front end developer",
                 Employer = google,
-                Location = googleAddress,
+                Location = "San Francisco, CA",
                 Description = "Create amazing UI",
                 Skills = new List<SkillTag>
                 {
@@ -210,7 +189,7 @@ namespace DAL.Initializer
             {
                 Name = "C# dev",
                 Employer = microsoft,
-                Location = microsoftAddress,
+                Location = "Seattle, WS",
                 Description = "Lets see sharp!",
                 Skills = new List<SkillTag>
                 {
@@ -226,7 +205,7 @@ namespace DAL.Initializer
             {
                 Name = "Project manager junior",
                 Employer = microsoft,
-                Location = microsoftAddress,
+                Location = "Seattle 2, WS",
                 Description = "Manage amazing projects",
                 Skills = new List<SkillTag>
                 {
@@ -243,7 +222,7 @@ namespace DAL.Initializer
             {
                 Name = "Quality engineer",
                 Employer = redHat,
-                Location = redHatAddress,
+                Location = "Brno, CZ",
                 Description = "Quality matters",
                 Skills = new List<SkillTag>
                 {
@@ -272,7 +251,7 @@ namespace DAL.Initializer
             {
                 Applicant = madki,
                 JobOffer = redHatQalityEngineer,
-                Status = Status.Open
+                JobApplicationStatus = JobApplicationStatus.Open
             };
 
             var answersoftSkillsRedHat = new QuestionAnswer

@@ -12,12 +12,12 @@ namespace DAL.Entities
         public int QuestionId { get; set; }
 
         [Required]
-        public Question Question { get; set; }
+        public virtual Question Question { get; set; }
 
         [Required]
         public int ApplicationId { get; set; }
 
         [Required]
-        public JobApplication Application { get; set; }
+        public virtual JobApplication Application { get; set; }
     }
 }

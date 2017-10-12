@@ -14,6 +14,7 @@ namespace DAL.Entities
         public virtual List<JobOffer> JobOffers { get; set; }
 
         public virtual List<User> Users { get; set; }
+
         public DateTime? DeletedDate { get; set; }
 
         public override string ToString()

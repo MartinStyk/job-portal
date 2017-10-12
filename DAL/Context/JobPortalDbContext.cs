@@ -6,7 +6,7 @@ namespace DAL.Context
 {
     public class JobPortalDbContext : DbContext
     {
-        public JobPortalDbContext() : base("JobPortalDb")
+        public JobPortalDbContext() : base(nameof(JobPortalDbContext))
         {
             Database.SetInitializer(new JobPortalInitializer());
         }
@@ -26,7 +26,5 @@ namespace DAL.Context
         public DbSet<QuestionAnswer> QuestionAnswers { get; set; }
 
         public DbSet<SkillTag> SkillTags { get; set; }
-
-        public DbSet<Address> Addresses { get; set; }
     }
 }

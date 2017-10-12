@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
@@ -12,10 +13,10 @@ namespace DAL.Entities
         public int JobOfferId { get; set; }
 
         [Required]
-        public JobOffer JobOffer { get; set; }
+        public virtual JobOffer JobOffer { get; set; }
 
         [Required]
-        public Status Status { get; set; }
+        public JobApplicationStatus JobApplicationStatus { get; set; }
 
         public virtual List<QuestionAnswer> QuestionAnswers { get; set; }
 
@@ -23,15 +24,8 @@ namespace DAL.Entities
         public int ApplicantId { get; set; }
 
         [Required]
-        public Applicant Applicant { get; set; }
+        public virtual Applicant Applicant { get; set; }
 
         public DateTime? DeletedDate { get; set; }
-    }
-
-    public enum Status
-    {
-        Open,
-        Accepted,
-        Rejected
     }
 }

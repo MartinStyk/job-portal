@@ -5,21 +5,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
-    public class Employer : IEntity<int>, ISoftDeleteEntity
+    public class Employer : IIdentityEntity<int>, ISoftDeleteEntity
     {
         public int Id { get; set; }
+
+        [Required, EmailAddress, StringLength(100)]
+        public string Email { get; set; }
+
+        [Required, DataType(DataType.Password)]
+        public string Password { get; set; }
 
         [Required]
         public string Name { get; set; }
 
         [Required]
-        public Address Address { get; set; }
-
-        public string PhoneNumber { get; set; }
+        public string Address { get; set; }
 
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Phone]
+        public string PhoneNumber { get; set; }
 
         public virtual List<JobOffer> JobOffers { get; set; }
 
