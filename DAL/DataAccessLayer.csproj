@@ -59,14 +59,26 @@
     <Compile Include="Entities\SkillTag.cs" />
     <Compile Include="Initializer\JobPortalInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\ApplicantRepository.cs" />
+    <Compile Include="Repository\EmployerRepository.cs" />
+    <Compile Include="Repository\JobApplicationRepository.cs" />
+    <Compile Include="Repository\JobOfferRepository.cs" />
+    <Compile Include="Repository\QuestionAnswerRepository.cs" />
+    <Compile Include="Repository\QuestionRepository.cs" />
+    <Compile Include="Repository\SkillRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Infrastructure.EntityFramework\Infrastructure.EntityFramework.csproj">
+      <Project>{eabdfe17-15e9-45d2-a1db-840aac26d71f}</Project>
+      <Name>Infrastructure.EntityFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
-      <Project>{c94b72c4-ad9f-4c5e-8ac9-3a401065424f}</Project>
+      <Project>{C94B72C4-AD9F-4C5E-8AC9-3A401065424F}</Project>
       <Name>Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
