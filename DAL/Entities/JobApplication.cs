@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Context;
 using Infrastructure.Entity;
 
 namespace DAL.Entities
@@ -9,6 +10,9 @@ namespace DAL.Entities
     public class JobApplication : IEntity<int>, ISoftDeleteEntity
     {
         public int Id { get; set; }
+
+        [NotMapped]
+        public string TableName { get; } = nameof(JobPortalDbContext.JobApplications);
 
         [Required]
         public int JobOfferId { get; set; }

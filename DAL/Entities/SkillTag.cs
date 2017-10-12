@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Context;
 using Infrastructure.Entity;
 
 namespace DAL.Entities
@@ -8,6 +10,9 @@ namespace DAL.Entities
     public class SkillTag : IEntity<int>, ISoftDeleteEntity
     {
         public int Id { get; set; }
+
+        [NotMapped]
+        public string TableName { get; } = nameof(JobPortalDbContext.SkillTags);
 
         [Required]
         public string Name { get; set; }
