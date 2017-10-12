@@ -6,7 +6,7 @@ namespace DAL.Context
 {
     public class JobPortalDbContext : DbContext
     {
-        public JobPortalDbContext() : base(nameof(JobPortalDbContext))
+        public JobPortalDbContext() : base("JobPortalDb")
         {
             Database.SetInitializer(new JobPortalInitializer());
         }
