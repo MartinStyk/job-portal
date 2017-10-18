@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "BusinessLa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.EntityFramework", "Infrastructure.EntityFramework\Infrastructure.EntityFramework.csproj", "{EABDFE17-15E9-45D2-A1DB-840AAC26D71F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{280CFAF7-75D9-408C-B6BB-D390B29A8459}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer.Tests", "DataAccessLayer.Tests\DataAccessLayer.Tests.csproj", "{B5987DEE-B599-43BF-B10E-F9AF44B9CF52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +43,16 @@ Global
 		{EABDFE17-15E9-45D2-A1DB-840AAC26D71F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EABDFE17-15E9-45D2-A1DB-840AAC26D71F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EABDFE17-15E9-45D2-A1DB-840AAC26D71F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5987DEE-B599-43BF-B10E-F9AF44B9CF52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5987DEE-B599-43BF-B10E-F9AF44B9CF52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5987DEE-B599-43BF-B10E-F9AF44B9CF52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5987DEE-B599-43BF-B10E-F9AF44B9CF52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B5987DEE-B599-43BF-B10E-F9AF44B9CF52} = {280CFAF7-75D9-408C-B6BB-D390B29A8459}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5A8343F3-E82F-40FE-9DBF-1E00050B3F8B}
