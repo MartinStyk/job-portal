@@ -60,7 +60,13 @@
   <ItemGroup>
     <Compile Include="Initializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryTests\JobOfferRepositoryTests.cs" />
     <Compile Include="RepositoryTests\EmployerRepositoryTests.cs" />
+    <Compile Include="RepositoryTests\JobApplicationRepositoryTests.cs" />
+    <Compile Include="RepositoryTests\AnswerRepositoryTests.cs" />
+    <Compile Include="RepositoryTests\QuestionRepositoryTests.cs" />
+    <Compile Include="RepositoryTests\SkillTagRepositoryTests.cs" />
+    <Compile Include="RepositoryTests\UserRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

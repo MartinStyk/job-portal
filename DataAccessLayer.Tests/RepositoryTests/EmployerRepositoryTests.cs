@@ -20,20 +20,82 @@ namespace DataAccessLayer.Tests.RepositoryTests
         private readonly EmployerRepository employerRepository = new EmployerRepository(Initializer.Provider);
 
         [Test]
-        public async Task GetEmployerAsync_AlreadyStoredInDBNoIncludes_ReturnsCorrectCategory()
+        public async Task GetEmployerAsync_AlreadyStoredInDBNoIncludes_ReturnsCorrectEmployer()
         {
-            // Arrange
             Employer employer;
 
-            // Act
             using (unitOfWorkProvider.Create())
             {
-                employer = await employerRepository.GetAsync(1);
+                employer = await employerRepository.GetAsync(Initializer.RedHatEmployer.Id);
             }
 
-            // Assert
             Assert.NotNull(employer);
-            // TODO Assert.AreEqual(androidCategory.Id, androidCategoryId);
+            Assert.AreEqual(employer.Id, Initializer.RedHatEmployer.Id);
         }
+
+        [Test]
+        public async Task CreateEmployerAsync_EmployerIsNotPreviouslySeeded_CreatesNewEmployer()
+        {
+            var capco = new Employer
+            {
+                Name = "Capco",
+                Address = "Bratislava, Slovakia",
+                Email = "mail@capco.xxx",
+                PhoneNumber = "+421 123 456 789",
+                Password = "cpc_pwd"
+            };
+
+            using (var unitOfWork = Initializer.Provider.Create())
+            {
+                employerRepository.Create(capco);
+                await unitOfWork.Commit();
+            }
+
+            Assert.IsFalse(capco.Id.Equals(0));
+        }
+
+        [Test]
+        public async Task UpdateEmployerAsync_EmployerIsPreviouslySeeded_UpdatesEmployer()
+        {
+            Employer updatedEmployer;
+            Employer newEmployer;
+
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                newEmployer = new Employer
+                {
+                    Id = Initializer.MicrosoftEmployer.Id,
+                    Name = "Microsoft 2.0",
+                    Address = "Praha, CZ",
+                    Email = "mail@microsoft.xxx",
+                    PhoneNumber = "(425) 882-8080",
+                    Password = "ms_pwd"
+                };
+
+                employerRepository.Update(newEmployer);
+                await uow.Commit();
+                updatedEmployer = await employerRepository.GetAsync(Initializer.MicrosoftEmployer.Id);
+            }
+
+            Assert.IsTrue(newEmployer.Name.Equals(updatedEmployer.Name));
+            Assert.IsTrue(newEmployer.Address.Equals(updatedEmployer.Address));
+        }
+
+        
+        [Test]
+        public async Task DeleteEmployerAsync_EmployerIsPreviouslySeeded_DeletesEmployer()
+        {
+            Employer deletedEmployer;
+
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                employerRepository.Delete(Initializer.MicrosoftEmployer.Id);
+                await uow.Commit();
+                deletedEmployer = await employerRepository.GetAsync(Initializer.MicrosoftEmployer.Id);
+            }
+
+            Assert.Null(deletedEmployer);
+        }
+
     }
 }

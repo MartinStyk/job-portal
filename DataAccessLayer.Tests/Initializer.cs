@@ -19,6 +19,18 @@ namespace DataAccessLayer.Tests
 
         internal static readonly IUnitOfWorkProvider Provider = new EntityFrameworkUnitOfWorkProvider(InitializeDatabase);
 
+        public static Employer RedHatEmployer, GoogleEmployer, MicrosoftEmployer;
+        public static User PiskulaUser, MadkiUser;
+        public static Applicant AnonymousUser;
+        public static SkillTag JavaSkill, CSharpSkill, PhpSkill, AngularSkill, AndroidSkill;
+        public static JobOffer RedHatQualityOffer, GoogleAndroidOffer, MicrosoftManagerOffer, MicrosoftCSharpOffer;
+        public static Question JavaExperienceQuestion, JavaEeExperienceQuestion, CSharpExperienceQuestion,
+        WebEprienceQuestion, AndroidExperienceQuestion, SoftSkillQuestion, HobbyQuesiton;
+        public static JobApplication ApplicationRedHatQuality;
+        public static QuestionAnswer AnswersoftSkillsRedHat, ÀnswersJavaRedHat, AnswerJavaEeRedHat;
+
+
+
         /// <summary>
         /// Initializes all Business Layer tests
         /// </summary>
@@ -45,7 +57,7 @@ namespace DataAccessLayer.Tests
 
             #region employers
 
-            var redHat = new Employer
+            RedHatEmployer = new Employer
             {
                 Name = "RedHat",
                 Address = "Brno, CzechRepublic",
@@ -53,7 +65,7 @@ namespace DataAccessLayer.Tests
                 PhoneNumber = "+420 123 456 789",
                 Password = "rh_pwd"
             };
-            var google = new Employer
+            GoogleEmployer = new Employer
             {
                 Name = "Google",
                 Address = "MountainView, CA",
@@ -62,7 +74,7 @@ namespace DataAccessLayer.Tests
                 Password = "google_pwd"
             };
 
-            var microsoft = new Employer
+            MicrosoftEmployer = new Employer
             {
                 Name = "Microsoft",
                 Address = "Praha, CZ",
@@ -71,31 +83,31 @@ namespace DataAccessLayer.Tests
                 Password = "ms_pwd"
             };
 
-            context.Employers.Add(redHat);
-            context.Employers.Add(google);
-            context.Employers.Add(microsoft);
+            context.Employers.Add(RedHatEmployer);
+            context.Employers.Add(GoogleEmployer);
+            context.Employers.Add(MicrosoftEmployer);
 
             #endregion
 
             #region skills
 
-            var cSharp = new SkillTag { Name = "C#" };
-            var java = new SkillTag { Name = "Java" };
-            var php = new SkillTag { Name = "Php" };
-            var angular = new SkillTag { Name = "Angular" };
-            var android = new SkillTag { Name = "Android" };
+            CSharpSkill = new SkillTag { Name = "C#" };
+            JavaSkill = new SkillTag { Name = "Java" };
+            PhpSkill = new SkillTag { Name = "Php" };
+            AngularSkill = new SkillTag { Name = "Angular" };
+            AndroidSkill = new SkillTag { Name = "Android" };
 
-            context.SkillTags.Add(cSharp);
-            context.SkillTags.Add(java);
-            context.SkillTags.Add(php);
-            context.SkillTags.Add(angular);
-            context.SkillTags.Add(android);
+            context.SkillTags.Add(CSharpSkill);
+            context.SkillTags.Add(JavaSkill);
+            context.SkillTags.Add(PhpSkill);
+            context.SkillTags.Add(AngularSkill);
+            context.SkillTags.Add(AndroidSkill);
 
             #endregion
 
             #region users
 
-            var piskula = new User
+            PiskulaUser = new User
             {
                 FirstName = "Piskula",
                 LastName = "Zeleny",
@@ -104,14 +116,14 @@ namespace DataAccessLayer.Tests
                 Education = "High School of Live",
                 Skills = new List<SkillTag>
                 {
-                    java,
-                    php,
-                    angular
+                    JavaSkill,
+                    PhpSkill,
+                    AngularSkill
                 },
                 Password = "password"
             };
 
-            var madki = new User
+            MadkiUser = new User
             {
                 FirstName = "Madki",
                 LastName = "Programmer",
@@ -120,14 +132,14 @@ namespace DataAccessLayer.Tests
                 Education = "Programming High",
                 Skills = new List<SkillTag>
                 {
-                    java,
-                    cSharp,
-                    android
+                    JavaSkill,
+                    CSharpSkill,
+                    AndroidSkill
                 },
                 Password = "password"
             };
 
-            var anonymous = new Applicant()
+            AnonymousUser = new Applicant()
             {
                 FirstName = "Anonymous",
                 LastName = "Inkognito",
@@ -136,191 +148,154 @@ namespace DataAccessLayer.Tests
                 Education = "Secret"
             };
 
-            context.Applicants.Add(piskula);
-            context.Applicants.Add(madki);
-            context.Applicants.Add(anonymous);
+            context.Applicants.Add(PiskulaUser);
+            context.Applicants.Add(MadkiUser);
+            context.Applicants.Add(AnonymousUser);
 
             #endregion
 
             #region questions
 
-            var javaExperience = new Question { Text = "What is your exeperience with Java programming?" };
-            var javaEeExperience = new Question { Text = "What is your exeperience with Java EE programming?" };
-            var cSharpExperience = new Question { Text = "What is your exeperience with .Net programming?" };
-            var webExperience = new Question { Text = "What is your exeperience with web application programming?" };
-            var androidExperience = new Question { Text = "What is your exeperience with Android programming?" };
-            var softSkills = new Question { Text = "Tell us about your soft skills" };
-            var hobby = new Question { Text = "What is your hobby?" };
+            JavaExperienceQuestion = new Question { Text = "What is your exeperience with Java programming?" };
+            JavaEeExperienceQuestion = new Question { Text = "What is your exeperience with Java EE programming?" };
+            CSharpExperienceQuestion = new Question { Text = "What is your exeperience with .Net programming?" };
+            WebEprienceQuestion = new Question { Text = "What is your exeperience with web application programming?" };
+            AndroidExperienceQuestion = new Question { Text = "What is your exeperience with Android programming?" };
+            SoftSkillQuestion = new Question { Text = "Tell us about your soft skills" };
+            HobbyQuesiton = new Question { Text = "What is your hobby?" };
 
-            context.Questions.Add(javaExperience);
-            context.Questions.Add(javaEeExperience);
-            context.Questions.Add(cSharpExperience);
-            context.Questions.Add(webExperience);
-            context.Questions.Add(androidExperience);
-            context.Questions.Add(softSkills);
-            context.Questions.Add(hobby);
+            context.Questions.Add(JavaExperienceQuestion);
+            context.Questions.Add(JavaEeExperienceQuestion);
+            context.Questions.Add(CSharpExperienceQuestion);
+            context.Questions.Add(WebEprienceQuestion);
+            context.Questions.Add(AndroidExperienceQuestion);
+            context.Questions.Add(SoftSkillQuestion);
+            context.Questions.Add(HobbyQuesiton);
 
             #endregion
 
             #region job offers
 
-            var googleAndroidOffer = new JobOffer
+            GoogleAndroidOffer = new JobOffer
             {
                 Name = "Associate Android Developer",
-                Employer = google,
+                Employer = GoogleEmployer,
                 Location = "Paris, FR",
                 Description = "Develop apps for Android - it will be fun!",
                 Skills = new List<SkillTag>
                 {
-                    java,
-                    android
+                    JavaSkill,
+                    AndroidSkill
                 },
                 Questions = new List<Question>
                 {
-                    softSkills,
-                    javaExperience,
-                    androidExperience
+                    SoftSkillQuestion,
+                    JavaExperienceQuestion,
+                    AndroidExperienceQuestion
                 }
             };
 
-            var googleBackendOffer = new JobOffer
-            {
-                Name = "Java backend senior",
-                Employer = google,
-                Location = "Vienna, Austria",
-                Description = "Be a backend hero!",
-                Skills = new List<SkillTag>
-                {
-                    java
-                },
-                Questions = new List<Question>
-                {
-                    javaExperience,
-                    javaEeExperience
-                }
-            };
-
-            var googleFronetEndOffer = new JobOffer
-            {
-                Name = "Javascript front end developer",
-                Employer = google,
-                Location = "San Francisco, CA",
-                Description = "Create amazing UI",
-                Skills = new List<SkillTag>
-                {
-                    angular,
-                    php
-                },
-                Questions = new List<Question>
-                {
-                    webExperience,
-                    softSkills,
-                    hobby
-                }
-            };
-
-            var microsoftCsharpDev = new JobOffer
+          
+            MicrosoftCSharpOffer = new JobOffer
             {
                 Name = "C# dev",
-                Employer = microsoft,
+                Employer = MicrosoftEmployer,
                 Location = "Seattle, WS",
                 Description = "Lets see sharp!",
                 Skills = new List<SkillTag>
                 {
-                    cSharp
+                    CSharpSkill
                 },
                 Questions = new List<Question>
                 {
-                    cSharpExperience
+                    CSharpExperienceQuestion
                 }
             };
 
-            var microsoftProjectManager = new JobOffer
+            MicrosoftManagerOffer = new JobOffer
             {
                 Name = "Project manager junior",
-                Employer = microsoft,
+                Employer = MicrosoftEmployer,
                 Location = "Seattle 2, WS",
                 Description = "Manage amazing projects",
                 Skills = new List<SkillTag>
                 {
-                    cSharp
+                    CSharpSkill
                 },
                 Questions = new List<Question>
                 {
-                    softSkills,
-                    hobby
+                    SoftSkillQuestion,
+                    HobbyQuesiton
                 }
             };
 
-            var redHatQalityEngineer = new JobOffer
+            RedHatQualityOffer = new JobOffer
             {
                 Name = "Quality engineer",
-                Employer = redHat,
+                Employer = RedHatEmployer,
                 Location = "Brno, CZ",
                 Description = "Quality matters",
                 Skills = new List<SkillTag>
                 {
-                    java
+                    JavaSkill
                 },
                 Questions = new List<Question>
                 {
-                    softSkills,
-                    javaExperience,
-                    javaEeExperience
+                    SoftSkillQuestion,
+                    JavaExperienceQuestion,
+                    JavaEeExperienceQuestion
                 }
             };
 
-            context.JobOffers.Add(googleAndroidOffer);
-            context.JobOffers.Add(googleBackendOffer);
-            context.JobOffers.Add(googleFronetEndOffer);
-            context.JobOffers.Add(microsoftCsharpDev);
-            context.JobOffers.Add(microsoftProjectManager);
-            context.JobOffers.Add(redHatQalityEngineer);
+            context.JobOffers.Add(GoogleAndroidOffer);
+            context.JobOffers.Add(MicrosoftCSharpOffer);
+            context.JobOffers.Add(MicrosoftManagerOffer);
+            context.JobOffers.Add(RedHatQualityOffer);
 
             #endregion
 
             #region applications
 
-            var applicationRedHatQuality = new JobApplication
+            ApplicationRedHatQuality = new JobApplication
             {
-                Applicant = madki,
-                JobOffer = redHatQalityEngineer,
+                Applicant = MadkiUser,
+                JobOffer = RedHatQualityOffer,
                 JobApplicationStatus = JobApplicationStatus.Open
             };
 
-            var answersoftSkillsRedHat = new QuestionAnswer
+            AnswersoftSkillsRedHat = new QuestionAnswer
             {
                 Text = "Great",
-                Application = applicationRedHatQuality,
-                Question = softSkills
+                Application = ApplicationRedHatQuality,
+                Question = SoftSkillQuestion
             };
 
-            var answersJavaRedHat = new QuestionAnswer
+            ÀnswersJavaRedHat = new QuestionAnswer
             {
                 Text = "Very Good",
-                Application = applicationRedHatQuality,
-                Question = javaExperience
+                Application = ApplicationRedHatQuality,
+                Question = JavaExperienceQuestion
             };
 
-            var answerJavaEeRedHat = new QuestionAnswer
+            AnswerJavaEeRedHat = new QuestionAnswer
             {
                 Text = "Basic",
-                Application = applicationRedHatQuality,
-                Question = javaEeExperience
+                Application = ApplicationRedHatQuality,
+                Question = JavaEeExperienceQuestion
             };
 
-            applicationRedHatQuality.QuestionAnswers = new List<QuestionAnswer>
+            ApplicationRedHatQuality.QuestionAnswers = new List<QuestionAnswer>
             {
-                answersoftSkillsRedHat,
-                answerJavaEeRedHat,
-                answersJavaRedHat
+                AnswersoftSkillsRedHat,
+                ÀnswersJavaRedHat,
+                AnswerJavaEeRedHat
             };
 
 
-            context.QuestionAnswers.Add(answersoftSkillsRedHat);
-            context.QuestionAnswers.Add(answerJavaEeRedHat);
-            context.QuestionAnswers.Add(answersJavaRedHat);
-            context.JobApplications.Add(applicationRedHatQuality);
+            context.QuestionAnswers.Add(AnswersoftSkillsRedHat);
+            context.QuestionAnswers.Add(AnswerJavaEeRedHat);
+            context.QuestionAnswers.Add(ÀnswersJavaRedHat);
+            context.JobApplications.Add(ApplicationRedHatQuality);
 
             #endregion
 
