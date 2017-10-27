@@ -30,7 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,17 +44,56 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\MappingConfiguration.cs" />
+    <Compile Include="DataTransferObjects\ApplicantDto.cs" />
+    <Compile Include="DataTransferObjects\Common\DtoBase.cs" />
+    <Compile Include="DataTransferObjects\Common\FilterDtoBase.cs" />
+    <Compile Include="DataTransferObjects\Common\QueryResultDto.cs" />
+    <Compile Include="DataTransferObjects\EmployerDto.cs" />
+    <Compile Include="DataTransferObjects\Filters\ApplicantFilterDto.cs" />
+    <Compile Include="DataTransferObjects\Filters\EmployerFilterDto.cs" />
+    <Compile Include="DataTransferObjects\Filters\JobApplicationFilterDto.cs" />
+    <Compile Include="DataTransferObjects\Filters\JobOfferFilterDto.cs" />
+    <Compile Include="DataTransferObjects\Filters\QuestionAnswerFilterDto.cs" />
+    <Compile Include="DataTransferObjects\Filters\QuestionFilterDto.cs" />
+    <Compile Include="DataTransferObjects\Filters\SkillTagFilterDto.cs" />
+    <Compile Include="DataTransferObjects\Filters\UserFilterDto.cs" />
+    <Compile Include="DataTransferObjects\JobApplicationDto.cs" />
+    <Compile Include="DataTransferObjects\JobOfferDto.cs" />
+    <Compile Include="DataTransferObjects\QuestionDto.cs" />
+    <Compile Include="DataTransferObjects\QuestionAnswerDto.cs" />
+    <Compile Include="DataTransferObjects\SkillTagDto.cs" />
+    <Compile Include="DataTransferObjects\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryObjects\JobApplicationQueryObject.cs" />
+    <Compile Include="QueryObjects\JobOfferQueryObject.cs" />
+    <Compile Include="QueryObjects\EmployerQueryObject.cs" />
+    <Compile Include="QueryObjects\ApplicantQueryObject.cs" />
+    <Compile Include="QueryObjects\Common\QueryObjectBase.cs" />
+    <Compile Include="QueryObjects\QuestionAnswerQueryObject.cs" />
+    <Compile Include="QueryObjects\QuestionQueryObject.cs" />
+    <Compile Include="QueryObjects\SkillQueryObject.cs" />
+    <Compile Include="QueryObjects\UserQueryObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DataAccessLayer.csproj">
       <Project>{ce6bce85-fbf9-4197-bf61-734e280070da}</Project>
       <Name>DataAccessLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Infrastructure.EntityFramework\Infrastructure.EntityFramework.csproj">
+      <Project>{eabdfe17-15e9-45d2-a1db-840aac26d71f}</Project>
+      <Name>Infrastructure.EntityFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{c94b72c4-ad9f-4c5e-8ac9-3a401065424f}</Project>
       <Name>Infrastructure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
