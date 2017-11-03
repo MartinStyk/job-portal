@@ -74,6 +74,23 @@
     <Compile Include="QueryObjects\QuestionQueryObject.cs" />
     <Compile Include="QueryObjects\SkillQueryObject.cs" />
     <Compile Include="QueryObjects\UserQueryObject.cs" />
+    <Compile Include="Services\Common\CrudQueryServiceBase.cs" />
+    <Compile Include="Services\Common\ICrudService.cs" />
+    <Compile Include="Services\Common\ServiceBase.cs" />
+    <Compile Include="Services\Employers\IJobApplicationService.cs" />
+    <Compile Include="Services\Employers\JobApplicationService.cs" />
+    <Compile Include="Services\JobApplications\IJobApplicationService.cs" />
+    <Compile Include="Services\JobApplications\JobApplicationService.cs" />
+    <Compile Include="Services\JobOffers\IJobOfferService.cs" />
+    <Compile Include="Services\JobOffers\JobOfferService.cs" />
+    <Compile Include="Services\QuestionAnswers\IQuestionAnswerService.cs" />
+    <Compile Include="Services\QuestionAnswers\QuestionAnswerService.cs" />
+    <Compile Include="Services\Questions\IQuestionService.cs" />
+    <Compile Include="Services\Questions\QuoestionService.cs" />
+    <Compile Include="Services\Skills\ISkillService.cs" />
+    <Compile Include="Services\Skills\SkillService.cs" />
+    <Compile Include="Services\Users\IUserService.cs" />
+    <Compile Include="Services\Users\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DataAccessLayer.csproj">
@@ -92,8 +109,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -28,7 +28,7 @@ namespace BusinessLayer.QueryObjects
             {
                 var skillIdPredicates = new List<IPredicate>(filter.SkillIds
                     .Select(skillId => new SimplePredicate(
-                        // TODO
+                        // TODO do repozitara priamo
                         nameof(JobOffer.Skills),
                         ValueComparingOperator.Equal,
                         skillId)));
