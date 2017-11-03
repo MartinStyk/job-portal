@@ -18,13 +18,13 @@ namespace BusinessLayer.Services.JobOffers
 {
     public class JobOfferService : CrudQueryServiceBase<JobOffer, JobOfferDto, JobOfferFilterDto>, IJobOfferService
     {
-        private JobOfferRepository Repository { get; }
+        private readonly JobOfferRepository jobOfferRepository;
 
         public JobOfferService(IMapper mapper, JobOfferRepository repository,
             QueryObjectBase<JobOfferDto, JobOffer, JobOfferFilterDto, IQuery<JobOffer>> quoryObject)
             : base(mapper, repository, quoryObject)
         {
-            Repository = repository;
+            jobOfferRepository = repository;
         }
 
         protected override async Task<JobOffer> GetWithIncludesAsync(int entityId)
@@ -40,7 +40,7 @@ namespace BusinessLayer.Services.JobOffers
 
         public async Task<IEnumerable<JobOffer>> GetBySkills(int[] skillIds)
         {
-            return await Repository.GetAsyncBySkills(skillIds);
+            return await jobOfferRepository.GetAsyncBySkills(skillIds);
         }
 
     }

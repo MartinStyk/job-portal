@@ -24,6 +24,6 @@ namespace BusinessLayer.Services.JobOffers
         /// </summary>
         /// <param name="skillIds">skillIds</param>
         /// <returns>Job offers for given set of skills</returns>
-        Task<IEnumerable<JobOfferDto>> GetBySkills(int[] skillIds);
+        Task<IEnumerable<JobOffer>> GetBySkills(int[] skillIds);
     }
 }
