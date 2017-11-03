@@ -24,17 +24,6 @@ namespace BusinessLayer.QueryObjects
         {
             var definedPredicates = new List<IPredicate>();
 
-            if (filter.SkillIds == null || !filter.SkillIds.Any())
-            {
-                var skillIdPredicates = new List<IPredicate>(filter.SkillIds
-                    .Select(skillId => new SimplePredicate(
-                        // TODO do repozitara priamo
-                        nameof(JobOffer.Skills),
-                        ValueComparingOperator.Equal,
-                        skillId)));
-                definedPredicates.Add(new CompositePredicate(skillIdPredicates, LogicalOperator.OR));
-            }
-
             if (!string.IsNullOrWhiteSpace(filter.Name))
                 definedPredicates.Add(new SimplePredicate(nameof(JobOffer.Name), ValueComparingOperator.StringContains, filter.Name));
 

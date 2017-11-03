@@ -9,6 +9,7 @@ using BusinessLayer.DataTransferObjects;
 using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.QueryObjects.Common;
 using BusinessLayer.Services.Common;
+using DAL.Repository;
 using Infrastructure.Query;
 using Infrastructure.Repository;
 
@@ -17,10 +18,13 @@ namespace BusinessLayer.Services.JobOffers
 {
     public class JobOfferService : CrudQueryServiceBase<JobOffer, JobOfferDto, JobOfferFilterDto>, IJobOfferService
     {
-        public JobOfferService(IMapper mapper, IRepository<JobOffer> repository,
+        private JobOfferRepository Repository { get; }
+
+        public JobOfferService(IMapper mapper, JobOfferRepository repository,
             QueryObjectBase<JobOfferDto, JobOffer, JobOfferFilterDto, IQuery<JobOffer>> quoryObject)
             : base(mapper, repository, quoryObject)
         {
+            Repository = repository;
         }
 
         protected override async Task<JobOffer> GetWithIncludesAsync(int entityId)
@@ -34,10 +38,9 @@ namespace BusinessLayer.Services.JobOffers
             return queryResult.Items;
         }
 
-        public async Task<IEnumerable<JobOfferDto>> GetBySkills(int[] skillIds)
+        public async Task<IEnumerable<JobOffer>> GetBySkills(int[] skillIds)
         {
-            var queryResult = await Query.ExecuteQuery(new JobOfferFilterDto { SkillIds = skillIds });
-            return queryResult.Items;
+            return await Repository.GetAsyncBySkills(skillIds);
         }
 
     }
