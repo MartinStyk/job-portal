@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using BusinessLayer.Configuration;
+using BusinessLayer.DataTransferObjects;
+using BusinessLayer.Facades;
+using BusinessLayer.QueryObjects;
+using BusinessLayer.Services.Employers;
+using BusinessLayer.Services.JobOffers;
+using BusinessLayer.Services.Questions;
+using BusinessLayer.Services.Skills;
 using DAL.Context;
 using DAL.Entities;
 using DAL.Repository;
@@ -21,7 +30,8 @@ namespace Test
 
         private static readonly ApplicantRepository ApplicantRepository = new ApplicantRepository(Provider);
 
-        private static readonly EntityFrameworkQuery<Applicant> ApplicantQuery = new EntityFrameworkQuery<Applicant>(Provider);
+        private static readonly EntityFrameworkQuery<Applicant> ApplicantQuery =
+            new EntityFrameworkQuery<Applicant>(Provider);
 
 
         static void Main(string[] args)
@@ -51,8 +61,72 @@ namespace Test
 
                 TestQuery().Wait();
 
+                Mapper mapper = new Mapper(new MapperConfiguration(MappingConfiguration.ConfigureMapping));
+
+                TestRegister(mapper).Wait();
+
+                mapper = new Mapper(new MapperConfiguration(MappingConfiguration.ConfigureMapping));
+
+                TestCreateOffer(mapper).Wait();
+
             }
             Console.ReadLine();
+        }
+
+        private static async Task TestRegister(Mapper mapper)
+        {
+            EmployerFacade employerFacade = new EmployerFacade(Provider,
+                new EmployerService(mapper, new EmployerRepository(Provider),
+                    new EmployerQueryObject(mapper, new EntityFrameworkQuery<Employer>(Provider))));
+            await employerFacade.Register(new EmployerDto
+                {
+                    Name = "Employer1",
+                    Address = "Brno",
+                    Email = "mail@empl.com",
+                    Password = "pass",
+                    PhoneNumber = "+421902333666"
+                }
+            );
+
+            var results = await employerFacade.GetAllEmployersAsync();
+            foreach (var resultsItem in results.Items)
+            {
+                Console.WriteLine(resultsItem.Name, resultsItem.Id);
+            }
+        }
+
+        private static async Task TestCreateOffer(Mapper mapper)
+        {
+            JobOfferFacade jobOfferFacade = new JobOfferFacade(Provider,mapper,
+                new EmployerService(mapper, new EmployerRepository(Provider),
+                    new EmployerQueryObject(mapper, new EntityFrameworkQuery<Employer>(Provider))),
+                new JobOfferService(mapper, new JobOfferRepository(Provider),
+                    new JobOfferQueryObject(mapper, new EntityFrameworkQuery<JobOffer>(Provider))),
+                new SkillService(mapper, new SkillRepository(Provider),
+                    new SkillQueryObject(mapper, new EntityFrameworkQuery<SkillTag>(Provider))),
+                new QuestionService(mapper, new QuestionRepository(Provider),
+                    new QuestionQueryObject(mapper, new EntityFrameworkQuery<Question>(Provider))));
+
+            await jobOfferFacade.CreateJobOffer(new JobOfferCreateDto{
+                Description = "desc1",
+                EmployerId = 1,
+                Location = "loc1",
+                Name = "name1",
+                QuestionTexts = new[] {"q1", "q2", "q3"},
+                SkillsIds = new[] {1, 2, 3},
+            });
+
+            var results = await jobOfferFacade.GetAllOffersOfEmployer(1);
+            foreach (var resultsItem in results)
+            {
+                Console.WriteLine(resultsItem.Name);
+            }
+
+            var results1 = await jobOfferFacade.GetOfferBySkill(1);
+            foreach (var resultsItem in results1)
+            {
+                Console.WriteLine(resultsItem.Name);
+            }
         }
 
         private static async Task TestQuery()
@@ -60,14 +134,14 @@ namespace Test
             using (Provider.Create())
             {
                 var madkiApplicantQuery = await ApplicantQuery
-                    .Where(new SimplePredicate(nameof(Applicant.FirstName), ValueComparingOperator.StringContains, "Madki"))
+                    .Where(new SimplePredicate(nameof(Applicant.FirstName), ValueComparingOperator.StringContains,
+                        "Madki"))
                     .ExecuteAsync();
-                foreach(var res in madkiApplicantQuery.Items)
+                foreach (var res in madkiApplicantQuery.Items)
                 {
                     Console.WriteLine(res.FirstName + res.LastName);
                 }
             }
         }
-
     }
 }

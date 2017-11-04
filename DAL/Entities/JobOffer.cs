@@ -20,7 +20,6 @@ namespace DAL.Entities
         [Required]
         public int EmployerId { get; set; }
 
-        [Required]
         public virtual Employer Employer { get; set; }
 
         public String Location { get; set; }

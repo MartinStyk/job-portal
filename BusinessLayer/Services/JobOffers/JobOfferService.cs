@@ -38,9 +38,10 @@ namespace BusinessLayer.Services.JobOffers
             return queryResult.Items;
         }
 
-        public async Task<IEnumerable<JobOffer>> GetBySkills(int[] skillIds)
+        public async Task<IList<JobOfferDto>> GetBySkills(SkillTagDto skillTagDto)
         {
-            return await jobOfferRepository.GetAsyncBySkills(skillIds);
+            SkillTag skillTag = Mapper.Map<SkillTag>(skillTagDto);
+            return Mapper.Map<IList<JobOfferDto>>(await (jobOfferRepository.GetBySkill(skillTag)));
         }
 
     }

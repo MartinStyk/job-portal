@@ -9,7 +9,7 @@ using Infrastructure.Query.Predicates.Operators;
 
 namespace BusinessLayer.QueryObjects
 {
-    class SkillQueryObject : QueryObjectBase<SkillTagDto, SkillTag, SkillTagFilterDto, IQuery<SkillTag>>
+    public class SkillQueryObject : QueryObjectBase<SkillTagDto, SkillTag, SkillTagFilterDto, IQuery<SkillTag>>
     {
         public SkillQueryObject(IMapper mapper, IQuery<SkillTag> query) : base(mapper, query)
         {

@@ -25,7 +25,7 @@ namespace BusinessLayer.Services.Skills
 
         protected override async Task<SkillTag> GetWithIncludesAsync(int entityId)
         {
-            return await Repository.GetAsync(entityId, nameof(SkillTag.JobOffers), nameof(User.JobApplications));
+            return await Repository.GetAsync(entityId, nameof(SkillTag.JobOffers));
         }
 
         public async Task<SkillTagDto> GetByName(string name)

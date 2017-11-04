@@ -22,8 +22,8 @@ namespace BusinessLayer.Services.JobOffers
         /// <summary>
         /// Find all offers for given skills
         /// </summary>
-        /// <param name="skillIds">skillIds</param>
+        /// <param name="skill">skill</param>
         /// <returns>Job offers for given set of skills</returns>
-        Task<IEnumerable<JobOffer>> GetBySkills(int[] skillIds);
+        Task<IList<JobOfferDto>> GetBySkills(SkillTagDto skill);
     }
 }

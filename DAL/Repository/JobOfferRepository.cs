@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.Entities;
@@ -14,9 +15,12 @@ namespace DAL.Repository
         {
         }
 
-        public async Task<IEnumerable<JobOffer>> GetAsyncBySkills(int[] skillsIds)
+        public async Task<List<JobOffer>> GetBySkill(SkillTag skillTag)
         {
-            throw new NotImplementedException();
+            var skill = await Context.Set<SkillTag>().FindAsync(skillTag.Id);
+            if (skill == null)
+                return null;
+            return skill.JobOffers;
         }
     }
 }

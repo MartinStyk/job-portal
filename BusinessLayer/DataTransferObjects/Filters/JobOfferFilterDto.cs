@@ -13,9 +13,7 @@ namespace BusinessLayer.DataTransferObjects.Filters
 
         public int? EmployerId { get; set; }
 
-        public int[] SkillIds { get; set; }
-
-        public string[] SkillNames { get; set; }
+        public int? SkillId { get; set; }
 
     }
 }
