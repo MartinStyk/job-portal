@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.Configuration;
 using BusinessLayer.DataTransferObjects;
+using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.Facades;
 using BusinessLayer.QueryObjects;
 using BusinessLayer.Services.Employers;
+using BusinessLayer.Services.JobApplications;
 using BusinessLayer.Services.JobOffers;
 using BusinessLayer.Services.Questions;
 using BusinessLayer.Services.Skills;
@@ -36,6 +39,7 @@ namespace Test
 
         static void Main(string[] args)
         {
+
             using (var context = new JobPortalDbContext())
             {
                 // there should be 3 companies
@@ -64,10 +68,9 @@ namespace Test
                 Mapper mapper = new Mapper(new MapperConfiguration(MappingConfiguration.ConfigureMapping));
 
                 TestRegister(mapper).Wait();
-
-                mapper = new Mapper(new MapperConfiguration(MappingConfiguration.ConfigureMapping));
-
                 TestCreateOffer(mapper).Wait();
+                TestCreateApplication(mapper).Wait();
+
 
             }
             Console.ReadLine();
@@ -122,10 +125,32 @@ namespace Test
                 Console.WriteLine(resultsItem.Name);
             }
 
-            var results1 = await jobOfferFacade.GetOfferBySkill(1);
+            var results1 = await jobOfferFacade.GetOffersBySkill(1);
             foreach (var resultsItem in results1)
             {
                 Console.WriteLine(resultsItem.Name);
+            }
+        }
+
+        private static async Task TestCreateApplication(Mapper mapper)
+        {
+            JobApplicationFacade jobApplicationFacade = new JobApplicationFacade(Provider,
+                new JobApplicationService(mapper, new JobApplicationRepository(Provider),
+                    new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider))));
+
+            List<QuestionAnswerDto> questionAnswers = new List<QuestionAnswerDto>();
+            questionAnswers.Add(new QuestionAnswerDto{QuestionId = 1, Text = "aaaaa"});
+            await jobApplicationFacade.CreateApplication(new JobApplicationDto
+            {
+                ApplicantId = 1,
+                JobOfferId = 1,
+                QuestionAnswers = questionAnswers
+            });
+
+            var results = await jobApplicationFacade.GetAllApplications();
+            foreach (var resultsItem in results)
+            {
+                Console.WriteLine(resultsItem.JobApplicationStatus);
             }
         }
 

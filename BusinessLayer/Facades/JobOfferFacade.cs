@@ -34,6 +34,14 @@ namespace BusinessLayer.Facades
 
         #region Search and listings
 
+        public async Task<JobOfferDto> GetOffer(int offerId)
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                return await jobOfferService.GetAsync(offerId);
+            }
+        }
+
         public async Task<IEnumerable<JobOfferDto>> GetAllOffersOfEmployer(int employerId)
         {
             using (UnitOfWorkProvider.Create())
@@ -42,7 +50,7 @@ namespace BusinessLayer.Facades
             }
         }
 
-        public async Task<IEnumerable<JobOfferDto>> GetOfferBySkill(int skillId)
+        public async Task<IEnumerable<JobOfferDto>> GetOffersBySkill(int skillId)
         {
             using (UnitOfWorkProvider.Create())
             {
@@ -53,6 +61,22 @@ namespace BusinessLayer.Facades
                 }
 
                 return await jobOfferService.GetBySkills(skill);
+            }
+        }
+
+        public async Task<IEnumerable<JobOfferDto>> GetOffersByName(string name)
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                return await jobOfferService.GetByName(name);
+            }
+        }
+
+        public async Task<IEnumerable<JobOfferDto>> GetOffersByFilter(JobOfferFilterDto filter)
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                return await jobOfferService.GetFiltered(filter);
             }
         }
 

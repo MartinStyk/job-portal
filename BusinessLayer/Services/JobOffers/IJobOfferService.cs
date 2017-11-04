@@ -20,10 +20,25 @@ namespace BusinessLayer.Services.JobOffers
         Task<IEnumerable<JobOfferDto>> GetByEmployer(int employerId);
 
         /// <summary>
+        /// Find all offers for given name
+        /// </summary>
+        /// <param name="name">name</param>
+        /// <returns>Job offers for given name</returns>
+        Task<IEnumerable<JobOfferDto>> GetByName(string name);
+
+        /// <summary>
         /// Find all offers for given skills
         /// </summary>
         /// <param name="skill">skill</param>
         /// <returns>Job offers for given set of skills</returns>
         Task<IList<JobOfferDto>> GetBySkills(SkillTagDto skill);
+
+
+        /// <summary>
+        /// Find all offers matching filter criteria
+        /// </summary>
+        /// <param name="filter">filter</param>
+        /// <returns>Job offers matching filter criteria</returns>
+        Task<IEnumerable<JobOfferDto>> GetFiltered(JobOfferFilterDto filter);
     }
 }

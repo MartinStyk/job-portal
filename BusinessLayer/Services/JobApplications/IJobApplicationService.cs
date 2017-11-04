@@ -33,5 +33,12 @@ namespace BusinessLayer.Services.JobApplications
         /// <param name="jobOfferId">jobOfferId</param>
         /// <returns>Applications for given user and job</returns>
         Task<IEnumerable<JobApplicationDto>> GetByApplicantJobOffer(int? applicantId, int? jobOfferId);
+
+        /// <summary>
+        /// Find all applications for given filter
+        /// </summary>
+        /// <param name="filter">filter</param>
+        /// <returns>Applications for given filter</returns>
+        Task<IEnumerable<JobApplicationDto>> GetByFilter(JobApplicationFilterDto filter);
     }
 }

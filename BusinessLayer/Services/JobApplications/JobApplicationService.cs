@@ -15,19 +15,22 @@ using Infrastructure.Repository;
 
 namespace BusinessLayer.Services.JobApplications
 {
-    public class JobApplicationService : CrudQueryServiceBase<JobApplication, JobApplicationDto, JobApplicationFilterDto>, IJobApplicationService
+    public class JobApplicationService :
+        CrudQueryServiceBase<JobApplication, JobApplicationDto, JobApplicationFilterDto>, IJobApplicationService
     {
         public JobApplicationService(IMapper mapper, IRepository<JobApplication> repository,
-            QueryObjectBase<JobApplicationDto, JobApplication, JobApplicationFilterDto, IQuery<JobApplication>> quoryObject)
+            QueryObjectBase<JobApplicationDto, JobApplication, JobApplicationFilterDto, IQuery<JobApplication>>
+                quoryObject)
             : base(mapper, repository, quoryObject)
         {
         }
 
         protected override async Task<JobApplication> GetWithIncludesAsync(int entityId)
         {
-            return await Repository.GetAsync(entityId, nameof(JobApplication.Applicant), nameof(JobApplication.QuestionAnswers));
+            return await Repository.GetAsync(entityId, nameof(JobApplication.Applicant),
+                nameof(JobApplication.QuestionAnswers));
         }
-        
+
         public async Task<IEnumerable<JobApplicationDto>> GetByJobOffer(int jobOfferId)
         {
             return await GetByApplicantJobOffer(null, jobOfferId);
@@ -40,9 +43,19 @@ namespace BusinessLayer.Services.JobApplications
 
         public async Task<IEnumerable<JobApplicationDto>> GetByApplicantJobOffer(int? applicantId, int? jobOfferId)
         {
-            var queryResult = await Query.ExecuteQuery(new JobApplicationFilterDto { JobOfferId = jobOfferId, ApplicantId = applicantId });
+            var queryResult =
+                await Query.ExecuteQuery(new JobApplicationFilterDto
+                {
+                    JobOfferId = jobOfferId,
+                    ApplicantId = applicantId
+                });
             return queryResult.Items;
         }
 
+        public async Task<IEnumerable<JobApplicationDto>> GetByFilter(JobApplicationFilterDto filter)
+        {
+            var queryResult = await Query.ExecuteQuery(filter);
+            return queryResult.Items;
+        }
     }
 }

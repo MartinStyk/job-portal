@@ -29,12 +29,19 @@ namespace BusinessLayer.Services.JobOffers
 
         protected override async Task<JobOffer> GetWithIncludesAsync(int entityId)
         {
-            return await Repository.GetAsync(entityId, nameof(JobOffer.Employer), nameof(JobOffer.Skills), nameof(JobOffer.Questions));
+            return await Repository.GetAsync(entityId, nameof(JobOffer.Employer), nameof(JobOffer.Skills),
+                nameof(JobOffer.Questions));
         }
-        
+
         public async Task<IEnumerable<JobOfferDto>> GetByEmployer(int employerId)
         {
-            var queryResult = await Query.ExecuteQuery(new JobOfferFilterDto { EmployerId =  employerId});
+            var queryResult = await Query.ExecuteQuery(new JobOfferFilterDto {EmployerId = employerId});
+            return queryResult.Items;
+        }
+
+        public async Task<IEnumerable<JobOfferDto>> GetByName(string name)
+        {
+            var queryResult = await Query.ExecuteQuery(new JobOfferFilterDto {Name = name});
             return queryResult.Items;
         }
 
@@ -42,6 +49,12 @@ namespace BusinessLayer.Services.JobOffers
         {
             SkillTag skillTag = Mapper.Map<SkillTag>(skillTagDto);
             return Mapper.Map<IList<JobOfferDto>>(await (jobOfferRepository.GetBySkill(skillTag)));
+        }
+
+        public async Task<IEnumerable<JobOfferDto>> GetFiltered(JobOfferFilterDto filter)
+        {
+            var queryResult = await Query.ExecuteQuery(filter);
+            return queryResult.Items;
         }
 
     }

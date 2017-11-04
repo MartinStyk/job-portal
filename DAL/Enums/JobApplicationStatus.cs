@@ -4,6 +4,7 @@
     {
         Open,
         Accepted,
-        Rejected
+        Rejected,
+        Closed
     }
 }

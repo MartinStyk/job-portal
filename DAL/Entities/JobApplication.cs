@@ -17,7 +17,6 @@ namespace DAL.Entities
         [Required]
         public int JobOfferId { get; set; }
 
-        [Required]
         public virtual JobOffer JobOffer { get; set; }
 
         [Required]
@@ -28,7 +27,6 @@ namespace DAL.Entities
         [Required]
         public int ApplicantId { get; set; }
 
-        [Required]
         public virtual Applicant Applicant { get; set; }
 
         public DateTime? DeletedDate { get; set; }
