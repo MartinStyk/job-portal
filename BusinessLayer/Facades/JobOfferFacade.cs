@@ -9,9 +9,11 @@ using BusinessLayer.DataTransferObjects.Common;
 using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.Facades.Common;
 using BusinessLayer.Services.Employers;
+using BusinessLayer.Services.JobOfferRecommendations;
 using BusinessLayer.Services.JobOffers;
 using BusinessLayer.Services.Questions;
 using BusinessLayer.Services.Skills;
+using BusinessLayer.Services.Users;
 using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Facades
@@ -20,16 +22,23 @@ namespace BusinessLayer.Facades
     {
         private readonly IJobOfferService jobOfferService;
         private readonly ISkillService skillService;
+        private readonly IJobOfferRecommendationService jobOfferRecommendationService;
+        private readonly IUserService userService;
+
         private readonly IMapper mapper;
 
 
         public JobOfferFacade(IUnitOfWorkProvider unitOfWorkProvider, IMapper mapper,
-            IEmployerService employerService, IJobOfferService jobOfferService, ISkillService skillService,
-            IQuestionService questionService) : base(unitOfWorkProvider)
+            IJobOfferService jobOfferService,
+            ISkillService skillService,
+            IJobOfferRecommendationService jobOfferRecommendationService,
+            IUserService userService) : base(unitOfWorkProvider)
         {
             this.mapper = mapper;
             this.jobOfferService = jobOfferService;
             this.skillService = skillService;
+            this.jobOfferRecommendationService = jobOfferRecommendationService;
+            this.userService = userService;
         }
 
         #region Search and listings
@@ -77,6 +86,16 @@ namespace BusinessLayer.Facades
             using (UnitOfWorkProvider.Create())
             {
                 return await jobOfferService.GetFiltered(filter);
+            }
+        }
+
+        public async Task<IList<JobOfferDto>> GetRecommendedOffersForUser(int userId, int numberOfResults)
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                var user = await userService.GetAsync(userId);
+                var jobOffers = (await jobOfferService.ListAllAsync()).Items;
+                return jobOfferRecommendationService.GetBestOffersForUser(user, jobOffers, numberOfResults);
             }
         }
 

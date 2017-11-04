@@ -21,10 +21,12 @@ namespace BusinessLayer.Facades
 
 
         public JobApplicationFacade(IUnitOfWorkProvider unitOfWorkProvider,
-            IJobApplicationService jobApplicationService)
+            IJobApplicationService jobApplicationService,
+            IApplicationProcessingService applicationProcessingService)
             : base(unitOfWorkProvider)
         {
             this.jobApplicationService = jobApplicationService;
+            this.applicationProcessingService = applicationProcessingService;
         }
 
 
@@ -33,6 +35,7 @@ namespace BusinessLayer.Facades
             using (var uow = UnitOfWorkProvider.Create())
             {
                 jobApplicationService.Create(jobApplication);
+                await uow.Commit();
                 await applicationProcessingService.OpenApplication(jobApplication);
                 await uow.Commit();
             }

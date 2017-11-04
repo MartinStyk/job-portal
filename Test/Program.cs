@@ -10,11 +10,14 @@ using BusinessLayer.DataTransferObjects;
 using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.Facades;
 using BusinessLayer.QueryObjects;
+using BusinessLayer.Services.ApplicationProcessing;
 using BusinessLayer.Services.Employers;
 using BusinessLayer.Services.JobApplications;
+using BusinessLayer.Services.JobOfferRecommendations;
 using BusinessLayer.Services.JobOffers;
 using BusinessLayer.Services.Questions;
 using BusinessLayer.Services.Skills;
+using BusinessLayer.Services.Users;
 using DAL.Context;
 using DAL.Entities;
 using DAL.Repository;
@@ -39,7 +42,6 @@ namespace Test
 
         static void Main(string[] args)
         {
-
             using (var context = new JobPortalDbContext())
             {
                 // there should be 3 companies
@@ -71,8 +73,7 @@ namespace Test
                 TestCreateOffer(mapper).Wait();
                 TestCreateApplicationRegistered(mapper).Wait();
                 TestCreateApplicationUnRegistered(mapper).Wait();
-
-
+                TestRecommendedJobs(mapper).Wait();
             }
             Console.ReadLine();
         }
@@ -101,17 +102,17 @@ namespace Test
 
         private static async Task TestCreateOffer(Mapper mapper)
         {
-            JobOfferFacade jobOfferFacade = new JobOfferFacade(Provider,mapper,
-                new EmployerService(mapper, new EmployerRepository(Provider),
-                    new EmployerQueryObject(mapper, new EntityFrameworkQuery<Employer>(Provider))),
+            JobOfferFacade jobOfferFacade = new JobOfferFacade(Provider, mapper,
                 new JobOfferService(mapper, new JobOfferRepository(Provider),
                     new JobOfferQueryObject(mapper, new EntityFrameworkQuery<JobOffer>(Provider))),
                 new SkillService(mapper, new SkillRepository(Provider),
                     new SkillQueryObject(mapper, new EntityFrameworkQuery<SkillTag>(Provider))),
-                new QuestionService(mapper, new QuestionRepository(Provider),
-                    new QuestionQueryObject(mapper, new EntityFrameworkQuery<Question>(Provider))));
+                new JobOfferRecommendationService(),
+                new UserService(mapper, new UserRepository(Provider),
+                    new UserQueryObject(mapper, new EntityFrameworkQuery<User>(Provider))));
 
-            await jobOfferFacade.CreateJobOffer(new JobOfferCreateDto{
+            await jobOfferFacade.CreateJobOffer(new JobOfferCreateDto
+            {
                 Description = "desc1",
                 EmployerId = 1,
                 Location = "loc1",
@@ -133,14 +134,35 @@ namespace Test
             }
         }
 
+        private static async Task TestRecommendedJobs(Mapper mapper)
+        {
+            JobOfferFacade jobOfferFacade = new JobOfferFacade(Provider, mapper,
+                new JobOfferService(mapper, new JobOfferRepository(Provider),
+                    new JobOfferQueryObject(mapper, new EntityFrameworkQuery<JobOffer>(Provider))),
+                new SkillService(mapper, new SkillRepository(Provider),
+                    new SkillQueryObject(mapper, new EntityFrameworkQuery<SkillTag>(Provider))),
+                new JobOfferRecommendationService(),
+                new UserService(mapper, new UserRepository(Provider),
+                    new UserQueryObject(mapper, new EntityFrameworkQuery<User>(Provider))));
+
+            var results = await jobOfferFacade.GetRecommendedOffersForUser(1, 10);
+            foreach (var resultsItem in results)
+            {
+                Console.WriteLine(resultsItem.Name);
+            }
+        }
+
         private static async Task TestCreateApplicationRegistered(Mapper mapper)
         {
             JobApplicationFacade jobApplicationFacade = new JobApplicationFacade(Provider,
                 new JobApplicationService(mapper, new JobApplicationRepository(Provider),
-                    new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider))));
+                    new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider))),
+                new ApplicationProcesingService(new JobApplicationService(mapper,
+                    new JobApplicationRepository(Provider),
+                    new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider)))));
 
             List<QuestionAnswerDto> questionAnswers = new List<QuestionAnswerDto>();
-            questionAnswers.Add(new QuestionAnswerDto{QuestionId = 1, Text = "aaaaa"});
+            questionAnswers.Add(new QuestionAnswerDto {QuestionId = 1, Text = "aaaaa"});
             await jobApplicationFacade.CreateApplication(new JobApplicationDto
             {
                 ApplicantId = 1,
@@ -159,10 +181,13 @@ namespace Test
         {
             JobApplicationFacade jobApplicationFacade = new JobApplicationFacade(Provider,
                 new JobApplicationService(mapper, new JobApplicationRepository(Provider),
-                    new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider))));
+                    new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider))),
+                new ApplicationProcesingService(new JobApplicationService(mapper,
+                    new JobApplicationRepository(Provider),
+                    new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider)))));
 
             List<QuestionAnswerDto> questionAnswers = new List<QuestionAnswerDto>();
-            questionAnswers.Add(new QuestionAnswerDto { QuestionId = 1, Text = "aaaaa" });
+            questionAnswers.Add(new QuestionAnswerDto {QuestionId = 1, Text = "aaaaa"});
             await jobApplicationFacade.CreateApplication(new JobApplicationDto
             {
                 Applicant = new Applicant()

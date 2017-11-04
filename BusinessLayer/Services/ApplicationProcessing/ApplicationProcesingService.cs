@@ -22,25 +22,25 @@ namespace BusinessLayer.Services.ApplicationProcessing
         public async Task OpenApplication(JobApplicationDto jobApplication)
         {
             jobApplication.JobApplicationStatus = JobApplicationStatus.Open;
-            await jobApplicationService.Update(jobApplication);
+ //           await jobApplicationService.Update(jobApplication);
         }
 
         public async Task RejectApplication(JobApplicationDto jobApplication)
         {
-            jobApplication.JobApplicationStatus = JobApplicationStatus.Open;
-            await jobApplicationService.Update(jobApplication);
+            jobApplication.JobApplicationStatus = JobApplicationStatus.Rejected;
+   //         await jobApplicationService.Update(jobApplication);
         }
 
         public async Task AcceptApplication(JobApplicationDto jobApplication)
         {
-            jobApplication.JobApplicationStatus = JobApplicationStatus.Open;
-            await jobApplicationService.Update(jobApplication);
+            jobApplication.JobApplicationStatus = JobApplicationStatus.Accepted;
+     //       await jobApplicationService.Update(jobApplication);
         }
 
         public async Task CloseApplication(JobApplicationDto jobApplication)
         {
-            jobApplication.JobApplicationStatus = JobApplicationStatus.Open;
-            await jobApplicationService.Update(jobApplication);
+            jobApplication.JobApplicationStatus = JobApplicationStatus.Closed;
+       //     await jobApplicationService.Update(jobApplication);
         }
     }
 }

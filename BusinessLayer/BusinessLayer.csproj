@@ -96,6 +96,8 @@
     <Compile Include="Services\Common\ServiceBase.cs" />
     <Compile Include="Services\Employers\IEmpoyerService.cs" />
     <Compile Include="Services\Employers\EmployerService.cs" />
+    <Compile Include="Services\JobOfferRecommendations\IJobOfferRecommendationService.cs" />
+    <Compile Include="Services\JobOfferRecommendations\JobOfferRecommendationService.cs" />
     <Compile Include="Services\JobApplications\IJobApplicationService.cs" />
     <Compile Include="Services\JobApplications\JobApplicationService.cs" />
     <Compile Include="Services\JobOffers\IJobOfferService.cs" />
