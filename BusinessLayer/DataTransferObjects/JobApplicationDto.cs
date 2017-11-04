@@ -16,6 +16,8 @@ namespace BusinessLayer.DataTransferObjects
 
         public virtual List<QuestionAnswerDto> QuestionAnswers { get; set; }
 
+        public Applicant Applicant { get; set; }
+
         public int ApplicantId { get; set; }
 
     }

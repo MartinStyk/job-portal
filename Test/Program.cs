@@ -69,7 +69,8 @@ namespace Test
 
                 TestRegister(mapper).Wait();
                 TestCreateOffer(mapper).Wait();
-                TestCreateApplication(mapper).Wait();
+                TestCreateApplicationRegistered(mapper).Wait();
+                TestCreateApplicationUnRegistered(mapper).Wait();
 
 
             }
@@ -132,7 +133,7 @@ namespace Test
             }
         }
 
-        private static async Task TestCreateApplication(Mapper mapper)
+        private static async Task TestCreateApplicationRegistered(Mapper mapper)
         {
             JobApplicationFacade jobApplicationFacade = new JobApplicationFacade(Provider,
                 new JobApplicationService(mapper, new JobApplicationRepository(Provider),
@@ -153,6 +154,36 @@ namespace Test
                 Console.WriteLine(resultsItem.JobApplicationStatus);
             }
         }
+
+        private static async Task TestCreateApplicationUnRegistered(Mapper mapper)
+        {
+            JobApplicationFacade jobApplicationFacade = new JobApplicationFacade(Provider,
+                new JobApplicationService(mapper, new JobApplicationRepository(Provider),
+                    new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider))));
+
+            List<QuestionAnswerDto> questionAnswers = new List<QuestionAnswerDto>();
+            questionAnswers.Add(new QuestionAnswerDto { QuestionId = 1, Text = "aaaaa" });
+            await jobApplicationFacade.CreateApplication(new JobApplicationDto
+            {
+                Applicant = new Applicant()
+                {
+                    Education = "basic",
+                    Email = "aaaa@mail.com",
+                    FirstName = "Dilino",
+                    LastName = "Master",
+                    PhoneNumber = "+444234956"
+                },
+                JobOfferId = 1,
+                QuestionAnswers = questionAnswers
+            });
+
+            var results = await jobApplicationFacade.GetAllApplications();
+            foreach (var resultsItem in results)
+            {
+                Console.WriteLine(resultsItem.JobApplicationStatus);
+            }
+        }
+
 
         private static async Task TestQuery()
         {

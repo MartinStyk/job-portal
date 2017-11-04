@@ -8,7 +8,7 @@ using BusinessLayer.Services.ApplicationProcessing;
 using BusinessLayer.Services.JobApplications;
 using DAL.Entities;
 
-namespace BusinessLayer.Services
+namespace BusinessLayer.Services.ApplicationProcessing
 {
     public class ApplicationProcesingService : IApplicationProcessingService
     {
@@ -20,6 +20,24 @@ namespace BusinessLayer.Services
         }
 
         public async Task OpenApplication(JobApplicationDto jobApplication)
+        {
+            jobApplication.JobApplicationStatus = JobApplicationStatus.Open;
+            await jobApplicationService.Update(jobApplication);
+        }
+
+        public async Task RejectApplication(JobApplicationDto jobApplication)
+        {
+            jobApplication.JobApplicationStatus = JobApplicationStatus.Open;
+            await jobApplicationService.Update(jobApplication);
+        }
+
+        public async Task AcceptApplication(JobApplicationDto jobApplication)
+        {
+            jobApplication.JobApplicationStatus = JobApplicationStatus.Open;
+            await jobApplicationService.Update(jobApplication);
+        }
+
+        public async Task CloseApplication(JobApplicationDto jobApplication)
         {
             jobApplication.JobApplicationStatus = JobApplicationStatus.Open;
             await jobApplicationService.Update(jobApplication);

@@ -11,5 +11,11 @@ namespace BusinessLayer.Services.ApplicationProcessing
     {
         Task OpenApplication(JobApplicationDto jobApplication);
 
+        Task RejectApplication(JobApplicationDto jobApplication);
+
+        Task AcceptApplication(JobApplicationDto jobApplication);
+
+        Task CloseApplication(JobApplicationDto jobApplication);
+
     }
 }

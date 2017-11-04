@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.DataTransferObjects;
@@ -16,6 +17,7 @@ namespace BusinessLayer.Facades
     public class JobApplicationFacade : FacadeBase
     {
         private readonly IJobApplicationService jobApplicationService;
+        private readonly IApplicationProcessingService applicationProcessingService;
 
 
         public JobApplicationFacade(IUnitOfWorkProvider unitOfWorkProvider,
@@ -30,24 +32,39 @@ namespace BusinessLayer.Facades
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
-                jobApplication.JobApplicationStatus = JobApplicationStatus.Open;
                 jobApplicationService.Create(jobApplication);
+                await applicationProcessingService.OpenApplication(jobApplication);
                 await uow.Commit();
             }
         }
 
         public async Task<bool> CloseApplication(int applicationId)
         {
+            return await ChangeApplicationStatus(applicationId, applicationProcessingService.CloseApplication);
+        }
+
+        public async Task<bool> RejectApplication(int applicationId)
+        {
+            return await ChangeApplicationStatus(applicationId, applicationProcessingService.RejectApplication);
+        }
+
+        public async Task<bool> AcceptApplication(int applicationId)
+        {
+            return await ChangeApplicationStatus(applicationId, applicationProcessingService.AcceptApplication);
+        }
+
+        private async Task<bool> ChangeApplicationStatus(int applicationId,
+            Func<JobApplicationDto, Task> changeFunction)
+        {
             using (var uow = UnitOfWorkProvider.Create())
             {
-                JobApplicationDto application =await jobApplicationService.GetAsync(applicationId, false);
+                JobApplicationDto application = await jobApplicationService.GetAsync(applicationId, false);
 
                 if (application == null)
                 {
                     return false;
                 }
-                application.JobApplicationStatus = JobApplicationStatus.Closed;
-                await jobApplicationService.Update(application);
+                await changeFunction(application);
                 await uow.Commit();
                 return true;
             }
