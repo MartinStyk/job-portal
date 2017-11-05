@@ -79,6 +79,7 @@
     <Compile Include="Facades\EmployerFacade.cs" />
     <Compile Include="Facades\JobOfferFacade.cs" />
     <Compile Include="Facades\JobApplicationFacade.cs" />
+    <Compile Include="Facades\SkillFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryObjects\JobApplicationQueryObject.cs" />
     <Compile Include="QueryObjects\JobOfferQueryObject.cs" />
