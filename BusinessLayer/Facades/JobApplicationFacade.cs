@@ -9,6 +9,7 @@ using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.Facades.Common;
 using BusinessLayer.Services.ApplicationProcessing;
 using BusinessLayer.Services.JobApplications;
+using BusinessLayer.Services.JobOffers;
 using DAL.Entities;
 using Infrastructure.UnitOfWork;
 
@@ -68,6 +69,31 @@ namespace BusinessLayer.Facades
                     return false;
                 }
                 await changeFunction(application);
+                await uow.Commit();
+                return true;
+            }
+        }
+
+        public async Task<bool> AcceptOnlyThisApplication(int applicationId)
+        {
+            using (var uow = UnitOfWorkProvider.Create())
+            {
+                var application = await jobApplicationService.GetAsync(applicationId);
+
+                if (application == null)
+                {
+                    return false;
+                }
+
+                await applicationProcessingService.AcceptApplication(application);
+
+                var allJobApplications = await jobApplicationService.GetByJobOffer(application.JobOfferId);
+
+                foreach (var otherApplication in allJobApplications)
+                {
+                    if (!otherApplication.Equals(application))
+                        await applicationProcessingService.CloseApplication(otherApplication);
+                }
                 await uow.Commit();
                 return true;
             }
