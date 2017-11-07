@@ -14,6 +14,7 @@ using BusinessLayer.Services.JobOffers;
 using BusinessLayer.Services.Questions;
 using BusinessLayer.Services.Skills;
 using BusinessLayer.Services.Users;
+using Castle.Core.Internal;
 using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Facades
@@ -95,6 +96,12 @@ namespace BusinessLayer.Facades
             {
                 var user = await userService.GetAsync(userId);
                 var jobOffers = (await jobOfferService.ListAllAsync()).Items;
+
+                // if user doesn't have skills return random job offers, otherwise return offers that fits user profile
+                if (user.Skills.IsNullOrEmpty())
+                {
+                    return jobOfferRecommendationService.GetRandomOffers(jobOffers, numberOfResults);
+                }
                 return jobOfferRecommendationService.GetBestOffersForUser(user, jobOffers, numberOfResults);
             }
         }

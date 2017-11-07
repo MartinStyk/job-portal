@@ -9,6 +9,8 @@ using BusinessLayer.DataTransferObjects;
 using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.QueryObjects.Common;
 using BusinessLayer.Services.Common;
+using BusinessLayer.Services.JobOffers;
+using Castle.Core.Internal;
 using Infrastructure.Query;
 using Infrastructure.Repository;
 
@@ -17,19 +19,21 @@ namespace BusinessLayer.Services.JobOfferRecommendations
 {
     public class JobOfferRecommendationService : IJobOfferRecommendationService
     {
-        public JobOfferRecommendationService()
-        {
-        }
 
         public IList<JobOfferDto> GetBestOffersForUser(UserDto user, IEnumerable<JobOfferDto> jobOffers, int numberOfResult)
         {
-            List<SkillTagDto> userSkills = user.Skills;
+            // if we don't know user skills, return random offers
+            if (user.Skills.IsNullOrEmpty())
+            {
+                return GetRandomOffers(jobOffers, numberOfResult);
+            }
+
             Dictionary<JobOfferDto, int> scoreBoard = new Dictionary<JobOfferDto, int>();
             foreach (var jobOffer in jobOffers)
             {
                 foreach (var skill in jobOffer.Skills)
                 {
-                    if (userSkills.Contains(skill))
+                    if (user.Skills.Contains(skill))
                     {
                         if (scoreBoard.ContainsKey(jobOffer))
                         {
@@ -53,7 +57,13 @@ namespace BusinessLayer.Services.JobOfferRecommendations
             }
 
             return results;
+        }
 
+
+        public IList<JobOfferDto> GetRandomOffers(IEnumerable<JobOfferDto> jobOffers, int numberOfResult)
+        {
+            var jobOfferDtos = jobOffers as JobOfferDto[] ?? jobOffers.ToArray();
+            return jobOfferDtos.OrderBy(x => new Random().Next()).Take(Math.Min(numberOfResult, jobOfferDtos.Length)).ToList();
         }
     }
 }
