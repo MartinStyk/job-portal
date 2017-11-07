@@ -53,5 +53,30 @@ namespace BusinessLayer.Facades
                 return await employerService.ListAllAsync();
             }
         }
+
+        public async Task<EmployerDto> GetEmployerByEmail(String email)
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                return await employerService.GetByEmail(email);
+            }
+        }
+
+        public async Task<EmployerDto> GetEmployerByName(String name)
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                return await employerService.GetByName(name);
+            }
+        }
+
+
+        public async Task<QueryResultDto<EmployerDto, EmployerFilterDto>> GetEmployerForFilter(EmployerFilterDto employerFilterDto)
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                return await employerService.GetFiltered(employerFilterDto);
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.DataTransferObjects;
+using BusinessLayer.DataTransferObjects.Common;
 using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.Services.Common;
 using DAL.Entities;
@@ -25,5 +26,12 @@ namespace BusinessLayer.Services.Employers
         /// <param name="mail">mail</param>
         /// <returns>Employer for given mail</returns>
         Task<EmployerDto> GetByEmail(string mail);
+
+        /// <summary>
+        /// Find all employers matching filter criteria
+        /// </summary>
+        /// <param name="filter">filter</param>
+        /// <returns>Employers matching filter criteria</returns>
+        Task<QueryResultDto<EmployerDto, EmployerFilterDto>> GetFiltered(EmployerFilterDto filter);
     }
 }
