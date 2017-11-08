@@ -157,9 +157,7 @@ namespace Test
             JobApplicationFacade jobApplicationFacade = new JobApplicationFacade(Provider,
                 new JobApplicationService(mapper, new JobApplicationRepository(Provider),
                     new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider))),
-                new ApplicationProcesingService(new JobApplicationService(mapper,
-                    new JobApplicationRepository(Provider),
-                    new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider)))));
+                new ApplicationProcesingService());
 
             List<QuestionAnswerDto> questionAnswers = new List<QuestionAnswerDto>();
             questionAnswers.Add(new QuestionAnswerDto {QuestionId = 1, Text = "aaaaa"});
@@ -182,9 +180,7 @@ namespace Test
             JobApplicationFacade jobApplicationFacade = new JobApplicationFacade(Provider,
                 new JobApplicationService(mapper, new JobApplicationRepository(Provider),
                     new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider))),
-                new ApplicationProcesingService(new JobApplicationService(mapper,
-                    new JobApplicationRepository(Provider),
-                    new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider)))));
+                new ApplicationProcesingService());
 
             List<QuestionAnswerDto> questionAnswers = new List<QuestionAnswerDto>();
             questionAnswers.Add(new QuestionAnswerDto {QuestionId = 1, Text = "aaaaa"});

@@ -27,18 +27,31 @@ namespace BusinessLayer.Services.JobApplications
         Task<IEnumerable<JobApplicationDto>> GetByApplicant(int applicantId);
 
         /// <summary>
-        /// Find all applications for given user and job
-        /// </summary>
-        /// <param name="applicantId">applicantId</param>
-        /// <param name="jobOfferId">jobOfferId</param>
-        /// <returns>Applications for given user and job</returns>
-        Task<IEnumerable<JobApplicationDto>> GetByApplicantJobOffer(int? applicantId, int? jobOfferId);
-
-        /// <summary>
         /// Find all applications for given filter
         /// </summary>
         /// <param name="filter">filter</param>
         /// <returns>Applications for given filter</returns>
         Task<IEnumerable<JobApplicationDto>> GetByFilter(JobApplicationFilterDto filter);
+    
+        /// <summary>
+        /// Close application
+        /// </summary>
+        /// <param name="applicationId">applicationId</param>
+        /// <returns>True if update was successfull</returns>
+        Task<bool> CloseApplication(int applicationId);
+
+        /// <summary>
+        /// Reject application
+        /// </summary>
+        /// <param name="applicationId">applicationId</param>
+        /// <returns>True if update was successfull</returns>
+        Task<bool> RejectApplication(int applicationId);
+        
+        /// <summary>
+        /// Accept application
+        /// </summary>
+        /// <param name="applicationId">applicationId</param>
+        /// <returns>True if update was successfull</returns>
+        Task<bool> AcceptApplication(int applicationId);
     }
 }

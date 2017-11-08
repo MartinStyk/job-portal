@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.DataTransferObjects;
 using BusinessLayer.DataTransferObjects.Common;
 using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.Facades.Common;
 using BusinessLayer.Services.Employers;
-using BusinessLayer.Services.JobApplications;
-using BusinessLayer.Services.JobOffers;
-using BusinessLayer.Services.Questions;
 using Infrastructure.UnitOfWork;
 
 namespace BusinessLayer.Facades
@@ -19,9 +13,7 @@ namespace BusinessLayer.Facades
     {
         private readonly IEmployerService employerService;
 
-
-        public EmployerFacade(IUnitOfWorkProvider unitOfWorkProvider,
-            IEmployerService employerService)
+        public EmployerFacade(IUnitOfWorkProvider unitOfWorkProvider, IEmployerService employerService)
             : base(unitOfWorkProvider)
         {
             this.employerService = employerService;
@@ -71,7 +63,8 @@ namespace BusinessLayer.Facades
         }
 
 
-        public async Task<QueryResultDto<EmployerDto, EmployerFilterDto>> GetEmployerForFilter(EmployerFilterDto employerFilterDto)
+        public async Task<QueryResultDto<EmployerDto, EmployerFilterDto>> GetEmployerForFilter(
+            EmployerFilterDto employerFilterDto)
         {
             using (UnitOfWorkProvider.Create())
             {

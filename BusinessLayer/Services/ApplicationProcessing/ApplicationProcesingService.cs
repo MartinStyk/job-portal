@@ -10,15 +10,12 @@ using DAL.Entities;
 
 namespace BusinessLayer.Services.ApplicationProcessing
 {
+    /// <summary>
+    /// This service is doing very basic logic right now.
+    /// It servers as a  
+    /// </summary>
     public class ApplicationProcesingService : IApplicationProcessingService
     {
-        private readonly IJobApplicationService jobApplicationService;
-
-        public ApplicationProcesingService(JobApplicationService jobApplicationService)
-        {
-            this.jobApplicationService = jobApplicationService;
-        }
-
         public async Task OpenApplication(JobApplicationDto jobApplication)
         {
             jobApplication.JobApplicationStatus = JobApplicationStatus.Open;

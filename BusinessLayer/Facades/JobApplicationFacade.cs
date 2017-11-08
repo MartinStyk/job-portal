@@ -9,7 +9,6 @@ using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.Facades.Common;
 using BusinessLayer.Services.ApplicationProcessing;
 using BusinessLayer.Services.JobApplications;
-using BusinessLayer.Services.JobOffers;
 using DAL.Entities;
 using Infrastructure.UnitOfWork;
 
@@ -35,67 +34,9 @@ namespace BusinessLayer.Facades
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
+                jobApplication.JobApplicationStatus = JobApplicationStatus.Open;
                 jobApplicationService.Create(jobApplication);
                 await uow.Commit();
-                await applicationProcessingService.OpenApplication(jobApplication);
-                await uow.Commit();
-            }
-        }
-
-        public async Task<bool> CloseApplication(int applicationId)
-        {
-            return await ChangeApplicationStatus(applicationId, applicationProcessingService.CloseApplication);
-        }
-
-        public async Task<bool> RejectApplication(int applicationId)
-        {
-            return await ChangeApplicationStatus(applicationId, applicationProcessingService.RejectApplication);
-        }
-
-        public async Task<bool> AcceptApplication(int applicationId)
-        {
-            return await ChangeApplicationStatus(applicationId, applicationProcessingService.AcceptApplication);
-        }
-
-        private async Task<bool> ChangeApplicationStatus(int applicationId,
-            Func<JobApplicationDto, Task> changeFunction)
-        {
-            using (var uow = UnitOfWorkProvider.Create())
-            {
-                JobApplicationDto application = await jobApplicationService.GetAsync(applicationId, false);
-
-                if (application == null)
-                {
-                    return false;
-                }
-                await changeFunction(application);
-                await uow.Commit();
-                return true;
-            }
-        }
-
-        public async Task<bool> AcceptOnlyThisApplication(int applicationId)
-        {
-            using (var uow = UnitOfWorkProvider.Create())
-            {
-                var application = await jobApplicationService.GetAsync(applicationId);
-
-                if (application == null)
-                {
-                    return false;
-                }
-
-                await applicationProcessingService.AcceptApplication(application);
-
-                var allJobApplications = await jobApplicationService.GetByJobOffer(application.JobOfferId);
-
-                foreach (var otherApplication in allJobApplications)
-                {
-                    if (!otherApplication.Equals(application))
-                        await applicationProcessingService.CloseApplication(otherApplication);
-                }
-                await uow.Commit();
-                return true;
             }
         }
 
@@ -121,6 +62,62 @@ namespace BusinessLayer.Facades
             using (UnitOfWorkProvider.Create())
             {
                 return await jobApplicationService.GetByFilter(filter);
+            }
+        }
+
+        public async Task<bool> AcceptOnlyThisApplication(int applicationId)
+        {
+            using (var uow = UnitOfWorkProvider.Create())
+            {
+                var application = await jobApplicationService.GetAsync(applicationId);
+
+                if (application == null)
+                {
+                    return false;
+                }
+
+                await jobApplicationService.AcceptApplication(applicationId);
+
+                var allJobApplications = await jobApplicationService.GetByJobOffer(application.JobOfferId);
+
+                foreach (var otherApplication in allJobApplications)
+                {
+                    if (!otherApplication.Equals(application))
+                        await jobApplicationService.CloseApplication(applicationId);
+                }
+                await uow.Commit();
+                return true;
+            }
+        }
+
+
+        public async Task<bool> CloseApplication(int applicationId)
+        {
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                var result = await jobApplicationService.CloseApplication(applicationId);
+                await unitOfWork.Commit();
+                return result;
+            }
+        }
+
+        public async Task<bool> RejectApplication(int applicationId)
+        {
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                var result = await jobApplicationService.RejectApplication(applicationId);
+                await unitOfWork.Commit();
+                return result;
+            }
+        }
+
+        public async Task<bool> AcceptApplication(int applicationId)
+        {
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                var result = await jobApplicationService.AcceptApplication(applicationId);
+                await unitOfWork.Commit();
+                return result;
             }
         }
     }

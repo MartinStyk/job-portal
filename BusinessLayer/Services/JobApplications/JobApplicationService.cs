@@ -33,22 +33,19 @@ namespace BusinessLayer.Services.JobApplications
 
         public async Task<IEnumerable<JobApplicationDto>> GetByJobOffer(int jobOfferId)
         {
-            return await GetByApplicantJobOffer(null, jobOfferId);
+            var queryResult = await Query.ExecuteQuery(new JobApplicationFilterDto
+            {
+                JobOfferId = jobOfferId
+            });
+            return queryResult.Items;
         }
 
         public async Task<IEnumerable<JobApplicationDto>> GetByApplicant(int applicantId)
         {
-            return await GetByApplicantJobOffer(applicantId, null);
-        }
-
-        public async Task<IEnumerable<JobApplicationDto>> GetByApplicantJobOffer(int? applicantId, int? jobOfferId)
-        {
-            var queryResult =
-                await Query.ExecuteQuery(new JobApplicationFilterDto
-                {
-                    JobOfferId = jobOfferId,
-                    ApplicantId = applicantId
-                });
+            var queryResult = await Query.ExecuteQuery(new JobApplicationFilterDto
+            {
+                ApplicantId = applicantId
+            });
             return queryResult.Items;
         }
 
@@ -56,6 +53,37 @@ namespace BusinessLayer.Services.JobApplications
         {
             var queryResult = await Query.ExecuteQuery(filter);
             return queryResult.Items;
+        }
+
+        public async Task<bool> CloseApplication(int applicationId)
+        {
+            return await ChangeApplicationStatus(applicationId,
+                job => job.JobApplicationStatus = JobApplicationStatus.Closed);
+        }
+
+        public async Task<bool> RejectApplication(int applicationId)
+        {
+            return await ChangeApplicationStatus(applicationId,
+                job => job.JobApplicationStatus = JobApplicationStatus.Rejected);
+        }
+
+        public async Task<bool> AcceptApplication(int applicationId)
+        {
+            return await ChangeApplicationStatus(applicationId,
+                job => job.JobApplicationStatus = JobApplicationStatus.Accepted);
+        }
+
+        private async Task<bool> ChangeApplicationStatus(int applicationId,
+            Action<JobApplicationDto> changeFunction)
+        {
+            JobApplicationDto application = await GetAsync(applicationId, false);
+            if (application == null)
+            {
+                return false;
+            }
+            changeFunction(application);
+            await Update(application);
+            return true;
         }
     }
 }
