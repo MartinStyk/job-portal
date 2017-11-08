@@ -11,8 +11,6 @@ using BusinessLayer.QueryObjects.Common;
 using BusinessLayer.Services.Common;
 using DAL.Repository;
 using Infrastructure.Query;
-using Infrastructure.Repository;
-
 
 namespace BusinessLayer.Services.JobOffers
 {

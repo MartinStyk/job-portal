@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.DataTransferObjects;
+using BusinessLayer.DataTransferObjects.Common;
 using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.Facades.Common;
 using BusinessLayer.Services.JobOfferRecommendations;
@@ -46,6 +47,14 @@ namespace BusinessLayer.Facades
             using (UnitOfWorkProvider.Create())
             {
                 return await jobOfferService.GetAsync(offerId);
+            }
+        }
+
+        public async Task<QueryResultDto<JobOfferDto, JobOfferFilterDto> > GetAllOffers()
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                return await jobOfferService.ListAllAsync();
             }
         }
 

@@ -7,6 +7,7 @@ using AutoMapper;
 using BusinessLayer.Facades.Common;
 using BusinessLayer.QueryObjects.Common;
 using BusinessLayer.Services.Common;
+using BusinessLayer.Services.JobOfferRecommendations;
 using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.Resolvers.SpecializedResolvers;
 using Castle.MicroKernel.SubSystems.Configuration;
@@ -39,10 +40,14 @@ namespace BusinessLayer.Configuration
 
                 Component.For<IMapper>()
                     .Instance(new Mapper(new MapperConfiguration(MappingConfiguration.ConfigureMapping)))
-                    .LifestyleSingleton()
+                    .LifestyleSingleton(),
+
+                Component.For<IJobOfferRecommendationService>()
+                    .ImplementedBy<JobOfferRecommendationService>()
+                    .LifestyleTransient()
             );
 
-            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
+        container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
         }
     }
 }

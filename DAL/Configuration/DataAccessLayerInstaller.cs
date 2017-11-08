@@ -8,6 +8,8 @@ using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
 using DAL.Context;
+using DAL.Entities;
+using DAL.Repository;
 using Infrastructure.EntityFramework.Query;
 using Infrastructure.EntityFramework.Repository;
 using Infrastructure.EntityFramework.UnitOfWork;
@@ -28,6 +30,9 @@ namespace DAL.Configuration
                 Component.For<IUnitOfWorkProvider>()
                     .ImplementedBy<EntityFrameworkUnitOfWorkProvider>()
                     .LifestyleSingleton(),
+                Component.For<JobOfferRepository>()
+                    .ImplementedBy<JobOfferRepository>()
+                    .LifestyleTransient(),
                 Component.For(typeof(IRepository<>))
                     .ImplementedBy(typeof(EntityFrameworkRepository<>))
                     .LifestyleTransient(),
