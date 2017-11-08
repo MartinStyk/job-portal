@@ -81,12 +81,12 @@ namespace Test
             EmployerFacade employerFacade = new EmployerFacade(Provider,
                 new EmployerService(mapper, new EmployerRepository(Provider),
                     new EmployerQueryObject(mapper, new EntityFrameworkQuery<Employer>(Provider))));
-            await employerFacade.Register(new EmployerDto
+            await employerFacade.Register(new EmployerCreateDto
                 {
                     Name = "Employer1",
+                    Password = "pwd",
                     Address = "Brno",
                     Email = "mail@empl.com",
-                    Password = "pass",
                     PhoneNumber = "+421902333666"
                 }
             );

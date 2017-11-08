@@ -8,9 +8,6 @@ namespace BusinessLayer.DataTransferObjects
         [EmailAddress, StringLength(100)]
         public string Email { get; set; }
 
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
         [Required]
         public string Name { get; set; }
 

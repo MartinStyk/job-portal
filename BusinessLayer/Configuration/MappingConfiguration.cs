@@ -18,6 +18,9 @@ namespace BusinessLayer.Configuration
         {
             config.CreateMap<Applicant, ApplicantDto>().ReverseMap();
             config.CreateMap<Employer, EmployerDto>().ReverseMap();
+            config.CreateMap<Employer, EmployerCreateDto>().ReverseMap();
+            config.CreateMap<User, UserCreateDto>().ReverseMap();
+
 
             config.CreateMap<JobApplication, JobApplicationDto>();
             config.CreateMap<JobApplicationDto, JobApplication>().ForMember(dest => dest.JobOffer, opt => opt.Ignore());

@@ -20,7 +20,7 @@ namespace BusinessLayer.Facades
         }
 
         // TODO registration
-        public async Task Register(EmployerDto employer)
+        public async Task Register(EmployerCreateDto employer)
         {
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {

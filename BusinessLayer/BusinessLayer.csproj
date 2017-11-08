@@ -59,6 +59,7 @@
     <Compile Include="DataTransferObjects\Common\DtoBase.cs" />
     <Compile Include="DataTransferObjects\Common\FilterDtoBase.cs" />
     <Compile Include="DataTransferObjects\Common\QueryResultDto.cs" />
+    <Compile Include="DataTransferObjects\EmployerCreateDto.cs" />
     <Compile Include="DataTransferObjects\EmployerDto.cs" />
     <Compile Include="DataTransferObjects\Filters\ApplicantFilterDto.cs" />
     <Compile Include="DataTransferObjects\Filters\EmployerFilterDto.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="DataTransferObjects\QuestionDto.cs" />
     <Compile Include="DataTransferObjects\QuestionAnswerDto.cs" />
     <Compile Include="DataTransferObjects\SkillTagDto.cs" />
+    <Compile Include="DataTransferObjects\UserCreateDto.cs" />
     <Compile Include="DataTransferObjects\UserDto.cs" />
     <Compile Include="Facades\Common\FacadeBase.cs" />
     <Compile Include="Facades\UserFacade.cs" />

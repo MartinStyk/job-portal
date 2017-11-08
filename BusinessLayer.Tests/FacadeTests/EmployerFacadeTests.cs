@@ -30,13 +30,13 @@ namespace BusinessLayer.Tests.FacadeTests
             var employerFacade = CreateFacade(employerQueryMock, employerRepositoryMock);
 
 
-            var employer = new EmployerDto
+            var employer = new EmployerCreateDto()
             {
                 Id = 2,
+                Password = "pwd",
                 Name = "Employer1",
                 Address = "Brno",
                 Email = "mail@empl.com",
-                Password = "pass",
                 PhoneNumber = "+421902333666"
             };
             await employerFacade.Register(employer);
@@ -52,7 +52,6 @@ namespace BusinessLayer.Tests.FacadeTests
             {
                 Id = 1,
                 Name = "Dilino",
-                Password = "pwd",
                 Email = email,
                 Address = ":D",
                 PhoneNumber = "+421910987654"
@@ -74,7 +73,6 @@ namespace BusinessLayer.Tests.FacadeTests
             {
                 Id = 1,
                 Name = name,
-                Password = "pwd",
                 Email = "user@somewhere.com",
                 Address = ":D",
                 PhoneNumber = "+421910987654"
