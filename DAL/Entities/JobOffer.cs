@@ -7,7 +7,7 @@ using Infrastructure.Entity;
 
 namespace DAL.Entities
 {
-    public class JobOffer : IEntity, ISoftDeleteEntity
+    public class JobOffer : IEntity
     {
         public int Id { get; set; }
 
@@ -31,7 +31,5 @@ namespace DAL.Entities
         public virtual List<Question> Questions { get; set; }
 
         public virtual List<JobApplication> Applications { get; set; }
-
-        public DateTime? DeletedDate { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using Infrastructure.Entity;
 
 namespace DAL.Entities
 {
-    public class SkillTag : IEntity, ISoftDeleteEntity
+    public class SkillTag : IEntity
     {
         public int Id { get; set; }
 
@@ -20,8 +20,6 @@ namespace DAL.Entities
         public virtual List<JobOffer> JobOffers { get; set; }
 
         public virtual List<User> Users { get; set; }
-
-        public DateTime? DeletedDate { get; set; }
 
         public override string ToString()
         {

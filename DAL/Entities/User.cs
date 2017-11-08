@@ -7,7 +7,7 @@ using Infrastructure.Entity;
 
 namespace DAL.Entities
 {
-    public class User : Applicant, IIdentityEntity, ISoftDeleteEntity
+    public class User : Applicant, IIdentityEntity
     {
 
         [NotMapped]
@@ -17,8 +17,6 @@ namespace DAL.Entities
         public string Password { get; set; }
 
         public virtual List<SkillTag> Skills { get; set; }
-
-        public DateTime? DeletedDate { get; set; }
 
     }
 }
