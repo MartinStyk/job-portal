@@ -30,7 +30,7 @@ namespace BusinessLayer.Tests.FacadeTests
                 }
             );
 
-            Assert.AreNotEqual(0, mockManager.CapturedCreatedId);
+            skillRepositoryMock.Verify(repository => repository.Create(It.IsAny<SkillTag>()), Times.AtLeastOnce);
         }
 
 
