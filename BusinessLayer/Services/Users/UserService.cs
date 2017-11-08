@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DAL.Entities;
 using BusinessLayer.DataTransferObjects;
+using BusinessLayer.DataTransferObjects.Common;
 using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.QueryObjects.Common;
 using BusinessLayer.Services.Common;
@@ -32,6 +33,11 @@ namespace BusinessLayer.Services.Users
         {
             var queryResult = await Query.ExecuteQuery(new UserFilterDto { Email = email});
             return queryResult.Items.SingleOrDefault();
+        }
+
+        public async Task<QueryResultDto<UserDto, UserFilterDto>> GetFiltered(UserFilterDto filter)
+        {
+            return await Query.ExecuteQuery(filter);
         }
     }
 }

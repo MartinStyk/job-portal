@@ -76,6 +76,7 @@
     <Compile Include="DataTransferObjects\SkillTagDto.cs" />
     <Compile Include="DataTransferObjects\UserDto.cs" />
     <Compile Include="Facades\Common\FacadeBase.cs" />
+    <Compile Include="Facades\UserFacade.cs" />
     <Compile Include="Facades\EmployerFacade.cs" />
     <Compile Include="Facades\JobOfferFacade.cs" />
     <Compile Include="Facades\JobApplicationFacade.cs" />

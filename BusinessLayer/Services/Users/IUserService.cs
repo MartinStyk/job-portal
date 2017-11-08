@@ -20,5 +20,12 @@ namespace BusinessLayer.Services.Users
         /// <returns>User with given email address</returns>
         Task<UserDto> GetByEmailAsync(string email);
 
+
+        /// <summary>
+        /// Find all users matching filter criteria
+        /// </summary>
+        /// <param name="filter">filter</param>
+        /// <returns>Users matching filter criteria</returns>
+        Task<QueryResultDto<UserDto, UserFilterDto>> GetFiltered(UserFilterDto filter);
     }
 }
