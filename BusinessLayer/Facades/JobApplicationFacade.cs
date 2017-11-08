@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using BusinessLayer.DataTransferObjects;
 using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.Facades.Common;
-using BusinessLayer.Services.ApplicationProcessing;
 using BusinessLayer.Services.JobApplications;
 using DAL.Entities;
 using Infrastructure.UnitOfWork;
@@ -17,16 +16,12 @@ namespace BusinessLayer.Facades
     public class JobApplicationFacade : FacadeBase
     {
         private readonly IJobApplicationService jobApplicationService;
-        private readonly IApplicationProcessingService applicationProcessingService;
-
 
         public JobApplicationFacade(IUnitOfWorkProvider unitOfWorkProvider,
-            IJobApplicationService jobApplicationService,
-            IApplicationProcessingService applicationProcessingService)
+            IJobApplicationService jobApplicationService)
             : base(unitOfWorkProvider)
         {
             this.jobApplicationService = jobApplicationService;
-            this.applicationProcessingService = applicationProcessingService;
         }
 
 

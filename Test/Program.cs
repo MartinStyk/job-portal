@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.Configuration;
 using BusinessLayer.DataTransferObjects;
-using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.Facades;
 using BusinessLayer.QueryObjects;
-using BusinessLayer.Services.ApplicationProcessing;
 using BusinessLayer.Services.Employers;
 using BusinessLayer.Services.JobApplications;
 using BusinessLayer.Services.JobOfferRecommendations;
@@ -156,8 +154,7 @@ namespace Test
         {
             JobApplicationFacade jobApplicationFacade = new JobApplicationFacade(Provider,
                 new JobApplicationService(mapper, new JobApplicationRepository(Provider),
-                    new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider))),
-                new ApplicationProcesingService());
+                    new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider))));
 
             List<QuestionAnswerDto> questionAnswers = new List<QuestionAnswerDto>();
             questionAnswers.Add(new QuestionAnswerDto {QuestionId = 1, Text = "aaaaa"});
@@ -179,14 +176,13 @@ namespace Test
         {
             JobApplicationFacade jobApplicationFacade = new JobApplicationFacade(Provider,
                 new JobApplicationService(mapper, new JobApplicationRepository(Provider),
-                    new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider))),
-                new ApplicationProcesingService());
+                    new JobApplicationQueryObject(mapper, new EntityFrameworkQuery<JobApplication>(Provider))));
 
             List<QuestionAnswerDto> questionAnswers = new List<QuestionAnswerDto>();
             questionAnswers.Add(new QuestionAnswerDto {QuestionId = 1, Text = "aaaaa"});
             await jobApplicationFacade.CreateApplication(new JobApplicationDto
             {
-                Applicant = new Applicant()
+                Applicant = new ApplicantDto()
                 {
                     Education = "basic",
                     Email = "aaaa@mail.com",

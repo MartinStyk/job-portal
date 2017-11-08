@@ -9,7 +9,6 @@ using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.Facades;
 using BusinessLayer.QueryObjects;
 using BusinessLayer.QueryObjects.Common;
-using BusinessLayer.Services.ApplicationProcessing;
 using BusinessLayer.Services.JobApplications;
 using BusinessLayer.Services.Skills;
 using BusinessLayer.Tests.FacadeTests.Common;
@@ -124,8 +123,7 @@ namespace BusinessLayer.Tests.FacadeTests
             var uowMock = FacadeMockManager.ConfigureUowMock();
             var mapper = FacadeMockManager.ConfigureRealMapper();
             var jobApplicationService = new JobApplicationService(mapper, jobApplicationRepositoryMock.Object, jobApplicationQueryMock.Object);
-            var applicationProcessingService = new ApplicationProcesingService(jobApplicationService);
-            var facade = new JobApplicationFacade(uowMock.Object, jobApplicationService, applicationProcessingService);
+            var facade = new JobApplicationFacade(uowMock.Object, jobApplicationService);
             return facade;
         }
     }

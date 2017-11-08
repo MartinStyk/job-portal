@@ -90,8 +90,6 @@
     <Compile Include="QueryObjects\QuestionQueryObject.cs" />
     <Compile Include="QueryObjects\SkillQueryObject.cs" />
     <Compile Include="QueryObjects\UserQueryObject.cs" />
-    <Compile Include="Services\ApplicationProcessing\ApplicationProcesingService.cs" />
-    <Compile Include="Services\ApplicationProcessing\IApplicationProcessingService.cs" />
     <Compile Include="Services\Common\CrudQueryServiceBase.cs" />
     <Compile Include="Services\Common\ICrudService.cs" />
     <Compile Include="Services\Common\ServiceBase.cs" />
