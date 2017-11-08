@@ -29,19 +29,19 @@ namespace BusinessLayer.Tests.FacadeTests
                 mockManager.ConfigureQueryObjectMock<EmployerDto, Employer, EmployerFilterDto>(null);
             var employerFacade = CreateFacade(employerQueryMock, employerRepositoryMock);
 
-            await employerFacade.Register(new EmployerDto
-                {
-                    Id = 2,
-                    Name = "Employer1",
-                    Address = "Brno",
-                    Email = "mail@empl.com",
-                    Password = "pass",
-                    PhoneNumber = "+421902333666"
-                }
-            );
 
+            var employer = new EmployerDto
+            {
+                Id = 2,
+                Name = "Employer1",
+                Address = "Brno",
+                Email = "mail@empl.com",
+                Password = "pass",
+                PhoneNumber = "+421902333666"
+            };
+            await employerFacade.Register(employer);
 
-            Assert.AreNotEqual(0, mockManager.CapturedCreatedId);
+            employerRepositoryMock.Verify(repository => repository.Create(It.IsAny<Employer>()), Times.AtLeastOnce);
         }
 
         [Test]
@@ -57,7 +57,8 @@ namespace BusinessLayer.Tests.FacadeTests
                 Address = ":D",
                 PhoneNumber = "+421910987654"
             };
-            var expectedQueryResult = new QueryResultDto<EmployerDto, EmployerFilterDto> { Items = new List<EmployerDto> { expectedEmployer } };
+            var expectedQueryResult =
+                new QueryResultDto<EmployerDto, EmployerFilterDto> {Items = new List<EmployerDto> {expectedEmployer}};
             var customerFacade = CreateFacade(expectedQueryResult);
 
             var actualCustomer = await customerFacade.GetEmployerByEmail(email);
@@ -78,7 +79,8 @@ namespace BusinessLayer.Tests.FacadeTests
                 Address = ":D",
                 PhoneNumber = "+421910987654"
             };
-            var expectedQueryResult = new QueryResultDto<EmployerDto, EmployerFilterDto> { Items = new List<EmployerDto> { expectedEmployer } };
+            var expectedQueryResult =
+                new QueryResultDto<EmployerDto, EmployerFilterDto> {Items = new List<EmployerDto> {expectedEmployer}};
             var customerFacade = CreateFacade(expectedQueryResult);
 
             var actualCustomer = await customerFacade.GetEmployerByName(name);
@@ -93,7 +95,7 @@ namespace BusinessLayer.Tests.FacadeTests
             var expectedQueryResult = new QueryResultDto<EmployerDto, EmployerFilterDto>
             {
                 Filter = new EmployerFilterDto(),
-                Items = new List<EmployerDto> { new EmployerDto { Id = 5 }, new EmployerDto { Id = 1 } },
+                Items = new List<EmployerDto> {new EmployerDto {Id = 5}, new EmployerDto {Id = 1}},
                 PageSize = 10,
                 RequestedPageNumber = null
             };
@@ -122,7 +124,8 @@ namespace BusinessLayer.Tests.FacadeTests
             var uowMock = FacadeMockManager.ConfigureUowMock();
             var mapper = FacadeMockManager.ConfigureRealMapper();
             var repositoryMock = mockManager.ConfigureRepositoryMock<Employer>();
-            var queryMock = mockManager.ConfigureQueryObjectMock<EmployerDto, Employer, EmployerFilterDto>(expectedQueryResult);
+            var queryMock =
+                mockManager.ConfigureQueryObjectMock<EmployerDto, Employer, EmployerFilterDto>(expectedQueryResult);
             var customerService = new EmployerService(mapper, repositoryMock.Object, queryMock.Object);
             var customerFacade = new EmployerFacade(uowMock.Object, customerService);
             return customerFacade;
