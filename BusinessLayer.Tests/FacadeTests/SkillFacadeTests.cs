@@ -38,7 +38,6 @@ namespace BusinessLayer.Tests.FacadeTests
             Mock<QueryObjectBase<SkillTagDto, SkillTag, SkillTagFilterDto, IQuery<SkillTag>>> skillQueryMock,
             Mock<IRepository<SkillTag>> skillRepositoryMock)
         {
-            var mockManager = new FacadeMockManager();
             var uowMock = FacadeMockManager.ConfigureUowMock();
             var mapper = FacadeMockManager.ConfigureRealMapper();
             var service = new SkillService(mapper, skillRepositoryMock.Object, skillQueryMock.Object);

@@ -65,6 +65,7 @@
     <Compile Include="FacadeTests\Common\StubUow.cs" />
     <Compile Include="FacadeTests\EmployerFacadeTests.cs" />
     <Compile Include="FacadeTests\JobOfferFacadeTests.cs" />
+    <Compile Include="FacadeTests\JobApplicationFacadeTests.cs" />
     <Compile Include="FacadeTests\SkillFacadeTests.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
