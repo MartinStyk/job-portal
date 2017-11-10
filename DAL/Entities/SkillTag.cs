@@ -27,4 +27,5 @@ namespace DAL.Entities
         }
 
     }
+
 }

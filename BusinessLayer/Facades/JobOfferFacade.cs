@@ -118,24 +118,9 @@ namespace BusinessLayer.Facades
 
         public async Task CreateJobOffer(JobOfferCreateDto jobOfferCreate)
         {
-            JobOfferDto job = mapper.Map<JobOfferDto>(jobOfferCreate);
-            job.Skills = new List<SkillTagDto>();
-            job.Questions = new List<QuestionDto>();
-
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
-                foreach (var skillId in jobOfferCreate.SkillsIds)
-                {
-                    job.Skills.Add(await skillService.GetAsync(skillId));
-                }
-
-                foreach (var questionText in jobOfferCreate.QuestionTexts)
-                {
-                    job.Questions.Add(new QuestionDto {Text = questionText});
-                }
-
-                jobOfferService.Create(job);
-
+                await jobOfferService.Create(jobOfferCreate);
                 await unitOfWork.Commit();
             }
         }

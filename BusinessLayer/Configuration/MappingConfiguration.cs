@@ -28,7 +28,7 @@ namespace BusinessLayer.Configuration
             config.CreateMap<JobOffer, JobOfferDto>();
             config.CreateMap<JobOfferDto, JobOffer>().ForMember(dest => dest.Employer, opt => opt.Ignore());
 
-            config.CreateMap<JobOfferCreateDto, JobOfferDto>().ReverseMap();
+            config.CreateMap<JobOfferCreateDto, JobOffer>().ReverseMap();
 
             config.CreateMap<QuestionAnswer, QuestionAnswerDto>();
             config.CreateMap<QuestionAnswerDto, QuestionAnswer>().ForMember(dest => dest.Question, opt => opt.Ignore());

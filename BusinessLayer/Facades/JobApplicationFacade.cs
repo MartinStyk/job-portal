@@ -64,24 +64,9 @@ namespace BusinessLayer.Facades
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
-                var application = await jobApplicationService.GetAsync(applicationId);
-
-                if (application == null)
-                {
-                    return false;
-                }
-
-                await jobApplicationService.AcceptApplication(applicationId);
-
-                var allJobApplications = await jobApplicationService.GetByJobOffer(application.JobOfferId);
-
-                foreach (var otherApplication in allJobApplications)
-                {
-                    if (!otherApplication.Equals(application))
-                        await jobApplicationService.CloseApplication(applicationId);
-                }
+                var result = await jobApplicationService.AcceptOnlyThisApplication(applicationId);
                 await uow.Commit();
-                return true;
+                return result;
             }
         }
 

@@ -73,6 +73,28 @@ namespace BusinessLayer.Services.JobApplications
                 job => job.JobApplicationStatus = JobApplicationStatus.Accepted);
         }
 
+        public async Task<bool> AcceptOnlyThisApplication(int applicationId)
+        {
+            var application = await GetAsync(applicationId);
+
+            if (application == null)
+            {
+                return false;
+            }
+
+            await AcceptApplication(applicationId);
+
+            var allJobApplications = await GetByJobOffer(application.JobOfferId);
+
+            foreach (var otherApplication in allJobApplications)
+            {
+                if (!otherApplication.Equals(application))
+                    await CloseApplication(applicationId);
+            }
+            return true;
+        }
+
+
         private async Task<bool> ChangeApplicationStatus(int applicationId,
             Action<JobApplicationDto> changeFunction)
         {

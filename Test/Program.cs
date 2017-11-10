@@ -20,6 +20,7 @@ using DAL.Context;
 using DAL.Entities;
 using DAL.Repository;
 using Infrastructure.EntityFramework.Query;
+using Infrastructure.EntityFramework.Repository;
 using Infrastructure.EntityFramework.UnitOfWork;
 using Infrastructure.Query.Predicates;
 using Infrastructure.Query.Predicates.Operators;
@@ -102,7 +103,7 @@ namespace Test
         {
             JobOfferFacade jobOfferFacade = new JobOfferFacade(Provider, mapper,
                 new JobOfferService(mapper, new JobOfferRepository(Provider),
-                    new JobOfferQueryObject(mapper, new EntityFrameworkQuery<JobOffer>(Provider))),
+                    new JobOfferQueryObject(mapper, new EntityFrameworkQuery<JobOffer>(Provider)), new EntityFrameworkRepository<SkillTag>(Provider)),
                 new SkillService(mapper, new SkillRepository(Provider),
                     new SkillQueryObject(mapper, new EntityFrameworkQuery<SkillTag>(Provider))),
                 new JobOfferRecommendationService(),
@@ -136,7 +137,7 @@ namespace Test
         {
             JobOfferFacade jobOfferFacade = new JobOfferFacade(Provider, mapper,
                 new JobOfferService(mapper, new JobOfferRepository(Provider),
-                    new JobOfferQueryObject(mapper, new EntityFrameworkQuery<JobOffer>(Provider))),
+                    new JobOfferQueryObject(mapper, new EntityFrameworkQuery<JobOffer>(Provider)), new SkillRepository(Provider)),
                 new SkillService(mapper, new SkillRepository(Provider),
                     new SkillQueryObject(mapper, new EntityFrameworkQuery<SkillTag>(Provider))),
                 new JobOfferRecommendationService(),

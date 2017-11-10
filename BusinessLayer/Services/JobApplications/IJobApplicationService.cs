@@ -53,5 +53,12 @@ namespace BusinessLayer.Services.JobApplications
         /// <param name="applicationId">applicationId</param>
         /// <returns>True if update was successfull</returns>
         Task<bool> AcceptApplication(int applicationId);
+
+        /// <summary>
+        /// Accept application and rejects all others
+        /// </summary>
+        /// <param name="applicationId">applicationId</param>
+        /// <returns>True if update was successfull</returns>
+        Task<bool> AcceptOnlyThisApplication(int applicationId);
     }
 }
