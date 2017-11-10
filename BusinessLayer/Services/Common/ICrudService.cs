@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BusinessLayer.DataTransferObjects;
+﻿using System.Threading.Tasks;
 using BusinessLayer.DataTransferObjects.Common;
-using BusinessLayer.DataTransferObjects.Filters;
-using Infrastructure.Entity;
 
 namespace BusinessLayer.Services.Common
 {

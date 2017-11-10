@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.DataTransferObjects;
@@ -24,16 +22,12 @@ namespace BusinessLayer.Facades
         private readonly IJobOfferRecommendationService jobOfferRecommendationService;
         private readonly IUserService userService;
 
-        private readonly IMapper mapper;
-
-
         public JobOfferFacade(IUnitOfWorkProvider unitOfWorkProvider, IMapper mapper,
             IJobOfferService jobOfferService,
             ISkillService skillService,
             IJobOfferRecommendationService jobOfferRecommendationService,
             IUserService userService) : base(unitOfWorkProvider)
         {
-            this.mapper = mapper;
             this.jobOfferService = jobOfferService;
             this.skillService = skillService;
             this.jobOfferRecommendationService = jobOfferRecommendationService;

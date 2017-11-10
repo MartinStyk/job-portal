@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web.UI.WebControls;
 using BusinessLayer.DataTransferObjects.Common;
 
 namespace BusinessLayer.DataTransferObjects
@@ -21,6 +19,5 @@ namespace BusinessLayer.DataTransferObjects
         public int[] SkillsIds { get; set; }
 
         public string[] QuestionTexts { get; set; }
-        
     }
 }

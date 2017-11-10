@@ -4,7 +4,6 @@ using BusinessLayer.DataTransferObjects;
 using BusinessLayer.DataTransferObjects.Common;
 using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.Facades.Common;
-using BusinessLayer.Services.Employers;
 using BusinessLayer.Services.Users;
 using Infrastructure.UnitOfWork;
 

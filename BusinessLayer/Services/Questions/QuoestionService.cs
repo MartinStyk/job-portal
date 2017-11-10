@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DAL.Entities;
@@ -11,7 +9,6 @@ using BusinessLayer.QueryObjects.Common;
 using BusinessLayer.Services.Common;
 using Infrastructure.Query;
 using Infrastructure.Repository;
-
 
 namespace BusinessLayer.Services.Questions
 {

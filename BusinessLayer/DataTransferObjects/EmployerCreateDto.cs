@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Security.Cryptography;
-using BusinessLayer.DataTransferObjects.Common;
 
 namespace BusinessLayer.DataTransferObjects
 {

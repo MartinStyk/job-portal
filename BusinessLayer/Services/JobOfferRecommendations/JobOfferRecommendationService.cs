@@ -1,19 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using DAL.Entities;
 using BusinessLayer.DataTransferObjects;
-using BusinessLayer.DataTransferObjects.Filters;
-using BusinessLayer.QueryObjects.Common;
-using BusinessLayer.Services.Common;
-using BusinessLayer.Services.JobOffers;
 using Castle.Core.Internal;
-using Infrastructure.Query;
-using Infrastructure.Repository;
-
 
 namespace BusinessLayer.Services.JobOfferRecommendations
 {
