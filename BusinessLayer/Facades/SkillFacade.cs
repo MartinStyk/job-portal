@@ -12,9 +12,18 @@ namespace BusinessLayer.Facades
     {
         private readonly ISkillService skillService;
 
-        public SkillFacade(IUnitOfWorkProvider unitOfWorkProvider, ISkillService skillService) : base(unitOfWorkProvider)
+        public SkillFacade(IUnitOfWorkProvider unitOfWorkProvider, ISkillService skillService) : base(
+            unitOfWorkProvider)
         {
             this.skillService = skillService;
+        }
+
+        public async Task<SkillTagDto> GetSkill(int id)
+        {
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                return await skillService.GetAsync(id);
+            }
         }
 
         public async Task CreateSkill(SkillTagDto skill)
