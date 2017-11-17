@@ -19,8 +19,10 @@ namespace BusinessLayer.Configuration
             config.CreateMap<Applicant, ApplicantDto>().ReverseMap();
             config.CreateMap<Employer, EmployerDto>().ReverseMap();
             config.CreateMap<Employer, EmployerCreateDto>().ReverseMap();
-            config.CreateMap<User, UserCreateDto>().ReverseMap();
-
+            config.CreateMap<User, UserCreateDto>();
+            config.CreateMap<UserCreateDto, User>().ForMember(dest => dest.Skills, opt => opt.Ignore());
+            config.CreateMap<User, UserDto>();
+            config.CreateMap<UserDto, User>().ForMember(dest => dest.Skills, opt => opt.Ignore());
 
             config.CreateMap<JobApplication, JobApplicationDto>();
             config.CreateMap<JobApplicationDto, JobApplication>().ForMember(dest => dest.JobOffer, opt => opt.Ignore());
@@ -35,7 +37,6 @@ namespace BusinessLayer.Configuration
 
             config.CreateMap<Question, QuestionDto>().ReverseMap();
             config.CreateMap<SkillTag, SkillTagDto>().ReverseMap();
-            config.CreateMap<User, UserDto>().ReverseMap();
 
             config.CreateMap<QueryResult<Applicant>, QueryResultDto<Applicant, ApplicantFilterDto>>();
             config.CreateMap<QueryResult<Employer>, QueryResultDto<EmployerDto, EmployerFilterDto>>();

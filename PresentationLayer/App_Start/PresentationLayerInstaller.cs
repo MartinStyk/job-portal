@@ -18,6 +18,12 @@ namespace PresentationLayer.App_Start
                     .BasedOn<IController>()
                     .LifestyleTransient()
             );
+
+            container.Register(
+                Classes.FromThisAssembly()
+                    .InNamespace("PresentationLayer.Helpers")
+                    .LifestyleTransient()
+            );
         }
     }
 }

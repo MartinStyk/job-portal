@@ -4,6 +4,6 @@ namespace BusinessLayer.DataTransferObjects
 {
     public class UserDto : ApplicantDto
     {
-        public virtual List<SkillTagDto> Skills { get; set; }
+        public IList<string> Skills { get; set; }
     }
 }
