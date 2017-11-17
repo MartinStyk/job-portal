@@ -114,7 +114,7 @@ namespace BusinessLayer.Facades
         {
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
-                await jobOfferService.Create(jobOfferCreate);
+                jobOfferService.Create(jobOfferCreate);
                 await unitOfWork.Commit();
             }
         }
@@ -133,7 +133,7 @@ namespace BusinessLayer.Facades
             }
         }
 
-        public async Task<bool> EditJobOffer(JobOfferDto jobOffer)
+        public async Task<bool> EditJobOffer(JobOfferCreateDto jobOffer)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {

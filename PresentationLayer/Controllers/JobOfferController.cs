@@ -4,13 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using BusinessLayer.DataTransferObjects;
 using BusinessLayer.Facades;
+using PresentationLayer.Helpers;
+using PresentationLayer.ViewModel;
 
 namespace PresentationLayer.Controllers
 {
     public class JobOfferController : Controller
     {
         public JobOfferFacade JobOfferFacade { get; set; }
+        public SkillSelectListHelper SkillSelectListHelper { get; set; }
+        public EmployerSelectListHelper EmployerSelectListHelper { get; set; }
+
 
         // GET: JobOffer
         public async Task<ActionResult> Index()
@@ -27,47 +33,60 @@ namespace PresentationLayer.Controllers
         }
 
         // GET: JobOffer/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            var model = new JobOfferCreateViewModel
+            {
+                AllSkills = await SkillSelectListHelper.Get(),
+                AllEmployers = await EmployerSelectListHelper.Get()
+            };
+
+            return View(model);
         }
 
         // POST: JobOffer/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(JobOfferCreateViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                await JobOfferFacade.CreateJobOffer(model.JobOfferCreateDto);
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            model.AllSkills = await SkillSelectListHelper.Get();
+            model.AllEmployers = await EmployerSelectListHelper.Get();
+
+            return View(model);
         }
 
         // GET: JobOffer/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var model = new JobOfferCreateViewModel
+            {
+                AllSkills = await SkillSelectListHelper.Get(),
+                AllEmployers = await EmployerSelectListHelper.Get(),
+                JobOfferCreateDto = new JobOfferCreateDto(await JobOfferFacade.GetOffer(id))
+            };
+
+            return View(model);
         }
 
         // POST: JobOffer/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, JobOfferCreateViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
+                await JobOfferFacade.EditJobOffer(model.JobOfferCreateDto);
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            model.AllSkills = await SkillSelectListHelper.Get();
+            model.AllEmployers = await EmployerSelectListHelper.Get();
+        
+            return View(model);
         }
 
         // GET: JobOffer/Delete/5

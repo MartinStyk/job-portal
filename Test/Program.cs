@@ -103,12 +103,13 @@ namespace Test
         {
             JobOfferFacade jobOfferFacade = new JobOfferFacade(Provider, mapper,
                 new JobOfferService(mapper, new JobOfferRepository(Provider),
-                    new JobOfferQueryObject(mapper, new EntityFrameworkQuery<JobOffer>(Provider)), new EntityFrameworkRepository<SkillTag>(Provider)),
+                    new JobOfferQueryObject(mapper, new EntityFrameworkQuery<JobOffer>(Provider)), new SkillRepository(Provider)),
                 new SkillService(mapper, new SkillRepository(Provider),
                     new SkillQueryObject(mapper, new EntityFrameworkQuery<SkillTag>(Provider))),
                 new JobOfferRecommendationService(),
                 new UserService(mapper, new UserRepository(Provider),
-                    new UserQueryObject(mapper, new EntityFrameworkQuery<User>(Provider))));
+                    new UserQueryObject(mapper, new EntityFrameworkQuery<User>(Provider)), 
+                    new SkillRepository(Provider)));
 
             await jobOfferFacade.CreateJobOffer(new JobOfferCreateDto
             {
@@ -117,7 +118,7 @@ namespace Test
                 Location = "loc1",
                 Name = "name1",
                 QuestionTexts = new[] {"q1", "q2", "q3"},
-                SkillsIds = new[] {1, 2, 3},
+                SkillNames = new[] {"Java", "Php"},
             });
 
             var results = await jobOfferFacade.GetAllOffersOfEmployer(1);
@@ -142,7 +143,8 @@ namespace Test
                     new SkillQueryObject(mapper, new EntityFrameworkQuery<SkillTag>(Provider))),
                 new JobOfferRecommendationService(),
                 new UserService(mapper, new UserRepository(Provider),
-                    new UserQueryObject(mapper, new EntityFrameworkQuery<User>(Provider))));
+                    new UserQueryObject(mapper, new EntityFrameworkQuery<User>(Provider)),
+                    new SkillRepository(Provider)));
 
             var results = await jobOfferFacade.GetRecommendedOffersForUser(1, 10);
             foreach (var resultsItem in results)

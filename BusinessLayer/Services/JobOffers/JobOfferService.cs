@@ -16,11 +16,12 @@ namespace BusinessLayer.Services.JobOffers
     public class JobOfferService : CrudQueryServiceBase<JobOffer, JobOfferDto, JobOfferFilterDto>, IJobOfferService
     {
         private readonly JobOfferRepository jobOfferRepository;
-        private readonly IRepository<SkillTag> skillRepository;
+        private readonly SkillRepository skillRepository;
 
 
         public JobOfferService(IMapper mapper, JobOfferRepository repository,
-            QueryObjectBase<JobOfferDto, JobOffer, JobOfferFilterDto, IQuery<JobOffer>> quoryObject, IRepository<SkillTag> skillRepository)
+            QueryObjectBase<JobOfferDto, JobOffer, JobOfferFilterDto, IQuery<JobOffer>> quoryObject,
+            SkillRepository skillRepository)
             : base(mapper, repository, quoryObject)
         {
             jobOfferRepository = repository;
@@ -32,25 +33,56 @@ namespace BusinessLayer.Services.JobOffers
             throw new NotImplementedException();
         }
 
-        public async Task Create(JobOfferCreateDto jobOfferCreate)
+        public int Create(JobOfferCreateDto jobOfferCreate)
         {
             JobOffer job = Mapper.Map<JobOffer>(jobOfferCreate);
             job.Skills = new List<SkillTag>();
             job.Questions = new List<Question>();
 
-            foreach (var skillId in jobOfferCreate.SkillsIds)
-            {
-                var skill = await skillRepository.GetAsync(skillId);
-                job.Skills.Add(skill);
-                //skillRepository.Update(skill); //just to attach it and not create it twice if exists
-            }
+            if (jobOfferCreate.SkillNames != null)
+                foreach (var skillName in jobOfferCreate.SkillNames)
+                {
+                    var skill = skillRepository.GetByName(skillName);
+                    job.Skills.Add(skill);
+                }
 
-            foreach (var questionText in jobOfferCreate.QuestionTexts)
-            {
-                job.Questions.Add(new Question {Text = questionText});
-            }
+            if (jobOfferCreate.QuestionTexts != null)
+                foreach (var questionText in jobOfferCreate.QuestionTexts)
+                {
+                    job.Questions.Add(new Question {Text = questionText});
+                }
 
             Repository.Create(job);
+            return job.Id;
+        }
+
+        public override Task Update(JobOfferDto entityDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task Update(JobOfferCreateDto jobOfferCreate)
+        {
+
+            var entity = await GetWithIncludesAsync(jobOfferCreate.Id);
+            JobOffer job = Mapper.Map(jobOfferCreate, entity);
+            job.Skills = new List<SkillTag>();
+            job.Questions = new List<Question>();
+
+            if (jobOfferCreate.SkillNames != null)
+                foreach (var skillName in jobOfferCreate.SkillNames)
+                {
+                    var skill = skillRepository.GetByName(skillName);
+                    job.Skills.Add(skill);
+                }
+
+            if (jobOfferCreate.QuestionTexts != null)
+                foreach (var questionText in jobOfferCreate.QuestionTexts)
+                {
+                    job.Questions.Add(new Question { Text = questionText });
+                }
+
+            Repository.Update(job);
         }
 
 

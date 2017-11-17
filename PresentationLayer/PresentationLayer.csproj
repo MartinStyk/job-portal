@@ -165,8 +165,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\EmployerSelectListHelper.cs" />
     <Compile Include="Helpers\SkillSelectListHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\JobOfferCreateViewModel.cs" />
     <Compile Include="ViewModel\UserCreateViewModel.cs" />
     <Compile Include="ViewModel\UserUpdateViewModel.cs" />
   </ItemGroup>
@@ -225,6 +227,8 @@
     <Content Include="Views\JobOffer\Index.cshtml" />
     <Content Include="Views\JobOffer\Details.cshtml" />
     <Content Include="Views\JobOffer\Delete.cshtml" />
+    <Content Include="Views\JobOffer\Create.cshtml" />
+    <Content Include="Views\JobOffer\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
