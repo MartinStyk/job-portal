@@ -38,6 +38,15 @@ namespace BusinessLayer.Facades
             }
         }
 
+        public async Task Delete(int id)
+        {
+            using (var unitOfWork = UnitOfWorkProvider.Create())
+            {
+                employerService.Delete(id);
+                await unitOfWork.Commit();
+            }
+        }
+
         public async Task<QueryResultDto<EmployerDto, EmployerFilterDto>> GetAllEmployersAsync()
         {
             using (UnitOfWorkProvider.Create())
@@ -59,6 +68,14 @@ namespace BusinessLayer.Facades
             using (UnitOfWorkProvider.Create())
             {
                 return await employerService.GetByName(name);
+            }
+        }
+
+        public async Task<EmployerDto> GetEmployerById(int id)
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                return await employerService.GetAsync(id);
             }
         }
 

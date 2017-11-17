@@ -5,6 +5,7 @@ namespace BusinessLayer.DataTransferObjects
 {
     public class EmployerDto : DtoBase
     {
+        [Required]
         [EmailAddress, StringLength(100)]
         public string Email { get; set; }
 
