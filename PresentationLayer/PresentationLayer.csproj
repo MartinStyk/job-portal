@@ -159,6 +159,7 @@
     <Compile Include="App_Start\WindsorContollerFactory.cs" />
     <Compile Include="Controllers\EmployerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JobApplicationController.cs" />
     <Compile Include="Controllers\JobOfferController.cs" />
     <Compile Include="Controllers\SkillTagController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -229,6 +230,8 @@
     <Content Include="Views\JobOffer\Delete.cshtml" />
     <Content Include="Views\JobOffer\Create.cshtml" />
     <Content Include="Views\JobOffer\Edit.cshtml" />
+    <Content Include="Views\JobApplication\Index.cshtml" />
+    <Content Include="Views\JobApplication\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

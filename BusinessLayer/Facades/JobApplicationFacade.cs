@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BusinessLayer.DataTransferObjects;
+using BusinessLayer.DataTransferObjects.Common;
 using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.Facades.Common;
 using BusinessLayer.Services.JobApplications;
@@ -40,11 +41,11 @@ namespace BusinessLayer.Facades
             }
         }
 
-        public async Task<IEnumerable<JobApplicationDto>> GetAllApplications()
+        public async Task<QueryResultDto<JobApplicationDto, JobApplicationFilterDto>> GetAllApplications()
         {
             using (UnitOfWorkProvider.Create())
             {
-                return (await jobApplicationService.ListAllAsync()).Items;
+                return await jobApplicationService.ListAllAsync();
             }
         }
 

@@ -1,0 +1,72 @@
+﻿@model BusinessLayer.DataTransferObjects.JobApplicationDto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Job Application</h4>
+    <hr/>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.JobOffer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JobOffer.Name)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.JobOffer.Employer.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Applicant)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Applicant.FirstName)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Applicant.LastName)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Applicant.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JobApplicationStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JobApplicationStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JobOffer.Questions)
+        </dt>
+        <dd>
+            @for (int i = 0; i < Model.QuestionAnswers.Count; i++)
+            {
+                <ul>
+                    <li>
+                        @Html.DisplayFor(model => model.JobOffer.Questions[i].Text)
+                        &rarr;
+                        @Html.DisplayFor(model => model.QuestionAnswers[i].Text)
+                    </li>
+
+                </ul>
+            }
+        </dd>
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
