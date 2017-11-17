@@ -71,19 +71,19 @@ namespace PresentationLayer.Controllers
         }
 
         // GET: JobApplication/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            var application = await JobApplicationFacade.GetApplication(id);
+            return View(application);
         }
 
         // POST: JobApplication/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                await JobApplicationFacade.DeleteApplication(id);
                 return RedirectToAction("Index");
             }
             catch

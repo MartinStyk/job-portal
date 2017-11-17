@@ -33,6 +33,15 @@ namespace BusinessLayer.Facades
             }
         }
 
+        public async Task DeleteApplication(int id)
+        {
+            using (var uow = UnitOfWorkProvider.Create())
+            {
+                jobApplicationService.Delete(id);
+                await uow.Commit();
+            }
+        }
+
         public async Task<JobApplicationDto> GetApplication(int id)
         {
             using (UnitOfWorkProvider.Create())
