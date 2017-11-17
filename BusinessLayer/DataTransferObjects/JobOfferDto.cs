@@ -19,7 +19,7 @@ namespace BusinessLayer.DataTransferObjects
 
         public string Description { get; set; }
 
-        public virtual List<SkillTagDto> Skills { get; set; }
+        public virtual List<string> Skills { get; set; }
 
         public virtual List<QuestionDto> Questions { get; set; }
 

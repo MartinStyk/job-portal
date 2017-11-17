@@ -22,7 +22,7 @@ namespace BusinessLayer.Services.JobOfferRecommendations
             {
                 foreach (var skill in jobOffer.Skills)
                 {
-                    if (user.Skills.Contains(skill.Name))
+                    if (user.Skills.Contains(skill))
                     {
                         if (scoreBoard.ContainsKey(jobOffer))
                         {
