@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using BusinessLayer.DataTransferObjects;
 using BusinessLayer.Facades;
 
 namespace PresentationLayer.Controllers
@@ -11,6 +12,7 @@ namespace PresentationLayer.Controllers
     public class JobApplicationController : Controller
     {
         public JobApplicationFacade JobApplicationFacade { get; set; }
+        public JobOfferFacade JobOfferFacade { get; set; }
 
         // GET: JobApplication
         public async Task<ActionResult> Index()
@@ -27,25 +29,36 @@ namespace PresentationLayer.Controllers
         }
 
         // GET: JobApplication/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create(int jobOfferId)
         {
-            return View();
+            var offer = await JobOfferFacade.GetOffer(jobOfferId);
+
+            var model = new JobApplicationCreateDto
+            {
+                // TODO current user (if logged) 
+                // Applicant = 
+                JobOffer = offer,
+                JobOfferId = offer.Id
+            };
+
+            return View(model);
         }
 
         // POST: JobApplication/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(JobApplicationCreateDto application)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                await JobApplicationFacade.CreateApplication(application);
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            var offer = await JobOfferFacade.GetOffer(application.JobOfferId);
+            application.JobOffer = offer;
+            application.JobOfferId = offer.Id;
+
+            return View(application);
         }
 
         // GET: JobApplication/Edit/5

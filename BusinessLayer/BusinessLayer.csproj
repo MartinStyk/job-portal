@@ -69,6 +69,7 @@
     <Compile Include="DataTransferObjects\Filters\QuestionFilterDto.cs" />
     <Compile Include="DataTransferObjects\Filters\SkillTagFilterDto.cs" />
     <Compile Include="DataTransferObjects\Filters\UserFilterDto.cs" />
+    <Compile Include="DataTransferObjects\JobApplicationCreateDto.cs" />
     <Compile Include="DataTransferObjects\JobApplicationDto.cs" />
     <Compile Include="DataTransferObjects\JobOfferCreateDto.cs" />
     <Compile Include="DataTransferObjects\JobOfferDto.cs" />

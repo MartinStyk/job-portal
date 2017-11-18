@@ -1,0 +1,112 @@
+﻿@using BusinessLayer.DataTransferObjects
+@model BusinessLayer.DataTransferObjects.JobApplicationCreateDto
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Job Application</h4>
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+        @Html.HiddenFor(model => model.JobOfferId)
+        
+        <h3>Job info</h3>
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobOffer, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.JobOffer.Name, new {htmlAttributes = new {@class = "form-control"}})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobOffer.Employer, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.JobOffer.Employer.Name, new {htmlAttributes = new {@class = "form-control"}})
+            </div>
+        </div>
+        
+        <h3>Applicant info</h3>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Applicant.FirstName, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Applicant.FirstName, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Applicant.FirstName, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Applicant.LastName, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Applicant.LastName, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Applicant.LastName, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Applicant.MiddleName, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Applicant.MiddleName, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Applicant.MiddleName, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Applicant.Email, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Applicant.Email, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Applicant.Email, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Applicant.Education, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Applicant.Education, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Applicant.Education, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Applicant.PhoneNumber, htmlAttributes: new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Applicant.PhoneNumber, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.Applicant.PhoneNumber, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        
+        <h3>Questions</h3>
+        <div class="form-group">
+            <div class="col-md-10">
+                @for (int i = 0; i < Model.JobOffer.Questions.Count; i++)
+                {
+                    <ul>
+                        <li>
+                            @Html.DisplayFor(model => model.JobOffer.Questions[i].Text)
+                            @Html.EditorFor(model => model.QuestionAnswers[i].Text, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(model => model.QuestionAnswers[i].Text, "", new {@class = "text-danger"})
+                        </li>
+
+                    </ul>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default"/>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

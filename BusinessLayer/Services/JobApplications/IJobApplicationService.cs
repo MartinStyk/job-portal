@@ -8,6 +8,8 @@ namespace BusinessLayer.Services.JobApplications
 {
     public interface IJobApplicationService : ICrudService<JobApplicationDto, JobApplicationFilterDto>
     {
+        Task<int> Create(JobApplicationCreateDto entityDto);
+
         /// <summary>
         /// Find all applications for given job offer
         /// </summary>

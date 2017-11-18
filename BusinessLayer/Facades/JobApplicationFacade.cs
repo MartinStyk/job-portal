@@ -23,12 +23,11 @@ namespace BusinessLayer.Facades
         }
 
 
-        public async Task CreateApplication(JobApplicationDto jobApplication)
+        public async Task CreateApplication(JobApplicationCreateDto jobApplication)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
-                jobApplication.JobApplicationStatus = JobApplicationStatus.Open;
-                jobApplicationService.Create(jobApplication);
+                await jobApplicationService.Create(jobApplication);
                 await uow.Commit();
             }
         }

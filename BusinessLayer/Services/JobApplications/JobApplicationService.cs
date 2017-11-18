@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Web.WebSockets;
 using AutoMapper;
 using DAL.Entities;
 using BusinessLayer.DataTransferObjects;
@@ -16,12 +17,45 @@ namespace BusinessLayer.Services.JobApplications
     public class JobApplicationService :
         CrudQueryServiceBase<JobApplication, JobApplicationDto, JobApplicationFilterDto>, IJobApplicationService
     {
+        private readonly IRepository<JobOffer> jobOfferRepository;
+
         public JobApplicationService(IMapper mapper, IRepository<JobApplication> repository,
             QueryObjectBase<JobApplicationDto, JobApplication, JobApplicationFilterDto, IQuery<JobApplication>>
-                quoryObject)
+                quoryObject, IRepository<JobOffer> jobOfferRepository)
             : base(mapper, repository, quoryObject)
         {
+            this.jobOfferRepository = jobOfferRepository;
         }
+
+        public override int Create(JobApplicationDto entityDto)
+        {
+            throw new NotImplementedException("Use JobApplicationCreateDto");
+        }
+
+        public async Task<int> Create(JobApplicationCreateDto entityDto)
+        {
+            var applicationEntity = Mapper.Map<JobApplication>(entityDto);
+
+            var jobOffer = await jobOfferRepository.GetAsync(entityDto.JobOfferId);
+
+            applicationEntity.QuestionAnswers = new List<QuestionAnswer>();
+            if (entityDto.QuestionAnswers != null)
+                for (int i = 0; i < entityDto.QuestionAnswers.Count; i++)
+                {
+                    var answerEntity = new QuestionAnswer()
+                    {
+                        Application = applicationEntity,
+                        Text = entityDto.QuestionAnswers[i].Text,
+                        Question = jobOffer.Questions[i]
+                    };
+
+                    applicationEntity.QuestionAnswers.Add(answerEntity);
+                }
+
+            Repository.Create(applicationEntity);
+            return applicationEntity.Id;
+        }
+
 
         protected override async Task<JobApplication> GetWithIncludesAsync(int entityId)
         {
@@ -74,16 +108,12 @@ namespace BusinessLayer.Services.JobApplications
         public async Task<bool> AcceptOnlyThisApplication(int applicationId)
         {
             var application = await GetAsync(applicationId);
-
             if (application == null)
             {
                 return false;
             }
-
             await AcceptApplication(applicationId);
-
             var allJobApplications = await GetByJobOffer(application.JobOfferId);
-
             foreach (var otherApplication in allJobApplications)
             {
                 if (!otherApplication.Equals(application))
@@ -91,7 +121,6 @@ namespace BusinessLayer.Services.JobApplications
             }
             return true;
         }
-
 
         private async Task<bool> ChangeApplicationStatus(int applicationId,
             Action<JobApplicationDto> changeFunction)
