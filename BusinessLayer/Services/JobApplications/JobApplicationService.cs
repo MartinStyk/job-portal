@@ -123,15 +123,15 @@ namespace BusinessLayer.Services.JobApplications
         }
 
         private async Task<bool> ChangeApplicationStatus(int applicationId,
-            Action<JobApplicationDto> changeFunction)
+            Action<JobApplication> changeFunction)
         {
-            JobApplicationDto application = await GetAsync(applicationId, false);
+            var application = await Repository.GetAsync(applicationId);
             if (application == null)
             {
                 return false;
             }
             changeFunction(application);
-            await Update(application);
+            Repository.Update(application);
             return true;
         }
     }

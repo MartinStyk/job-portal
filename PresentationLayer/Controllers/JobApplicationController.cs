@@ -104,5 +104,53 @@ namespace PresentationLayer.Controllers
                 return View();
             }
         }
+
+        // GET: JobApplication/AcceptApplication/5
+        public async Task<ActionResult> AcceptApplication(int id)
+        {
+            ViewBag.Action = "Accept application";
+            var application = await JobApplicationFacade.GetApplication(id);
+            return View("ChangeApplicationStatus", application);
+        }
+
+        // POST: JobApplication/AcceptApplication/5
+        [HttpPost]
+        public async Task<ActionResult> AcceptApplication(int id, FormCollection collection)
+        {
+            await JobApplicationFacade.AcceptApplication(id);
+            return RedirectToAction("Index");
+        }
+
+        // GET: JobApplication/RejectApplication/5
+        public async Task<ActionResult> RejectApplication(int id)
+        {
+            ViewBag.Action = "Reject application";
+            var application = await JobApplicationFacade.GetApplication(id);
+            return View("ChangeApplicationStatus", application);
+        }
+
+        // POST: JobApplication/RejectApplication/5
+        [HttpPost]
+        public async Task<ActionResult> RejectApplication(int id, FormCollection collection)
+        {
+            await JobApplicationFacade.RejectApplication(id);
+            return RedirectToAction("Index");
+        }
+
+        // GET: JobApplication/RejectApplication/5
+        public async Task<ActionResult> CloseApplication(int id)
+        {
+            ViewBag.Action = "Close application";
+            var application = await JobApplicationFacade.GetApplication(id);
+            return View("ChangeApplicationStatus", application);
+        }
+
+        // POST: JobApplication/RejectApplication/5
+        [HttpPost]
+        public async Task<ActionResult> CloseApplication(int id, FormCollection collection)
+        {
+            await JobApplicationFacade.CloseApplication(id);
+            return RedirectToAction("Index");
+        }
     }
 }

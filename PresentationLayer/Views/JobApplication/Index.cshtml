@@ -41,7 +41,9 @@
             @Html.DisplayFor(modelItem => item.JobApplicationStatus)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Accept", "AcceptApplication", new { id=item.Id }) |
+            @Html.ActionLink("Reject", "RejectApplication", new { id=item.Id }) |
+            @Html.ActionLink("Close", "CloseApplication", new { id = item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>

@@ -1,0 +1,73 @@
+﻿@model BusinessLayer.DataTransferObjects.JobApplicationDto
+
+@{
+    ViewBag.Title = ViewBag.Action;
+}
+
+<h2>@Html.Raw(ViewBag.Action)</h2>
+
+<h3>Are you sure you want to @Html.Raw(ViewBag.Action)?</h3>
+<div>
+    <hr/>
+    <h4>Application</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.JobApplicationStatus)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.JobApplicationStatus)
+        </dd>
+    </dl>
+    
+
+    <h4>Job info</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.JobOffer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.JobOffer.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.JobOffer.Employer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JobOffer.Employer.Name)
+        </dd>
+    </dl>
+
+    <h4>Applicant Info</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Applicant.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Applicant.FirstName)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.Applicant.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Applicant.LastName)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.Applicant.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Applicant.Email)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value=@Html.Raw(ViewBag.Action) class="btn btn-default"/> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -234,6 +234,7 @@
     <Content Include="Views\JobApplication\Details.cshtml" />
     <Content Include="Views\JobApplication\Delete.cshtml" />
     <Content Include="Views\JobApplication\Create.cshtml" />
+    <Content Include="Views\JobApplication\ChangeApplicationStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
