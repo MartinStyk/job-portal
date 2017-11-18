@@ -15,11 +15,11 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.JobOffer.Name)
+            @Html.ActionLink( Model.JobOffer.Name, "Details", "JobOffer", new {id = Model.JobOffer.Id}, null)
         </dd>
 
         <dd>
-            @Html.DisplayFor(model => model.JobOffer.Employer.Name)
+            @Html.ActionLink(Model.JobOffer.Employer.Name, "Details", "Employer", new { id = Model.JobOffer.Employer.Id }, null)
         </dd>
 
         <dt>

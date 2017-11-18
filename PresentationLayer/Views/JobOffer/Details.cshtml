@@ -24,7 +24,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Employer.Name)
+            @Html.ActionLink(Model.Employer.Name, "Details", "Employer", new {id = Model.Employer.Id}, null)
         </dd>
 
         <dt>
@@ -63,13 +63,13 @@
                     <br/>
                 }
             }
-            
+
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Create Application", "Create", "JobApplication", new { jobOfferId = Model.Id }, null) |
+    @Html.ActionLink("Create Application", "Create", "JobApplication", new {jobOfferId = Model.Id}, null) |
     @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
     @Html.ActionLink("Back to List", "Index")
 </p>

@@ -25,6 +25,20 @@ namespace PresentationLayer.Controllers
             return View(offers);
         }
 
+        // GET: JobOffer/OffersOfEmployer/2
+        public async Task<ActionResult> OffersOfEmployer(int id)
+        {
+            var offers = await JobOfferFacade.GetAllOffersOfEmployer(id);
+            return View("Index", offers);
+        }
+
+        // GET: JobOffer/OffersBySkill/2
+        public async Task<ActionResult> OffersBySkill(int id)
+        {
+            var offers = await JobOfferFacade.GetOffersBySkill(id);
+            return View("Index", offers);
+        }
+
         // GET: JobOffer/Details/5
         public async Task<ActionResult> Details(int id)
         {
@@ -85,7 +99,7 @@ namespace PresentationLayer.Controllers
 
             model.AllSkills = await SkillSelectListHelper.Get();
             model.AllEmployers = await EmployerSelectListHelper.Get();
-        
+
             return View(model);
         }
 
