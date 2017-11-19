@@ -12,7 +12,6 @@ namespace PresentationLayer.Controllers
     public class UserController : Controller
     {
         public UserFacade UserFacade { get; set; }
-        public SkillFacade SkillFacade { get; set; }
 
         public SkillSelectListHelper SkillSelectListHelper { get; set; }
 
@@ -25,7 +24,6 @@ namespace PresentationLayer.Controllers
         }
 
         // GET: User/Details/5
-        [Route("Details")]
         public async Task<ActionResult> Details(int id)
         {
             var user = await UserFacade.GetById(id);

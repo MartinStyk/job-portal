@@ -61,26 +61,18 @@ namespace PresentationLayer.Controllers
             return View(application);
         }
 
-        // GET: JobApplication/Edit/5
-        public ActionResult Edit(int id)
+        // GET: JobApplication/ApplicationsByUser/2
+        public async Task<ActionResult> ApplicationsByUser(int id)
         {
-            return View();
+            var aplications = await JobApplicationFacade.GetByApplicant(id);
+            return View("Index", aplications.Items);
         }
 
-        // POST: JobApplication/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        // GET: JobApplication/ApplicationsByJobOffer/2
+        public async Task<ActionResult> ApplicationsByJobOffer(int id)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var aplications = await JobApplicationFacade.GetByJobOffer(id);
+            return View("Index", aplications.Items);
         }
 
         // GET: JobApplication/Delete/5

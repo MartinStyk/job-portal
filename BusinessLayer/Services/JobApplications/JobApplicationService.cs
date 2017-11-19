@@ -5,6 +5,7 @@ using System.Web.WebSockets;
 using AutoMapper;
 using DAL.Entities;
 using BusinessLayer.DataTransferObjects;
+using BusinessLayer.DataTransferObjects.Common;
 using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.QueryObjects.Common;
 using BusinessLayer.Services.Common;
@@ -63,28 +64,28 @@ namespace BusinessLayer.Services.JobApplications
                 nameof(JobApplication.QuestionAnswers));
         }
 
-        public async Task<IEnumerable<JobApplicationDto>> GetByJobOffer(int jobOfferId)
+        public async Task<QueryResultDto<JobApplicationDto, JobApplicationFilterDto>> GetByJobOffer(int jobOfferId)
         {
             var queryResult = await Query.ExecuteQuery(new JobApplicationFilterDto
             {
                 JobOfferId = jobOfferId
             });
-            return queryResult.Items;
+            return queryResult;
         }
 
-        public async Task<IEnumerable<JobApplicationDto>> GetByApplicant(int applicantId)
+        public async Task<QueryResultDto<JobApplicationDto, JobApplicationFilterDto>> GetByApplicant(int applicantId)
         {
             var queryResult = await Query.ExecuteQuery(new JobApplicationFilterDto
             {
                 ApplicantId = applicantId
             });
-            return queryResult.Items;
+            return queryResult;
         }
 
-        public async Task<IEnumerable<JobApplicationDto>> GetByFilter(JobApplicationFilterDto filter)
+        public async Task<QueryResultDto<JobApplicationDto, JobApplicationFilterDto>> GetByFilter(JobApplicationFilterDto filter)
         {
             var queryResult = await Query.ExecuteQuery(filter);
-            return queryResult.Items;
+            return queryResult;
         }
 
         public async Task<bool> CloseApplication(int applicationId)
@@ -114,7 +115,7 @@ namespace BusinessLayer.Services.JobApplications
             }
             await AcceptApplication(applicationId);
             var allJobApplications = await GetByJobOffer(application.JobOfferId);
-            foreach (var otherApplication in allJobApplications)
+            foreach (var otherApplication in allJobApplications.Items)
             {
                 if (!otherApplication.Equals(application))
                     await CloseApplication(applicationId);

@@ -70,6 +70,7 @@
 </div>
 <p>
     @Html.ActionLink("Create Application", "Create", "JobApplication", new {jobOfferId = Model.Id}, null) |
+    @Html.ActionLink("Show Applications", "ApplicationsByJobOffer", "JobApplication", new { id = Model.Id }, null) |
     @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) |
     @Html.ActionLink("Back to List", "Index")
 </p>

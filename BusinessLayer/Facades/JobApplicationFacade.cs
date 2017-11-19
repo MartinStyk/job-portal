@@ -58,11 +58,27 @@ namespace BusinessLayer.Facades
         }
 
 
-        public async Task<IEnumerable<JobApplicationDto>> GetApplicationsForFilter(JobApplicationFilterDto filter)
+        public async Task<QueryResultDto<JobApplicationDto, JobApplicationFilterDto>> GetApplicationsForFilter(JobApplicationFilterDto filter)
         {
             using (UnitOfWorkProvider.Create())
             {
                 return await jobApplicationService.GetByFilter(filter);
+            }
+        }
+
+        public async Task<QueryResultDto<JobApplicationDto, JobApplicationFilterDto>> GetByJobOffer(int offerId)
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                return await jobApplicationService.GetByJobOffer(offerId);
+            }
+        }
+
+        public async Task<QueryResultDto<JobApplicationDto, JobApplicationFilterDto>> GetByApplicant(int applicantId)
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                return await jobApplicationService.GetByApplicant(applicantId);
             }
         }
 
