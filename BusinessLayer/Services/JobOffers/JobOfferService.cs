@@ -9,7 +9,6 @@ using BusinessLayer.QueryObjects.Common;
 using BusinessLayer.Services.Common;
 using DAL.Repository;
 using Infrastructure.Query;
-using Infrastructure.Repository;
 
 namespace BusinessLayer.Services.JobOffers
 {
@@ -37,19 +36,12 @@ namespace BusinessLayer.Services.JobOffers
         {
             JobOffer job = Mapper.Map<JobOffer>(jobOfferCreate);
             job.Skills = new List<SkillTag>();
-            job.Questions = new List<Question>();
 
             if (jobOfferCreate.SkillNames != null)
                 foreach (var skillName in jobOfferCreate.SkillNames)
                 {
                     var skill = skillRepository.GetByName(skillName);
                     job.Skills.Add(skill);
-                }
-
-            if (jobOfferCreate.QuestionTexts != null)
-                foreach (var questionText in jobOfferCreate.QuestionTexts)
-                {
-                    job.Questions.Add(new Question {Text = questionText});
                 }
 
             Repository.Create(job);
@@ -67,19 +59,12 @@ namespace BusinessLayer.Services.JobOffers
             var entity = await GetWithIncludesAsync(jobOfferCreate.Id);
             JobOffer job = Mapper.Map(jobOfferCreate, entity);
             job.Skills = new List<SkillTag>();
-            job.Questions = new List<Question>();
 
             if (jobOfferCreate.SkillNames != null)
                 foreach (var skillName in jobOfferCreate.SkillNames)
                 {
                     var skill = skillRepository.GetByName(skillName);
                     job.Skills.Add(skill);
-                }
-
-            if (jobOfferCreate.QuestionTexts != null)
-                foreach (var questionText in jobOfferCreate.QuestionTexts)
-                {
-                    job.Questions.Add(new Question { Text = questionText });
                 }
 
             Repository.Update(job);

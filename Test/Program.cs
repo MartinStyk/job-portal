@@ -117,7 +117,7 @@ namespace Test
                 EmployerId = 1,
                 Location = "loc1",
                 Name = "name1",
-                QuestionTexts = new[] {"q1", "q2", "q3"},
+                Questions = new[] {"q1", "q2", "q3"},
                 SkillNames = new[] {"Java", "Php"},
             });
 

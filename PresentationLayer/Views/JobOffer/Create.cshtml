@@ -6,70 +6,82 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>JobOfferCreateDto</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <hr/>
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
         <div class="form-group">
-            @Html.LabelFor(model => model.JobOfferCreateDto.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.JobOfferCreateDto.Name, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.JobOfferCreateDto.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.JobOfferCreateDto.Name, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.JobOfferCreateDto.Name, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.JobOfferCreateDto.Name, "", new {@class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.JobOfferCreateDto.EmployerId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.JobOfferCreateDto.EmployerId, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
                 @Html.DropDownListFor(m => m.JobOfferCreateDto.EmployerId, Model.AllEmployers)
-                @Html.ValidationMessageFor(model => model.JobOfferCreateDto.EmployerId, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.JobOfferCreateDto.EmployerId, "", new {@class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.JobOfferCreateDto.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.JobOfferCreateDto.Location, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.JobOfferCreateDto.Location, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.JobOfferCreateDto.Location, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.JobOfferCreateDto.Location, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.JobOfferCreateDto.Location, "", new {@class = "text-danger"})
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.JobOfferCreateDto.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.JobOfferCreateDto.Description, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.JobOfferCreateDto.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.JobOfferCreateDto.Description, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.JobOfferCreateDto.Description, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.JobOfferCreateDto.Description, "", new {@class = "text-danger"})
             </div>
         </div>
-        
+
         <div class="form-group">
-            @Html.LabelFor(model => model.JobOfferCreateDto.SkillNames, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.JobOfferCreateDto.SkillNames, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.ValidationMessageFor(model => model.JobOfferCreateDto.SkillNames, "", new { @class = "text-danger" })
-                @Html.ListBoxFor(model => model.JobOfferCreateDto.SkillNames, Model.AllSkills, new { size = 5 })
+                @Html.ValidationMessageFor(model => model.JobOfferCreateDto.SkillNames, "", new {@class = "text-danger"})
+                @Html.ListBoxFor(model => model.JobOfferCreateDto.SkillNames, Model.AllSkills, new {size = 5})
             </div>
         </div>
-        
+
         <div class="form-group">
-            @Html.LabelFor(model => model.JobOfferCreateDto.QuestionTexts, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Number of Questions", htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.EditorFor(model => model.JobOfferCreateDto.QuestionTexts, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.JobOfferCreateDto.QuestionTexts, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.NumberOfQuestions, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.NumberOfQuestions, "", new {@class = "text-danger"})
+                <input type="submit" name="ChangeQuestions" value="Change number of questions" class="btn btn-default"/>
             </div>
         </div>
+
+
+        @{
+            for (int i = 0; i < Model.NumberOfQuestions; i++)
+            {
+                <div class="form-group">
+                    @Html.Label("Question", htmlAttributes: new {@class = "control-label col-md-2"})
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.JobOfferCreateDto.Questions[i].Text, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.JobOfferCreateDto.Questions[i].Text, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+            }
+        }
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" name="Create" value="Create" class="btn btn-default"/>
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

@@ -52,7 +52,8 @@ namespace PresentationLayer.Controllers
             var model = new JobOfferCreateViewModel
             {
                 AllSkills = await SkillSelectListHelper.Get(),
-                AllEmployers = await EmployerSelectListHelper.Get()
+                AllEmployers = await EmployerSelectListHelper.Get(),
+                NumberOfQuestions = 1
             };
 
             return View(model);
@@ -62,7 +63,7 @@ namespace PresentationLayer.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(JobOfferCreateViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!CheckQuestionChange(model) && ModelState.IsValid) 
             {
                 await JobOfferFacade.CreateJobOffer(model.JobOfferCreateDto);
                 return RedirectToAction("Index");
@@ -88,7 +89,8 @@ namespace PresentationLayer.Controllers
         }
 
         // POST: JobOffer/Edit/5
-        [HttpPost]
+        [
+            HttpPost]
         public async Task<ActionResult> Edit(int id, JobOfferCreateViewModel model)
         {
             if (ModelState.IsValid)
@@ -111,7 +113,8 @@ namespace PresentationLayer.Controllers
         }
 
         // POST: JobOffer/Delete/5
-        [HttpPost]
+        [
+            HttpPost]
         public async Task<ActionResult> Delete(int id, FormCollection collection)
         {
             try
@@ -124,5 +127,26 @@ namespace PresentationLayer.Controllers
                 return View();
             }
         }
+
+        #region Private
+
+        private bool CheckQuestionChange(JobOfferCreateViewModel model)
+        {
+            if (Request.Form["ChangeQuestions"] != null)
+            {
+                // handle adding questions
+                if (model.JobOfferCreateDto.Questions == null)
+                    model.JobOfferCreateDto.Questions = new List<QuestionDto>();
+                while (model.JobOfferCreateDto.Questions.Count < model.NumberOfQuestions)
+                {
+                    model.JobOfferCreateDto.Questions.Add(new QuestionDto());
+                }
+                return true;
+            }
+            return false;
+        }
+        
+        #endregion
     }
+
 }

@@ -20,7 +20,7 @@ namespace BusinessLayer.DataTransferObjects
 
         public IList<string> SkillNames { get; set; }
 
-        public IList<string> QuestionTexts { get; set; }
+        public IList<QuestionDto> Questions { get; set; }
 
         public JobOfferCreateDto()
         {
@@ -34,14 +34,7 @@ namespace BusinessLayer.DataTransferObjects
             Location = jobOffer.Location;
             Description = jobOffer.Description;
             SkillNames = jobOffer.Skills;
-
-            QuestionTexts = new List<string>();
-            if(jobOffer.Questions != null)
-                foreach (var question in jobOffer.Questions)
-                {
-                    QuestionTexts.Add(question.Text);
-                }
-
+            Questions = jobOffer.Questions;
         }
     }
 }
