@@ -15,9 +15,16 @@ namespace WebApi.Controllers
     {
         public JobOfferFacade JobOfferFacade { get; set; }
 
+        // GET api/joboffer
         public async Task<IEnumerable<JobOfferDto>> Get()
         {
             return (await JobOfferFacade.GetAllOffers()).Items;
+        }
+
+        // GET api/joboffer/1
+        public async Task<JobOfferDto> Get(int id)
+        {
+            return (await JobOfferFacade.GetOffer(id));
         }
     }
 }
