@@ -30,10 +30,10 @@ namespace DAL.Configuration
                 Component.For<IUnitOfWorkProvider>()
                     .ImplementedBy<EntityFrameworkUnitOfWorkProvider>()
                     .LifestyleSingleton(),
-                Component.For<JobOfferRepository>()
+                Component.For<IJobOfferRepository>()
                     .ImplementedBy<JobOfferRepository>()
                     .LifestyleTransient(),
-                Component.For<SkillRepository>()
+                Component.For<ISkillRepository>()
                     .ImplementedBy<SkillRepository>()
                     .LifestyleTransient(),
                 Component.For(typeof(IRepository<>))

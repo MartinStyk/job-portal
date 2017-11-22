@@ -14,13 +14,13 @@ namespace BusinessLayer.Services.JobOffers
 {
     public class JobOfferService : CrudQueryServiceBase<JobOffer, JobOfferDto, JobOfferFilterDto>, IJobOfferService
     {
-        private readonly JobOfferRepository jobOfferRepository;
-        private readonly SkillRepository skillRepository;
+        private readonly IJobOfferRepository jobOfferRepository;
+        private readonly ISkillRepository skillRepository;
 
 
-        public JobOfferService(IMapper mapper, JobOfferRepository repository,
+        public JobOfferService(IMapper mapper, IJobOfferRepository repository,
             QueryObjectBase<JobOfferDto, JobOffer, JobOfferFilterDto, IQuery<JobOffer>> quoryObject,
-            SkillRepository skillRepository)
+            ISkillRepository skillRepository)
             : base(mapper, repository, quoryObject)
         {
             jobOfferRepository = repository;

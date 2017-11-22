@@ -18,10 +18,10 @@ namespace BusinessLayer.Services.Users
 {
     public class UserService : CrudQueryServiceBase<User, UserDto, UserFilterDto>, IUserService
     {
-        private readonly SkillRepository skillRepository;
+        private readonly ISkillRepository skillRepository;
 
         public UserService(IMapper mapper, IRepository<User> repository,
-            QueryObjectBase<UserDto, User, UserFilterDto, IQuery<User>> quoreObject, SkillRepository skillRepository)
+            QueryObjectBase<UserDto, User, UserFilterDto, IQuery<User>> quoreObject, ISkillRepository skillRepository)
             : base(mapper, repository, quoreObject)
         {
             this.skillRepository = skillRepository;
