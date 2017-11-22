@@ -183,7 +183,7 @@ namespace Test
 
             List<QuestionAnswerDto> questionAnswers = new List<QuestionAnswerDto>();
             questionAnswers.Add(new QuestionAnswerDto {QuestionId = 1, Text = "aaaaa"});
-            await jobApplicationFacade.CreateApplication(new JobApplicationDto
+            await jobApplicationFacade.CreateApplication(new JobApplicationCreateDto()
             {
                 Applicant = new ApplicantDto()
                 {

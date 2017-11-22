@@ -9,11 +9,16 @@ namespace DAL.Context
     {
         public JobPortalDbContext() : base("JobPortalDb")
         {
+            // force load of EntityFramework.SqlServer.dll into build
+            var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
             Database.SetInitializer(new JobPortalInitializer());
         }
 
         public JobPortalDbContext(DbConnection connection) : base(connection, true)
         {
+
+            // force load of EntityFramework.SqlServer.dll into build
+            var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
             Database.CreateIfNotExists();
         }
 
