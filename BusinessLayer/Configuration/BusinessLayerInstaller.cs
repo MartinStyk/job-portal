@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BusinessLayer.Facades.Common;
 using BusinessLayer.QueryObjects.Common;
+using BusinessLayer.Services.Auth;
 using BusinessLayer.Services.Common;
 using BusinessLayer.Services.JobOfferRecommendations;
 using Castle.MicroKernel.Registration;
@@ -28,26 +29,25 @@ namespace BusinessLayer.Configuration
                     .BasedOn(typeof(QueryObjectBase<,,,>))
                     .WithServiceBase()
                     .LifestyleTransient(),
-
                 Classes.FromThisAssembly()
                     .BasedOn<ServiceBase>()
                     .WithServiceDefaultInterfaces()
                     .LifestyleTransient(),
-
                 Classes.FromThisAssembly()
                     .BasedOn<FacadeBase>()
                     .LifestyleTransient(),
-
                 Component.For<IMapper>()
                     .Instance(new Mapper(new MapperConfiguration(MappingConfiguration.ConfigureMapping)))
                     .LifestyleSingleton(),
-
                 Component.For<IJobOfferRecommendationService>()
                     .ImplementedBy<JobOfferRecommendationService>()
+                    .LifestyleTransient(),
+                Component.For<IAuthenticationService>()
+                    .ImplementedBy<AuthenticationService>()
                     .LifestyleTransient()
             );
 
-        container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
+            container.Kernel.Resolver.AddSubResolver(new CollectionResolver(container.Kernel));
         }
     }
 }

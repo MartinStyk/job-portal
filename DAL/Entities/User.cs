@@ -12,11 +12,18 @@ namespace DAL.Entities
 
         [NotMapped]
         public override string TableName { get; } = nameof(JobPortalDbContext.Users);
-
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
         public virtual List<SkillTag> Skills { get; set; }
 
+        [Required, StringLength(100)]
+        public string PasswordSalt { get; set; }
+
+        [Required, StringLength(100)]
+        public string PasswordHash { get; set; }
+
+        /// <summary>
+        /// String with , delimiter.
+        /// For example: "Admin,Editor,Tutor"
+        /// </summary>
+        public string Roles { get; set; }
     }
 }

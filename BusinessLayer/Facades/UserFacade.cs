@@ -24,7 +24,7 @@ namespace BusinessLayer.Facades
         {
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
-                userService.Create(user);
+                await userService.Create(user);
                 await unitOfWork.Commit();
             }
         }
@@ -77,6 +77,14 @@ namespace BusinessLayer.Facades
             {
                 userService.Delete(id);
                 await unitOfWork.Commit();
+            }
+        }
+
+        public (bool success, string roles) Login(string mail, string password)
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                return userService.AuthorizeUserAsync(mail, password);
             }
         }
     }

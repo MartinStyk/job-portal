@@ -22,5 +22,9 @@ namespace BusinessLayer.Services.Users
         /// <param name="filter">filter</param>
         /// <returns>Users matching filter criteria</returns>
         Task<QueryResultDto<UserDto, UserFilterDto>> GetFiltered(UserFilterDto filter);
+
+        Task<int> Create(UserCreateDto entityDto);
+
+        (bool success, string roles) AuthorizeUserAsync(string email, string password);
     }
 }

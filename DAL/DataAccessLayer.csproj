@@ -82,6 +82,8 @@
     <Compile Include="Repository\ApplicantRepository.cs" />
     <Compile Include="Repository\EmployerRepository.cs" />
     <Compile Include="Repository\IJobOfferRepository.cs" />
+    <Compile Include="Repository\IEmployerRepository.cs" />
+    <Compile Include="Repository\IUserRepository.cs" />
     <Compile Include="Repository\ISkillRepository.cs" />
     <Compile Include="Repository\JobApplicationRepository.cs" />
     <Compile Include="Repository\JobOfferRepository.cs" />

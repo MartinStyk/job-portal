@@ -8,9 +8,11 @@ using BusinessLayer.DataTransferObjects.Common;
 using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.Facades;
 using BusinessLayer.QueryObjects.Common;
+using BusinessLayer.Services.Auth;
 using BusinessLayer.Services.Employers;
 using BusinessLayer.Tests.FacadeTests.Common;
 using DAL.Entities;
+using DAL.Repository;
 using Infrastructure.Query;
 using Infrastructure.Repository;
 using Moq;
@@ -24,7 +26,11 @@ namespace BusinessLayer.Tests.FacadeTests
         public async Task CreateEmployer()
         {
             var mockManager = new FacadeMockManager();
-            var employerRepositoryMock = mockManager.ConfigureCreateRepositoryMock<Employer>(nameof(Employer.Id));
+            int CapturedCreatedId;
+            var employerRepositoryMock = new Mock<IEmployerRepository>(MockBehavior.Loose);
+            employerRepositoryMock.Setup(repo => repo.Create(It.IsAny<Employer>()))
+                .Callback<Employer>(param => CapturedCreatedId = (int)(param.GetType().GetProperty(nameof(Employer.Id))?.GetValue(param) ?? 1));
+
             var employerQueryMock =
                 mockManager.ConfigureQueryObjectMock<EmployerDto, Employer, EmployerFilterDto>(null);
             var employerFacade = CreateFacade(employerQueryMock, employerRepositoryMock);
@@ -106,12 +112,12 @@ namespace BusinessLayer.Tests.FacadeTests
 
         private static EmployerFacade CreateFacade(
             Mock<QueryObjectBase<EmployerDto, Employer, EmployerFilterDto, IQuery<Employer>>> employerQueryMock,
-            Mock<IRepository<Employer>> employerRepositoryMock)
+            Mock<IEmployerRepository> employerRepositoryMock)
         {
             var mockManager = new FacadeMockManager();
             var uowMock = FacadeMockManager.ConfigureUowMock();
             var mapper = FacadeMockManager.ConfigureRealMapper();
-            var service = new EmployerService(mapper, employerRepositoryMock.Object, employerQueryMock.Object);
+            var service = new EmployerService(mapper, employerRepositoryMock.Object, employerQueryMock.Object, new AuthenticationService());
             var facade = new EmployerFacade(uowMock.Object, service);
             return facade;
         }
@@ -121,10 +127,10 @@ namespace BusinessLayer.Tests.FacadeTests
             var mockManager = new FacadeMockManager();
             var uowMock = FacadeMockManager.ConfigureUowMock();
             var mapper = FacadeMockManager.ConfigureRealMapper();
-            var repositoryMock = mockManager.ConfigureRepositoryMock<Employer>();
+            var repositoryMock = new Mock<IEmployerRepository>(MockBehavior.Loose);
             var queryMock =
                 mockManager.ConfigureQueryObjectMock<EmployerDto, Employer, EmployerFilterDto>(expectedQueryResult);
-            var customerService = new EmployerService(mapper, repositoryMock.Object, queryMock.Object);
+            var customerService = new EmployerService(mapper, repositoryMock.Object, queryMock.Object, new AuthenticationService());
             var customerFacade = new EmployerFacade(uowMock.Object, customerService);
             return customerFacade;
         }

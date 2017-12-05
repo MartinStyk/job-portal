@@ -36,6 +36,12 @@ namespace DAL.Configuration
                 Component.For<ISkillRepository>()
                     .ImplementedBy<SkillRepository>()
                     .LifestyleTransient(),
+                Component.For<IUserRepository>()
+                    .ImplementedBy<UserRepository>()
+                    .LifestyleTransient(),
+                Component.For<IEmployerRepository>()
+                    .ImplementedBy<EmployerRepository>()
+                    .LifestyleTransient(),
                 Component.For(typeof(IRepository<>))
                     .ImplementedBy(typeof(EntityFrameworkRepository<>))
                     .LifestyleTransient(),

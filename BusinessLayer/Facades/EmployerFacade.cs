@@ -24,8 +24,16 @@ namespace BusinessLayer.Facades
         {
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
-                employerService.Create(employer);
+                await employerService.Create(employer);
                 await unitOfWork.Commit();
+            }
+        }
+
+        public (bool success, string roles) Login(string mail, string password)
+        {
+            using (UnitOfWorkProvider.Create())
+            {
+                return employerService.AuthorizeEmployerAsync(mail, password);
             }
         }
 

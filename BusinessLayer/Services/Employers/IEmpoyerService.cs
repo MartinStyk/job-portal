@@ -28,5 +28,10 @@ namespace BusinessLayer.Services.Employers
         /// <param name="filter">filter</param>
         /// <returns>Employers matching filter criteria</returns>
         Task<QueryResultDto<EmployerDto, EmployerFilterDto>> GetFiltered(EmployerFilterDto filter);
+
+        Task<int> Create(EmployerCreateDto entityDto);
+
+        (bool success, string roles) AuthorizeEmployerAsync(string email, string password);
+
     }
 }

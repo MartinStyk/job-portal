@@ -17,7 +17,8 @@ namespace DAL.Initializer
                 Address = "Brno, CzechRepublic",
                 Email = "mail@redhat.xxx",
                 PhoneNumber = "+420 123 456 789",
-                Password = "rh_pwd"
+                PasswordHash = "rh_pwd",
+                PasswordSalt = "****"
             };
             var google = new Employer
             {
@@ -25,7 +26,8 @@ namespace DAL.Initializer
                 Address = "MountainView, CA",
                 Email = "mail@google.xxx",
                 PhoneNumber = "+421 123 456 789",
-                Password = "google_pwd"
+                PasswordHash = "google_pwd",
+                PasswordSalt = "****"
             };
 
             var microsoft = new Employer
@@ -34,7 +36,8 @@ namespace DAL.Initializer
                 Address = "Praha, CZ",
                 Email = "mail@microsoft.xxx",
                 PhoneNumber = "(425) 882-8080",
-                Password = "ms_pwd"
+                PasswordHash = "ms_pwd",
+                PasswordSalt = "****"
             };
 
             context.Employers.Add(redHat);
@@ -74,7 +77,8 @@ namespace DAL.Initializer
                     php,
                     angular
                 },
-                Password = "password"
+                PasswordHash = "password",
+                PasswordSalt = "aaaa",
             };
 
             var madki = new User
@@ -90,7 +94,8 @@ namespace DAL.Initializer
                     cSharp,
                     android
                 },
-                Password = "password"
+                PasswordHash = "password",
+                PasswordSalt = "aaaa",
             };
 
             var anonymous = new Applicant()
