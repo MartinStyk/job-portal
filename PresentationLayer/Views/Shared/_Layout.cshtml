@@ -1,79 +1,91 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Job Portal", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Job Offers", "Index", "JobOffer")</li>
-                    <li>@Html.ActionLink("Job Applications", "Index", "JobApplication")</li>
-                    <li>@Html.ActionLink("Skills", "Index", "SkillTag")</li>
-                    <li>@Html.ActionLink("Users", "Index", "User")</li>
-                    <li>@Html.ActionLink("Employers", "Index", "Employer")</li>
-                    @if (User.IsInRole("Employer"))
-                    {
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                    }
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Job Portal", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Job Offers", "Index", "JobOffer")</li>
+                <li>@Html.ActionLink("Job Applications", "Index", "JobApplication")</li>
+                <li>@Html.ActionLink("Skills", "Index", "SkillTag")</li>
+                <li>@Html.ActionLink("Users", "Index", "User")</li>
+                <li>@Html.ActionLink("Employers", "Index", "Employer")</li>
+                @if (User.IsInRole("Employer"))
+                {
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                <ul class="nav navbar-nav  navbar-right">
-                    @if (Request.IsAuthenticated)
-                    {
-                        <li class="dropdown pull-right">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user grey"></span> @User.Identity.Name.Split('@')[0] <b class="caret grey"></b></a>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-header">Account management</li>
-                                <li class="divider"></li>
-                                <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
-                            </ul>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="dropdown pull-right">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user grey"></span><b class="caret grey"></b></a>
-                            <ul class="dropdown-menu">
-                                <li class="divider"></li>
-                                <li>@Html.ActionLink("Log in", "Login", "Account")</li>
-                                <li class="divider"></li>
-                                <li>@Html.ActionLink("Register as user", "RegisterUser", "Account")</li>
-                                <li class="divider"></li>
-                                <li>@Html.ActionLink("Register as employer", "RegisterEmployer", "Account")</li>
-                            </ul>
-                        </li>
+                }
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            </ul>
+            <ul class="nav navbar-nav  navbar-right">
+                @if (Request.IsAuthenticated)
+                {
+                    <li class="dropdown pull-right">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-user grey"></span> @User.Identity.Name.Split('@')[0] <b class="caret grey"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">Account management</li>
+                            @if (User.IsInRole("Employer"))
+                            {
+                                <li>@Html.ActionLink("Edit account", "EditCurrentEmployer", "Employer")</li>
+                            }
+                            else if (User.IsInRole("User"))
+                            {
+                                <li>@Html.ActionLink("Edit account", "EditCurrentUser", "User")</li>
+                            }
 
-                    }
-                </ul>
-            </div>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li class="dropdown pull-right">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-user grey"></span><b class="caret grey"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Log in", "Login", "Account")</li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Register as user", "RegisterUser", "Account")</li>
+                            <li class="divider"></li>
+                            <li>@Html.ActionLink("Register as employer", "RegisterEmployer", "Account")</li>
+                        </ul>
+                    </li>
+                }
+            </ul>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Created by Martin Styk and Ondrej Oravcok</p>
-        </footer>
-    </div>
+</div>
+<div class="container body-content">
+    @RenderBody()
+    <hr/>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Created by Martin Styk and Ondrej Oravcok</p>
+    </footer>
+</div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
 </body>
 </html>
