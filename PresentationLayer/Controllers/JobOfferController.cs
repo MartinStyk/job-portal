@@ -17,6 +17,7 @@ namespace PresentationLayer.Controllers
     {
         public JobOfferFacade JobOfferFacade { get; set; }
         public EmployerFacade EmployerFacade { get; set; }
+        public UserFacade UserFacade { get; set; }
         public SkillSelectListHelper SkillSelectListHelper { get; set; }
 
 
@@ -24,6 +25,16 @@ namespace PresentationLayer.Controllers
         public async Task<ActionResult> Index()
         {
             var offers = (await JobOfferFacade.GetAllOffers()).Items;
+            return View(offers);
+        }
+
+        // GET: JobOffer/Recommended
+        [Authorize(Roles = "User")]
+        public async Task<ActionResult> Recommended()
+        {
+            var user = await UserFacade.GetUserByEmail(User.Identity.Name);
+        
+            var offers = await JobOfferFacade.GetRecommendedOffersForUser(user.Id,10);
             return View(offers);
         }
 

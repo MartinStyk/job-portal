@@ -28,6 +28,10 @@
                 else
                 {
                     <li>@Html.ActionLink("Job Offers", "Index", "JobOffer")</li>
+                    if (User.IsInRole("User"))
+                     {
+                         <li>@Html.ActionLink("Recommended Job Offers", "Recommended", "JobOffer")</li>
+                     }
                 }
 
                 @if (User.IsInRole("User"))
