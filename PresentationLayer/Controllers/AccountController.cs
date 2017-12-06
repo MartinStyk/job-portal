@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using BusinessLayer.DataTransferObjects;
 using BusinessLayer.Facades;
+using PresentationLayer.Helpers;
 using PresentationLayer.ViewModel;
 
 namespace PresentationLayer.Controllers
@@ -13,33 +14,48 @@ namespace PresentationLayer.Controllers
     {
         public UserFacade UserFacade { get; set; }
         public EmployerFacade EmployerFacade { get; set; }
+        public SkillSelectListHelper SkillSelectListHelper { get; set; }
 
 
-        public ActionResult RegisterUser()
+        // GET Account/RegisterUser
+        public async Task<ActionResult> RegisterUser()
         {
-            return View();
+            var model = new UserCreateViewModel
+            {
+                AllSkills = await SkillSelectListHelper.Get()
+            };
+
+            return View(model);
         }
 
+        // POST Account/RegisterUser
         [HttpPost]
-        public async Task<ActionResult> RegisterUser(UserCreateDto userCreateDto)
+        public async Task<ActionResult> RegisterUser(UserCreateViewModel model)
         {
-            try
-            {
-                await UserFacade.Register(userCreateDto);
 
-                var authTicket = new FormsAuthenticationTicket(1, userCreateDto.Email, DateTime.Now,
-                    DateTime.Now.AddMinutes(30), false, "User");
-                string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
-                var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-                HttpContext.Response.Cookies.Add(authCookie);
-
-                return RedirectToAction("Index", "Home");
-            }
-            catch (ArgumentException)
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("Username", "Account with that username already exists!");
-                return View();
+                try
+                {
+                    await UserFacade.Register(model.UserCreateDto);
+
+                    var authTicket = new FormsAuthenticationTicket(1, model.UserCreateDto.Email, DateTime.Now,
+                        DateTime.Now.AddMinutes(30), false, "User");
+                    string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
+                    var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                    HttpContext.Response.Cookies.Add(authCookie);
+
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (ArgumentException)
+                {
+                    ModelState.AddModelError("Username", "Account with that username already exists!");
+                    return View();
+                }
             }
+
+            model.AllSkills = await SkillSelectListHelper.Get();
+            return View(model);
         }
 
         public ActionResult RegisterEmployer()
@@ -50,23 +66,28 @@ namespace PresentationLayer.Controllers
         [HttpPost]
         public async Task<ActionResult> RegisterEmployer(EmployerCreateDto employerCreateDto)
         {
-            try
+            if (ModelState.IsValid)
             {
-                await EmployerFacade.Register(employerCreateDto);
+                try
+                {
+                    await EmployerFacade.Register(employerCreateDto);
 
-                var authTicket = new FormsAuthenticationTicket(1, employerCreateDto.Email, DateTime.Now,
-                    DateTime.Now.AddMinutes(30), false, "Employer");
-                string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
-                var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-                HttpContext.Response.Cookies.Add(authCookie);
+                    var authTicket = new FormsAuthenticationTicket(1, employerCreateDto.Email, DateTime.Now,
+                        DateTime.Now.AddMinutes(30), false, "Employer");
+                    string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
+                    var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+                    HttpContext.Response.Cookies.Add(authCookie);
 
-                return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (ArgumentException)
+                {
+                    ModelState.AddModelError("Username", "Account with that username already exists!");
+                    return View();
+                }
             }
-            catch (ArgumentException)
-            {
-                ModelState.AddModelError("Username", "Account with that username already exists!");
-                return View();
-            }
+
+            return View(employerCreateDto);
         }
 
         public ActionResult Login()

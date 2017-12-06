@@ -30,30 +30,6 @@ namespace PresentationLayer.Controllers
             return View(user);
         }
 
-        // GET: User/Create
-        public async Task<ActionResult> Create()
-        {
-            var model = new UserCreateViewModel
-            {
-                AllSkills = await SkillSelectListHelper.Get()
-            };
-
-            return View(model);
-        }
-
-        // POST: User/Create
-        [HttpPost]
-        public async Task<ActionResult> Create(UserCreateViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                await UserFacade.Register(model.UserCreateDto);
-                return RedirectToAction("Index");
-            }
-            model.AllSkills = await SkillSelectListHelper.Get();
-            return View(model);
-        }
-
         // GET: User/Edit/5
         public async Task<ActionResult> Edit(int id)
         {

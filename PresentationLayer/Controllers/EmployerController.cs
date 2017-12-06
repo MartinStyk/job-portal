@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 using BusinessLayer.DataTransferObjects;
 using BusinessLayer.Facades;
@@ -25,24 +21,6 @@ namespace PresentationLayer.Controllers
         {
             var employers = await EmployerFacade.GetEmployerById(id);
             return View(employers);
-        }
-
-        // GET: Employer/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Employer/Create
-        [HttpPost]
-        public async Task<ActionResult> Create(EmployerCreateDto employerCreateDto)
-        {
-            if (ModelState.IsValid)
-            {
-                await EmployerFacade.Register(employerCreateDto);
-                return RedirectToAction("Index");
-            }
-            return View(employerCreateDto);
         }
 
         // GET: Employer/Edit/5
