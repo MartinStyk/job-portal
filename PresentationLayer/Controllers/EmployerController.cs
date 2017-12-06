@@ -53,6 +53,7 @@ namespace PresentationLayer.Controllers
         }
 
         // POST: Employer/Edit/5
+        [Authorize(Roles = "Employer")]
         [HttpPost]
         public async Task<ActionResult> Edit(int id, EmployerDto employerDto)
         {
@@ -66,6 +67,7 @@ namespace PresentationLayer.Controllers
         }
 
         // GET: Employer/Delete/5
+        [Authorize(Roles = "Employer")]
         public async Task<ActionResult> Delete(int id)
         {
             var employer = await EmployerFacade.GetEmployerById(id);
@@ -73,6 +75,7 @@ namespace PresentationLayer.Controllers
         }
 
         // POST: Employer/Delete/5
+        [Authorize(Roles = "Employer")]
         [HttpPost]
         public async Task<ActionResult> Delete(int id, FormCollection collection)
         {

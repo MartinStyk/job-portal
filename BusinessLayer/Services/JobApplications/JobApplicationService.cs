@@ -9,6 +9,7 @@ using BusinessLayer.DataTransferObjects.Common;
 using BusinessLayer.DataTransferObjects.Filters;
 using BusinessLayer.QueryObjects.Common;
 using BusinessLayer.Services.Common;
+using DAL.Repository;
 using Infrastructure.Query;
 using Infrastructure.Repository;
 
@@ -19,13 +20,16 @@ namespace BusinessLayer.Services.JobApplications
         CrudQueryServiceBase<JobApplication, JobApplicationDto, JobApplicationFilterDto>, IJobApplicationService
     {
         private readonly IRepository<JobOffer> jobOfferRepository;
+        private readonly IUserRepository userRepository;
+
 
         public JobApplicationService(IMapper mapper, IRepository<JobApplication> repository,
             QueryObjectBase<JobApplicationDto, JobApplication, JobApplicationFilterDto, IQuery<JobApplication>>
-                quoryObject, IRepository<JobOffer> jobOfferRepository)
+                quoryObject, IRepository<JobOffer> jobOfferRepository, IUserRepository userRepository)
             : base(mapper, repository, quoryObject)
         {
             this.jobOfferRepository = jobOfferRepository;
+            this.userRepository = userRepository;
         }
 
         public override int Create(JobApplicationDto entityDto)
@@ -38,6 +42,13 @@ namespace BusinessLayer.Services.JobApplications
             var applicationEntity = Mapper.Map<JobApplication>(entityDto);
 
             var jobOffer = await jobOfferRepository.GetAsync(entityDto.JobOfferId);
+            var registeredUser = userRepository.GetByEmail(entityDto.Applicant.Email);
+
+            if (registeredUser != null)
+            {
+                applicationEntity.Applicant = registeredUser;
+                applicationEntity.ApplicantId = registeredUser.Id;
+            }
 
             applicationEntity.QuestionAnswers = new List<QuestionAnswer>();
             if (entityDto.QuestionAnswers != null)
@@ -82,7 +93,8 @@ namespace BusinessLayer.Services.JobApplications
             return queryResult;
         }
 
-        public async Task<QueryResultDto<JobApplicationDto, JobApplicationFilterDto>> GetByFilter(JobApplicationFilterDto filter)
+        public async Task<QueryResultDto<JobApplicationDto, JobApplicationFilterDto>> GetByFilter(
+            JobApplicationFilterDto filter)
         {
             var queryResult = await Query.ExecuteQuery(filter);
             return queryResult;

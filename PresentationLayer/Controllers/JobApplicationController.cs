@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using BusinessLayer.DataTransferObjects;
 using BusinessLayer.Facades;
+using Castle.Core.Internal;
 
 namespace PresentationLayer.Controllers
 {
@@ -13,6 +14,8 @@ namespace PresentationLayer.Controllers
     {
         public JobApplicationFacade JobApplicationFacade { get; set; }
         public JobOfferFacade JobOfferFacade { get; set; }
+
+        public UserFacade UserFacade { get; set; }
 
         // GET: JobApplication
         public async Task<ActionResult> Index()
@@ -32,11 +35,11 @@ namespace PresentationLayer.Controllers
         public async Task<ActionResult> Create(int jobOfferId)
         {
             var offer = await JobOfferFacade.GetOffer(jobOfferId);
+            var user = User.Identity.Name.IsNullOrEmpty() ? new ApplicantDto() : await UserFacade.GetUserByEmail(User.Identity.Name);
 
             var model = new JobApplicationCreateDto
             {
-                // TODO current user (if logged) 
-                // Applicant = 
+                Applicant = user,
                 JobOffer = offer,
                 JobOfferId = offer.Id
             };
@@ -57,6 +60,8 @@ namespace PresentationLayer.Controllers
             var offer = await JobOfferFacade.GetOffer(application.JobOfferId);
             application.JobOffer = offer;
             application.JobOfferId = offer.Id;
+            application.Applicant = User.Identity.Name.IsNullOrEmpty() ? new ApplicantDto() : await UserFacade.GetUserByEmail(User.Identity.Name);
+
 
             return View(application);
         }
