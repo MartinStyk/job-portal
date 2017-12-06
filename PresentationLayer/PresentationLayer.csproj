@@ -218,8 +218,6 @@
     <Content Include="Views\User\Delete.cshtml" />
     <Content Include="Views\Employer\Index.cshtml" />
     <Content Include="Views\Employer\Details.cshtml" />
-    <Content Include="Views\Employer\Edit.cshtml" />
-    <Content Include="Views\Employer\Delete.cshtml" />
     <Content Include="Views\JobOffer\Index.cshtml" />
     <Content Include="Views\JobOffer\Details.cshtml" />
     <Content Include="Views\JobOffer\Delete.cshtml" />

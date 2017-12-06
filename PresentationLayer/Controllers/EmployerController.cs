@@ -47,51 +47,5 @@ namespace PresentationLayer.Controllers
 
             return View("Edit", employerDto);
         }
-
-        // GET: Employer/Edit/5
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Edit(int id)
-        {
-            var user = await EmployerFacade.GetEmployerById(id);
-            return View(user);
-        }
-
-        // POST: Employer/Edit/5
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<ActionResult> Edit(int id, EmployerDto employerDto)
-        {
-            if (ModelState.IsValid)
-            {
-                await EmployerFacade.Update(employerDto);
-                return RedirectToAction("Index");
-            }
-
-            return View(employerDto);
-        }
-
-        // GET: Employer/Delete/5
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Delete(int id)
-        {
-            var employer = await EmployerFacade.GetEmployerById(id);
-            return View(employer);
-        }
-
-        // POST: Employer/Delete/5
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task<ActionResult> Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                await EmployerFacade.Delete(id);
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
