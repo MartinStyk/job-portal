@@ -32,10 +32,13 @@ namespace BusinessLayer.Facades
             }
         }
 
-        public async Task DeleteApplication(int id)
+        public async Task DeleteApplication(int id, EmployerDto deletingEmployer)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
+                if ((await jobApplicationService.GetAsync(id)).JobOffer.Employer.Id != deletingEmployer.Id)
+                    throw new ArgumentException();
+
                 jobApplicationService.Delete(id);
                 await uow.Commit();
             }
@@ -82,10 +85,13 @@ namespace BusinessLayer.Facades
             }
         }
 
-        public async Task<bool> AcceptOnlyThisApplication(int applicationId)
+        public async Task<bool> AcceptOnlyThisApplication(int applicationId, EmployerDto managingEmployer)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
+                if ((await jobApplicationService.GetAsync(applicationId)).JobOffer.Employer.Id != managingEmployer.Id)
+                    throw new ArgumentException();
+
                 var result = await jobApplicationService.AcceptOnlyThisApplication(applicationId);
                 await uow.Commit();
                 return result;
@@ -93,30 +99,39 @@ namespace BusinessLayer.Facades
         }
 
 
-        public async Task<bool> CloseApplication(int applicationId)
+        public async Task<bool> CloseApplication(int applicationId, EmployerDto managingEmployer)
         {
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
+                if ((await jobApplicationService.GetAsync(applicationId)).JobOffer.Employer.Id != managingEmployer.Id)
+                    throw new ArgumentException();
+
                 var result = await jobApplicationService.CloseApplication(applicationId);
                 await unitOfWork.Commit();
                 return result;
             }
         }
 
-        public async Task<bool> RejectApplication(int applicationId)
+        public async Task<bool> RejectApplication(int applicationId, EmployerDto managingEmployer)
         {
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
+                if ((await jobApplicationService.GetAsync(applicationId)).JobOffer.Employer.Id != managingEmployer.Id)
+                    throw new ArgumentException();
+
                 var result = await jobApplicationService.RejectApplication(applicationId);
                 await unitOfWork.Commit();
                 return result;
             }
         }
 
-        public async Task<bool> AcceptApplication(int applicationId)
+        public async Task<bool> AcceptApplication(int applicationId, EmployerDto managingEmployer)
         {
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
+                if ((await jobApplicationService.GetAsync(applicationId)).JobOffer.Employer.Id != managingEmployer.Id)
+                    throw new ArgumentException();
+
                 var result = await jobApplicationService.AcceptApplication(applicationId);
                 await unitOfWork.Commit();
                 return result;

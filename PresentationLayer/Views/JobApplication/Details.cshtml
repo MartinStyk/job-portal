@@ -67,8 +67,12 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Accept", "AcceptApplication", new {id = Model.Id}) |
-    @Html.ActionLink("Reject", "RejectApplication", new { id = Model.Id }) |
-    @Html.ActionLink("Close", "CloseApplication", new { id = Model.Id }) |
+    @if (Request.IsAuthenticated && User.IsInRole("Employer"))
+    {
+        @Html.ActionLink("Accept", "AcceptApplication", new {id = Model.Id}) @:|
+        @Html.ActionLink("Reject", "RejectApplication", new {id = Model.Id}) @:|
+        @Html.ActionLink("Close", "CloseApplication", new {id = Model.Id}) @:|
+    }
+   
     @Html.ActionLink("Back to List", "Index")
 </p>

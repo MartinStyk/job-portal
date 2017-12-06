@@ -69,11 +69,16 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Create Application", "Create", "JobApplication", new {jobOfferId = Model.Id}, null) |
-    @if (User.IsInRole("Employer")  && User.Identity.Name.Equals(Model.Employer.Email) )
+    @if (!User.IsInRole("Employer"))
     {
-        @Html.ActionLink("Show Applications", "ApplicationsByJobOffer", "JobApplication", new { id = Model.Id }, null) @:|
-        @Html.ActionLink("Edit", "Edit", new {id = Model.Id}) @:|
+        @Html.ActionLink("Create Application", "Create", "JobApplication", new {jobOfferId = Model.Id}, null) @:|
+    }
+    @if (User.IsInRole("Employer") && User.Identity.Name.Equals(Model.Employer.Email))
+    {
+        @Html.ActionLink("Show Applications", "ApplicationsByJobOffer", "JobApplication", new {id = Model.Id}, null)
+        @:|
+        @Html.ActionLink("Edit", "Edit", new {id = Model.Id})
+        @:|
     }
     @Html.ActionLink("Back to List", "Index")
 </p>
