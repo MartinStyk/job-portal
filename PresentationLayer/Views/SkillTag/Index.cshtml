@@ -18,10 +18,12 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
+                <span class="badge" style="font-size: 1.2em">@Html.DisplayFor(modelItem => item.Name)</span>
+                </td>
             <td>
-                @Html.ActionLink("Show related jobs", "OffersBySkill", "JobOffer", new {id = item.Id}, null)
+                <a class="btn btn-success btn-sm" href="@Url.Action("OffersBySkill", "JobOffer", new {id = item.Id}, null)">
+                    See Jobs<i class="glyphicon glyphicon-new-window ml-2" style="margin-left: 0.5rem"></i>
+                </a>
             </td>
         </tr>
     }

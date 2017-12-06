@@ -213,9 +213,7 @@
     <Content Include="Views\SkillTag\Index.cshtml" />
     <Content Include="Views\SkillTag\Create.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
-    <Content Include="Views\User\Delete.cshtml" />
     <Content Include="Views\Employer\Index.cshtml" />
     <Content Include="Views\Employer\Details.cshtml" />
     <Content Include="Views\JobOffer\Index.cshtml" />

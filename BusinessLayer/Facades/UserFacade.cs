@@ -29,8 +29,11 @@ namespace BusinessLayer.Facades
             }
         }
 
-        public async Task Update(UserDto user)
+        public async Task Update(UserDto user, UserDto editor)
         {
+            if(user.Id != editor.Id)
+                throw new ArgumentException();
+
             using (var unitOfWork = UnitOfWorkProvider.Create())
             {
                 await userService.Update(user);
