@@ -14,8 +14,8 @@ namespace PresentationLayer.Controllers
     public class JobOfferController : Controller
     {
         public JobOfferFacade JobOfferFacade { get; set; }
+        public EmployerFacade EmployerFacade { get; set; }
         public SkillSelectListHelper SkillSelectListHelper { get; set; }
-        public EmployerSelectListHelper EmployerSelectListHelper { get; set; }
 
 
         // GET: JobOffer
@@ -26,13 +26,24 @@ namespace PresentationLayer.Controllers
         }
 
         // GET: JobOffer/OffersOfEmployer/2
+        [AllowAnonymous]
         public async Task<ActionResult> OffersOfEmployer(int id)
         {
             var offers = await JobOfferFacade.GetAllOffersOfEmployer(id);
             return View("Index", offers);
         }
 
+        // GET: JobOffer/OffersOfCurrentEmployer
+        [Authorize(Roles = "Employer")]
+        public async Task<ActionResult> OffersOfCurrentEmployer()
+        {
+            var employer = await EmployerFacade.GetEmployerByEmail(User.Identity.Name);
+            var offers = await JobOfferFacade.GetAllOffersOfEmployer(employer.Id);
+            return View("Index", offers);
+        }
+
         // GET: JobOffer/OffersBySkill/2
+        [AllowAnonymous]
         public async Task<ActionResult> OffersBySkill(int id)
         {
             var offers = await JobOfferFacade.GetOffersBySkill(id);
@@ -40,6 +51,7 @@ namespace PresentationLayer.Controllers
         }
 
         // GET: JobOffer/Details/5
+        [AllowAnonymous]
         public async Task<ActionResult> Details(int id)
         {
             var offer = await JobOfferFacade.GetOffer(id);
@@ -47,12 +59,13 @@ namespace PresentationLayer.Controllers
         }
 
         // GET: JobOffer/Create
+        [Authorize(Roles = "Employer")]
         public async Task<ActionResult> Create()
         {
             var model = new JobOfferCreateViewModel
             {
                 AllSkills = await SkillSelectListHelper.Get(),
-                AllEmployers = await EmployerSelectListHelper.Get(),
+                Employer = await EmployerFacade.GetEmployerByEmail(User.Identity.Name),
                 NumberOfQuestions = 1
             };
 
@@ -61,27 +74,31 @@ namespace PresentationLayer.Controllers
 
         // POST: JobOffer/Create
         [HttpPost]
+        [Authorize(Roles = "Employer")]
         public async Task<ActionResult> Create(JobOfferCreateViewModel model)
         {
             if (!CheckQuestionChange(model) && ModelState.IsValid) 
             {
+                model.JobOfferCreateDto.EmployerId = (await EmployerFacade.GetEmployerByEmail(User.Identity.Name)).Id;
                 await JobOfferFacade.CreateJobOffer(model.JobOfferCreateDto);
                 return RedirectToAction("Index");
             }
 
             model.AllSkills = await SkillSelectListHelper.Get();
-            model.AllEmployers = await EmployerSelectListHelper.Get();
+            model.Employer = await EmployerFacade.GetEmployerByEmail(User.Identity.Name);
+
 
             return View(model);
         }
 
         // GET: JobOffer/Edit/5
+        [Authorize(Roles = "Employer")]
         public async Task<ActionResult> Edit(int id)
         {
             var model = new JobOfferCreateViewModel
             {
                 AllSkills = await SkillSelectListHelper.Get(),
-                AllEmployers = await EmployerSelectListHelper.Get(),
+                Employer = await EmployerFacade.GetEmployerByEmail(User.Identity.Name),
                 JobOfferCreateDto = new JobOfferCreateDto(await JobOfferFacade.GetOffer(id))
             };
 
@@ -89,8 +106,8 @@ namespace PresentationLayer.Controllers
         }
 
         // POST: JobOffer/Edit/5
-        [
-            HttpPost]
+        [HttpPost]
+        [Authorize(Roles = "Employer")]
         public async Task<ActionResult> Edit(int id, JobOfferCreateViewModel model)
         {
             if (ModelState.IsValid)
@@ -100,12 +117,12 @@ namespace PresentationLayer.Controllers
             }
 
             model.AllSkills = await SkillSelectListHelper.Get();
-            model.AllEmployers = await EmployerSelectListHelper.Get();
-
+            model.Employer = await EmployerFacade.GetEmployerByEmail(User.Identity.Name);
             return View(model);
         }
 
         // GET: JobOffer/Delete/5
+        [Authorize(Roles = "Employer,Admin")]
         public async Task<ActionResult> Delete(int id)
         {
             var offer = await JobOfferFacade.GetOffer(id);
@@ -113,8 +130,8 @@ namespace PresentationLayer.Controllers
         }
 
         // POST: JobOffer/Delete/5
-        [
-            HttpPost]
+        [HttpPost]
+        [Authorize(Roles = "Employer,Admin")]
         public async Task<ActionResult> Delete(int id, FormCollection collection)
         {
             try

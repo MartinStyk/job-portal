@@ -13,7 +13,7 @@ namespace PresentationLayer.ViewModel
         [Range(0,10)]
         public int NumberOfQuestions { get; set; }
         public IEnumerable<SelectListItem> AllSkills { get; set; }
-        public IEnumerable<SelectListItem> AllEmployers { get; set; }
+        public EmployerDto Employer { get; set; }
 
         public JobOfferCreateDto JobOfferCreateDto { get; set; }
     }

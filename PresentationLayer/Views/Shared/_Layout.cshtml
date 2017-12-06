@@ -21,7 +21,14 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Job Offers", "Index", "JobOffer")</li>
+                @if (User.IsInRole("Employer"))
+                {
+                    <li>@Html.ActionLink("Job Offer Management", "OffersOfCurrentEmployer", "JobOffer")</li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Job Offers", "Index", "JobOffer")</li>
+                }
                 <li>@Html.ActionLink("Job Applications", "Index", "JobApplication")</li>
                 <li>@Html.ActionLink("Skills", "Index", "SkillTag")</li>
                 <li>@Html.ActionLink("Users", "Index", "User")</li>
