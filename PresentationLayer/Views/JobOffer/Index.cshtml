@@ -51,7 +51,7 @@
                 @String.Join(", ", item.Skills.ToArray())
             </td>
             <td>
-                @if (!User.IsInRole("Emplyer") && !User.IsInRole("Admin"))
+                @if (!User.IsInRole("Employer"))
                 {
                     @Html.ActionLink("Create Application", "Create", "JobApplication", new {jobOfferId = item.Id}, null)
                     @:|
@@ -64,11 +64,8 @@
                     @:|
                     @Html.ActionLink("Edit", "Edit", new {id = item.Id})
                     @:|
-                }
-
-                @if ((User.IsInRole("Employer") && User.Identity.Name.Equals(item.Employer.Email)) || User.IsInRole("Admin"))
-                {
                     @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+
                 }
             </td>
         </tr>

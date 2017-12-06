@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Selectors;
 using System.Linq;
+using System.Security;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -77,15 +79,17 @@ namespace PresentationLayer.Controllers
         [Authorize(Roles = "Employer")]
         public async Task<ActionResult> Create(JobOfferCreateViewModel model)
         {
-            if (!CheckQuestionChange(model) && ModelState.IsValid) 
+            var currentEmployer = await EmployerFacade.GetEmployerByEmail(User.Identity.Name);
+
+            if (!CheckQuestionChange(model) && ModelState.IsValid)
             {
-                model.JobOfferCreateDto.EmployerId = (await EmployerFacade.GetEmployerByEmail(User.Identity.Name)).Id;
+                model.JobOfferCreateDto.EmployerId = currentEmployer.Id;
                 await JobOfferFacade.CreateJobOffer(model.JobOfferCreateDto);
-                return RedirectToAction("Index");
+                return RedirectToAction("OffersOfCurrentEmployer");
             }
 
             model.AllSkills = await SkillSelectListHelper.Get();
-            model.Employer = await EmployerFacade.GetEmployerByEmail(User.Identity.Name);
+            model.Employer = currentEmployer;
 
 
             return View(model);
@@ -95,11 +99,17 @@ namespace PresentationLayer.Controllers
         [Authorize(Roles = "Employer")]
         public async Task<ActionResult> Edit(int id)
         {
+            var jobOfferCreateDto = new JobOfferCreateDto(await JobOfferFacade.GetOffer(id));
+            var currentEmployer = await EmployerFacade.GetEmployerByEmail(User.Identity.Name);
+
+            if (currentEmployer.Id != jobOfferCreateDto.EmployerId)
+                throw new ArgumentException();
+
             var model = new JobOfferCreateViewModel
             {
                 AllSkills = await SkillSelectListHelper.Get(),
-                Employer = await EmployerFacade.GetEmployerByEmail(User.Identity.Name),
-                JobOfferCreateDto = new JobOfferCreateDto(await JobOfferFacade.GetOffer(id))
+                Employer = currentEmployer,
+                JobOfferCreateDto = jobOfferCreateDto
             };
 
             return View(model);
@@ -110,34 +120,44 @@ namespace PresentationLayer.Controllers
         [Authorize(Roles = "Employer")]
         public async Task<ActionResult> Edit(int id, JobOfferCreateViewModel model)
         {
+            var currentEmployer = await EmployerFacade.GetEmployerByEmail(User.Identity.Name);
+
             if (ModelState.IsValid)
             {
-                await JobOfferFacade.EditJobOffer(model.JobOfferCreateDto);
-                return RedirectToAction("Index");
+                model.JobOfferCreateDto.EmployerId = currentEmployer.Id;
+                await JobOfferFacade.EditJobOffer(model.JobOfferCreateDto, currentEmployer);
+                return RedirectToAction("OffersOfCurrentEmployer");
             }
 
             model.AllSkills = await SkillSelectListHelper.Get();
-            model.Employer = await EmployerFacade.GetEmployerByEmail(User.Identity.Name);
+            model.Employer = currentEmployer;
             return View(model);
         }
 
         // GET: JobOffer/Delete/5
-        [Authorize(Roles = "Employer,Admin")]
+        [Authorize(Roles = "Employer")]
         public async Task<ActionResult> Delete(int id)
         {
             var offer = await JobOfferFacade.GetOffer(id);
+            var currentEmployer = await EmployerFacade.GetEmployerByEmail(User.Identity.Name);
+
+            if (currentEmployer.Id != offer.EmployerId)
+                throw new ArgumentException();
+
             return View(offer);
         }
 
         // POST: JobOffer/Delete/5
         [HttpPost]
-        [Authorize(Roles = "Employer,Admin")]
+        [Authorize(Roles = "Employer")]
         public async Task<ActionResult> Delete(int id, FormCollection collection)
         {
+            var currentEmployer = await EmployerFacade.GetEmployerByEmail(User.Identity.Name);
+
             try
             {
-                await JobOfferFacade.DeleteJobOffer(id);
-                return RedirectToAction("Index");
+                await JobOfferFacade.DeleteJobOffer(id, currentEmployer);
+                return RedirectToAction("OffersOfCurrentEmployer");
             }
             catch
             {
@@ -162,8 +182,7 @@ namespace PresentationLayer.Controllers
             }
             return false;
         }
-        
+
         #endregion
     }
-
 }

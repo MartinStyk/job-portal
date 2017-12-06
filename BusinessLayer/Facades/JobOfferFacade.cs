@@ -44,7 +44,7 @@ namespace BusinessLayer.Facades
             }
         }
 
-        public async Task<QueryResultDto<JobOfferDto, JobOfferFilterDto> > GetAllOffers()
+        public async Task<QueryResultDto<JobOfferDto, JobOfferFilterDto>> GetAllOffers()
         {
             using (UnitOfWorkProvider.Create())
             {
@@ -119,22 +119,29 @@ namespace BusinessLayer.Facades
             }
         }
 
-        public async Task<bool> DeleteJobOffer(int entityId)
+        public async Task<bool> DeleteJobOffer(int entityId, EmployerDto editor)
         {
             using (var uow = UnitOfWorkProvider.Create())
             {
-                if ((await jobOfferService.GetAsync(entityId, false)) == null)
-                {
+                var jobOffer = await jobOfferService.GetAsync(entityId, false);
+
+                if (jobOffer == null)
                     return false;
-                }
+
+                if (editor.Id != jobOffer.EmployerId)
+                    throw new ArgumentException();
+
                 jobOfferService.Delete(entityId);
                 await uow.Commit();
                 return true;
             }
         }
 
-        public async Task<bool> EditJobOffer(JobOfferCreateDto jobOffer)
+        public async Task<bool> EditJobOffer(JobOfferCreateDto jobOffer, EmployerDto editor)
         {
+            if (editor.Id != jobOffer.EmployerId)
+                throw new ArgumentException();
+
             using (var uow = UnitOfWorkProvider.Create())
             {
                 if ((await jobOfferService.GetAsync(jobOffer.Id, false)) == null)
