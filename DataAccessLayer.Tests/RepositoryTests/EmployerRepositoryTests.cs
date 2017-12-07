@@ -42,7 +42,8 @@ namespace DataAccessLayer.Tests.RepositoryTests
                 Address = "Bratislava, Slovakia",
                 Email = "mail@capco.xxx",
                 PhoneNumber = "+421 123 456 789",
-                Password = "cpc_pwd"
+                PasswordHash = "password",
+                PasswordSalt = "password"
             };
 
             using (var unitOfWork = Initializer.Provider.Create())
@@ -69,7 +70,8 @@ namespace DataAccessLayer.Tests.RepositoryTests
                     Address = "Praha, CZ",
                     Email = "mail@microsoft.xxx",
                     PhoneNumber = "(425) 882-8080",
-                    Password = "ms_pwd"
+                    PasswordHash = "password",
+                    PasswordSalt = "password"
                 };
 
                 employerRepository.Update(newEmployer);

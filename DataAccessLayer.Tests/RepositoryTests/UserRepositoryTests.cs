@@ -43,7 +43,8 @@ namespace DataAccessLayer.Tests.RepositoryTests
                 Email = "majster@n.net",
                 PhoneNumber = "+421 123 456 789",
                 Education = "I dont know",
-                Password = "password"
+                PasswordHash = "password",
+                PasswordSalt = "password"
             };
 
             using (var unitOfWork = Initializer.Provider.Create())
@@ -71,7 +72,8 @@ namespace DataAccessLayer.Tests.RepositoryTests
                     Email = "majster@n.net",
                     PhoneNumber = "+421 123 456 789",
                     Education = "I dont know",
-                    Password = "password"
+                    PasswordHash = "password",
+                    PasswordSalt = "password"
                 };
 
                 userRepository.Update(newUser);

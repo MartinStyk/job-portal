@@ -63,7 +63,8 @@ namespace DataAccessLayer.Tests
                 Address = "Brno, CzechRepublic",
                 Email = "mail@redhat.xxx",
                 PhoneNumber = "+420 123 456 789",
-                Password = "rh_pwd"
+                PasswordHash = "password",
+                PasswordSalt = "password"
             };
             GoogleEmployer = new Employer
             {
@@ -71,7 +72,8 @@ namespace DataAccessLayer.Tests
                 Address = "MountainView, CA",
                 Email = "mail@google.xxx",
                 PhoneNumber = "+421 123 456 789",
-                Password = "google_pwd"
+                PasswordHash = "password",
+                PasswordSalt = "password"
             };
 
             MicrosoftEmployer = new Employer
@@ -80,7 +82,8 @@ namespace DataAccessLayer.Tests
                 Address = "Praha, CZ",
                 Email = "mail@microsoft.xxx",
                 PhoneNumber = "(425) 882-8080",
-                Password = "ms_pwd"
+                PasswordHash = "password",
+                PasswordSalt = "password"
             };
 
             context.Employers.Add(RedHatEmployer);
@@ -120,7 +123,8 @@ namespace DataAccessLayer.Tests
                     PhpSkill,
                     AngularSkill
                 },
-                Password = "password"
+                PasswordHash = "password",
+                PasswordSalt = "password"
             };
 
             MadkiUser = new User
@@ -136,7 +140,8 @@ namespace DataAccessLayer.Tests
                     CSharpSkill,
                     AndroidSkill
                 },
-                Password = "password"
+                PasswordHash = "password",
+                PasswordSalt = "password"
             };
 
             AnonymousUser = new Applicant()
