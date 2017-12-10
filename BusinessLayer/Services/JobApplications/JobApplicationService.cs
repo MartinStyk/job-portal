@@ -129,7 +129,7 @@ namespace BusinessLayer.Services.JobApplications
             var allJobApplications = await GetByJobOffer(application.JobOfferId);
             foreach (var otherApplication in allJobApplications.Items)
             {
-                if (!otherApplication.Equals(application))
+                if (otherApplication.Id != application.Id)
                     await CloseApplication(applicationId);
             }
             return true;

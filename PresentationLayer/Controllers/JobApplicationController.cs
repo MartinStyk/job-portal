@@ -144,6 +144,31 @@ namespace PresentationLayer.Controllers
             return RedirectToAction("ApplicationsByJobOffer", new {id = (await JobApplicationFacade.GetApplication(id)).JobOffer.Id});
         }
 
+        // GET: JobApplication/AcceptApplicationAndCloseOther/5
+        [Authorize(Roles = "Employer")]
+        public async Task<ActionResult> AcceptApplicationAndCloseOther(int id)
+        {
+            ViewBag.Action = "Accept application and close all other";
+            var emoloyer = await EmployerFacade.GetEmployerByEmail(User.Identity.Name);
+            var application = await JobApplicationFacade.GetApplication(id);
+
+            if (application.JobOffer.Employer.Id != emoloyer.Id)
+                throw new ArgumentException();
+
+            return View("ChangeApplicationStatus", application);
+        }
+
+        // POST: JobApplication/AcceptApplicationAndCloseOther/5
+        [HttpPost]
+        [Authorize(Roles = "Employer")]
+        public async Task<ActionResult> AcceptApplicationAndCloseOther(int id, FormCollection collection)
+        {
+            await JobApplicationFacade.AcceptOnlyThisApplication(id, await EmployerFacade.GetEmployerByEmail(User.Identity.Name));
+
+            return RedirectToAction("ApplicationsByJobOffer", new { id = (await JobApplicationFacade.GetApplication(id)).JobOffer.Id });
+        }
+
+
         // GET: JobApplication/RejectApplication/5
         [Authorize(Roles = "Employer")]
         public async Task<ActionResult> RejectApplication(int id)
