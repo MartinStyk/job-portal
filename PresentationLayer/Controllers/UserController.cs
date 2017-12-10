@@ -50,7 +50,7 @@ namespace PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 await UserFacade.Update(model.UserDto, currentUser);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             model.AllSkills = await SkillSelectListHelper.Get(model.UserDto);

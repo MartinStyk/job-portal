@@ -42,7 +42,7 @@ namespace PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 await EmployerFacade.Update(employerDto);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             return View("Edit", employerDto);
